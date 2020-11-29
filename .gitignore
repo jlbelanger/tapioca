@@ -1,0 +1,5 @@
+.DS_Store
+.env
+.phpunit.result.cache
+/vendor
+TODO.md

@@ -1,0 +1,36 @@
+{
+	"name": "jlbelanger/laravel-json-api",
+	"description": "",
+	"type": "library",
+	"license": "MIT",
+	"version": "1.0.0",
+	"authors": [
+		{
+			"name": "Jenny Belanger",
+			"email": "mail@jennybelanger.com",
+			"homepage": "https://www.jennybelanger.com/"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Jlbelanger\\LaravelJsonApi\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Jlbelanger\\LaravelJsonApi\\Tests\\": "tests"
+		}
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Jlbelanger\\LaravelJsonApi\\LaravelJsonApiServiceProvider"
+			]
+		}
+	},
+	"require-dev": {
+		"orchestra/testbench": "^6.4",
+		"phpunit/phpunit": "^9.1",
+		"squizlabs/php_codesniffer": "^3.5"
+	}
+}
