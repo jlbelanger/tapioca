@@ -17,6 +17,8 @@ class FilterHelper
 		'lt' => '<',
 		'ne' => '!=',
 		'in' => 'IN',
+		'null' => 'IS NULL',
+		'notnull' => 'IS NOT NULL',
 	];
 
 	/**
@@ -63,13 +65,6 @@ class FilterHelper
 						'detail' => 'Permitted operations: ' . implode(', ', array_keys(self::$filterOps)),
 					], 400);
 				}
-
-				if ($value === 'null' && $op !== 'eq' && $op !== 'ne') {
-					throw JsonApiException::generate([
-						'title' => "Parameter 'filter[$key][$op]' has invalid operation for 'null' value.",
-						'detail' => "Permitted operations for 'null': eq, ne",
-					], 400);
-				}
 			}
 		}
 
@@ -95,13 +90,10 @@ class FilterHelper
 						// TODO: Should also handle other operators.
 						$q->where($foreignKey, '=', $value);
 					});
-				} elseif ($value === 'null') {
-					// TODO: Maybe make these into separate operators so you can still filter by the string 'null'.
-					if ($op === 'ne') {
-						$records = $records->whereNotNull($key);
-					} else {
-						$records = $records->whereNull($key);
-					}
+				} elseif ($op === 'notnull') {
+					$records = $records->whereNotNull($key);
+				} elseif ($op === 'null') {
+					$records = $records->whereNull($key);
 				} elseif ($op === 'in') {
 					$value = array_map('trim', explode(',', $value));
 					$records = $records->whereIn($key, $value);

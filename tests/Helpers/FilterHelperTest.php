@@ -131,15 +131,7 @@ class FilterHelperTest extends TestCase
 						'equals' => 'bar, baz',
 					],
 				],
-				'expectedMessage' => '{"title":"Parameter \'filter[foo][equals]\' has invalid operation.","detail":"Permitted operations: eq, ge, gt, le, like, lt, ne, in"}',
-			]],
-			'with an invalid null operation' => [[
-				'filter' => [
-					'foo' => [
-						'in' => 'null',
-					],
-				],
-				'expectedMessage' => '{"title":"Parameter \'filter[foo][in]\' has invalid operation for \'null\' value.","detail":"Permitted operations for \'null\': eq, ne"}',
+				'expectedMessage' => '{"title":"Parameter \'filter[foo][equals]\' has invalid operation.","detail":"Permitted operations: eq, ge, gt, le, like, lt, ne, in, null, notnull"}',
 			]],
 			'with a valid array' => [[
 				'filter' => [
@@ -188,20 +180,6 @@ class FilterHelperTest extends TestCase
 				'filter' => [
 					'title' => [
 						'eq' => 'a',
-					],
-				],
-				'expected' => ['a'],
-			]],
-			'when filtering with eq and null' => [[
-				'records' => [
-					'articles' => [
-						['title' => 'a', 'content' => null],
-						['title' => 'b', 'content' => 'b'],
-					],
-				],
-				'filter' => [
-					'content' => [
-						'eq' => 'null',
 					],
 				],
 				'expected' => ['a'],
@@ -325,20 +303,6 @@ class FilterHelperTest extends TestCase
 				],
 				'expected' => ['b'],
 			]],
-			'when filtering with ne and null' => [[
-				'records' => [
-					'articles' => [
-						['title' => 'a', 'content' => null],
-						['title' => 'b', 'content' => 'b'],
-					],
-				],
-				'filter' => [
-					'content' => [
-						'ne' => 'null',
-					],
-				],
-				'expected' => ['b'],
-			]],
 			'when filtering with in' => [[
 				'records' => [
 					'articles' => [
@@ -353,6 +317,34 @@ class FilterHelperTest extends TestCase
 					],
 				],
 				'expected' => ['a', 'c'],
+			]],
+			'when filtering with null' => [[
+				'records' => [
+					'articles' => [
+						['title' => 'a', 'content' => null],
+						['title' => 'b', 'content' => 'b'],
+					],
+				],
+				'filter' => [
+					'content' => [
+						'null' => '1',
+					],
+				],
+				'expected' => ['a'],
+			]],
+			'when filtering with notnull' => [[
+				'records' => [
+					'articles' => [
+						['title' => 'a', 'content' => null],
+						['title' => 'b', 'content' => 'b'],
+					],
+				],
+				'filter' => [
+					'content' => [
+						'notnull' => '1',
+					],
+				],
+				'expected' => ['b'],
 			]],
 			'when filtering a relationship with eq' => [[
 				'records' => [
