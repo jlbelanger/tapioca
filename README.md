@@ -8,6 +8,7 @@ There are other Laravel packages that already do the same thing, and they probab
 
 ``` bash
 composer require jlbelanger/laravel-json-api @dev
+php artisan vendor:publish --provider="Jlbelanger\LaravelJsonApi\LaravelJsonApiServiceProvider" --tag="config"
 ```
 
 ## Setup
