@@ -12,24 +12,20 @@ class IncludedHelperTest extends TestCase
 	{
 		return [
 			'with an empty array' => [[
-				'data' => [],
-				'expected' => ['included' => []],
+				'included' => [],
+				'expected' => [],
 			]],
-			'with an empty array for included' => [[
-				'data' => ['included' => []],
-				'expected' => ['included' => []],
+			'with an empty string' => [[
+				'included' => '',
+				'expected' => [],
 			]],
-			'with an empty string for included' => [[
-				'data' => ['included' => ''],
-				'expected' => ['included' => []],
-			]],
-			'with null for included' => [[
-				'data' => ['included' => null],
-				'expected' => ['included' => []],
+			'with null' => [[
+				'included' => null,
+				'expected' => [],
 			]],
 			'with valid included' => [[
-				'data' => ['included' => ['foo' => 'bar']],
-				'expected' => ['included' => ['foo' => 'bar']],
+				'included' => ['foo' => 'bar'],
+				'expected' => ['foo' => 'bar'],
 			]],
 		];
 	}
@@ -39,7 +35,7 @@ class IncludedHelperTest extends TestCase
 	 */
 	public function testNormalize($args)
 	{
-		$output = IncludedHelper::normalize($args['data']);
+		$output = IncludedHelper::normalize($args['included']);
 		$this->assertSame($args['expected'], $output);
 	}
 

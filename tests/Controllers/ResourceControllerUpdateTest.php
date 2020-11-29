@@ -653,7 +653,112 @@ class ResourceControllerUpdateTest extends TestCase
 				],
 				'expectedStatus' => 200,
 			]],
-			// TODO: when changing a hasMany relationship
+			'when changing a hasMany relationship' => [[
+				'records' => [
+					'albums' => [
+						['title' => 'foo'],
+					],
+					'songs' => [
+						['title' => 'a'],
+						['title' => 'b'],
+						['title' => 'c'],
+					],
+					'album_songs' => [
+						['album' => 'foo', 'song' => 'a', 'track' => 1],
+						['album' => 'foo', 'song' => 'b', 'track' => 2],
+						['album' => 'foo', 'song' => 'c', 'track' => 3],
+					],
+				],
+				'path' => '/albums/%albums.foo%?include=album_songs',
+				'parameters' => [
+					'data' => [
+						'id' => '%albums.foo%',
+						'type' => 'albums',
+						'relationships' => [
+							'album_songs' => [
+								'data' => [
+									[
+										'id' => '%album_songs.0%',
+										'type' => 'album-song',
+									],
+									[
+										'id' => '%album_songs.1%',
+										'type' => 'album-song',
+									],
+									[
+										'id' => '%album_songs.2%',
+										'type' => 'album-song',
+									],
+								],
+							],
+						],
+					],
+					'included' => [
+						[
+							'id' => '%album_songs.1%',
+							'type' => 'album-song',
+							'attributes' => [
+								'track' => '4',
+							],
+						],
+					],
+				],
+				'expected' => [
+					'data' => [
+						'id' => '%albums.foo%',
+						'type' => 'albums',
+						'attributes' => [
+							'title' => 'foo',
+							'release_date' => null,
+						],
+						'relationships' => [
+							'album_songs' => [
+								'data' => [
+									[
+										'id' => '%album_songs.0%',
+										'type' => 'album-song',
+									],
+									[
+										'id' => '%album_songs.1%',
+										'type' => 'album-song',
+									],
+									[
+										'id' => '%album_songs.2%',
+										'type' => 'album-song',
+									],
+								],
+							],
+						],
+					],
+					'included' => [
+						[
+							'id' => '%album_songs.0%',
+							'type' => 'album-song',
+							'attributes' => [
+								'track' => '1',
+								'length' => null,
+							],
+						],
+						[
+							'id' => '%album_songs.1%',
+							'type' => 'album-song',
+							'attributes' => [
+								'track' => '4',
+								'length' => null,
+							],
+						],
+						[
+							'id' => '%album_songs.2%',
+							'type' => 'album-song',
+							'attributes' => [
+								'track' => '3',
+								'length' => null,
+							],
+						],
+					],
+				],
+				'expectedStatus' => 200,
+			]],
 		];
 	}
 

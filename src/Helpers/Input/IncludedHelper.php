@@ -7,17 +7,16 @@ use Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException;
 class IncludedHelper
 {
 	/**
-	 * @param  array|mixed $data
+	 * @param  array|mixed $included
 	 * @return array
 	 */
-	public static function normalize($data) : array
+	public static function normalize($included) : array
 	{
-		if (empty($data['included'])) {
-			$data['included'] = [];
-			return $data;
+		if (empty($included)) {
+			return [];
 		}
-		self::validate($data['included']);
-		return $data;
+		self::validate($included);
+		return $included;
 	}
 
 	/**

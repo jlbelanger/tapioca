@@ -29,7 +29,7 @@ class RelationshipsHasManyHelper
 		$newIds = array_map('strval', Arr::pluck($relData['data'], 'id'));
 
 		$deleteData = self::delete($existing, $existingIds, $newIds);
-		$addData = self::add($relData, $existing, $key, $record, $included);
+		$addData = self::addOrUpdate($relData, $existing, $key, $record, $included);
 
 		return [
 			'deleteIds' => $deleteData['ids'],
@@ -86,7 +86,7 @@ class RelationshipsHasManyHelper
 	 * @param  array   $included
 	 * @return array
 	 */
-	protected static function add(array $relData, HasMany $existing, string $key, Model $record, array $included) : array
+	protected static function addOrUpdate(array $relData, HasMany $existing, string $key, Model $record, array $included) : array
 	{
 		// Get the pivot model (eg. AlbumSong).
 		$pivotModel = get_class($existing->getRelated());
@@ -95,14 +95,11 @@ class RelationshipsHasManyHelper
 		];
 
 		foreach ($relData['data'] as $rel) {
-			if (strpos($rel['id'], self::$tempIdPrefix) !== 0) {
-				// We don't need to create a new record.
-				continue;
-			}
+			$isAdd = strpos($rel['id'], self::$tempIdPrefix) === 0;
 
 			// Find the corresponding record in 'included'.
 			$includedData = self::find($included, $rel['id'], $rel['type']);
-			if (empty($includedData)) {
+			if ($isAdd && empty($includedData)) {
 				throw JsonApiException::generate([
 					'title' => "Record with id '" . $rel['id'] . "' and type '" . $rel['type'] . "' not found in 'included'.",
 					'source' => [
@@ -111,13 +108,20 @@ class RelationshipsHasManyHelper
 				], 400);
 			}
 
-			// Create the new pivot model.
 			$relRecord = new $pivotModel();
 			$includedData = DataHelper::normalize($includedData, $relRecord->whitelistedAttributes(), $relRecord->whitelistedRelationships());
-			$includedData['attributes'][$record->getForeignKey()] = $record->id;
 			$includedData = AttributesHelper::convertSingularRelationships($includedData);
-			$new = $relRecord->create($includedData['attributes']);
-			$output['ids'][] = (string) $new->id;
+
+			if ($isAdd) {
+				// Create the new pivot model.
+				$includedData['attributes'][$record->getForeignKey()] = $record->id;
+				$new = $relRecord->create($includedData['attributes']);
+				$output['ids'][] = (string) $new->id;
+			} else {
+				// Update the existing pivot model.
+				$relRecord = $relRecord->find($rel['id']);
+				$relRecord->update($includedData['attributes']);
+			}
 		}
 
 		return $output;
