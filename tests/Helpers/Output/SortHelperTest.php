@@ -4,7 +4,7 @@ namespace Jlbelanger\LaravelJsonApi\Tests\Helpers\Output;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jlbelanger\LaravelJsonApi\Helpers\Output\SortHelper;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Article;
+use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
 use Jlbelanger\LaravelJsonApi\Tests\TestCase;
 
 class SortHelperTest extends TestCase
@@ -21,7 +21,7 @@ class SortHelperTest extends TestCase
 			]],
 			'when sorting ascending' => [[
 				'records' => [
-					'articles' => [
+					'albums' => [
 						['title' => 'c'],
 						['title' => 'a'],
 						['title' => 'b'],
@@ -32,7 +32,7 @@ class SortHelperTest extends TestCase
 			]],
 			'when sorting descending' => [[
 				'records' => [
-					'articles' => [
+					'albums' => [
 						['title' => 'c'],
 						['title' => 'a'],
 						['title' => 'b'],
@@ -43,32 +43,32 @@ class SortHelperTest extends TestCase
 			]],
 			'when sorting by a related record' => [[
 				'records' => [
-					'articles' => [
-						['title' => '1', 'username' => 'c'],
-						['title' => '2', 'username' => 'a'],
-						['title' => '3', 'username' => 'b'],
+					'albums' => [
+						['title' => '1', 'artist' => 'c'],
+						['title' => '2', 'artist' => 'a'],
+						['title' => '3', 'artist' => 'b'],
 					],
-					'users' => [
-						['username' => 'c'],
-						['username' => 'a'],
-						['username' => 'b'],
+					'artists' => [
+						['title' => 'c'],
+						['title' => 'a'],
+						['title' => 'b'],
 					],
 				],
-				'sort' => ['user.username'],
+				'sort' => ['artist.title'],
 				'expected' => ['2', '3', '1'],
 			]],
 			'when sorting by multiple fields' => [[
 				'records' => [
-					'articles' => [
-						['title' => 'a', 'content' => 'b'],
-						['title' => 'b', 'content' => 'b'],
-						['title' => 'c', 'content' => 'b'],
-						['title' => 'd', 'content' => 'a'],
-						['title' => 'e', 'content' => 'a'],
-						['title' => 'f', 'content' => 'a'],
+					'albums' => [
+						['title' => 'a', 'release_date' => '1968'],
+						['title' => 'b', 'release_date' => '1968'],
+						['title' => 'c', 'release_date' => '1968'],
+						['title' => 'd', 'release_date' => '1967'],
+						['title' => 'e', 'release_date' => '1967'],
+						['title' => 'f', 'release_date' => '1967'],
 					],
 				],
-				'sort' => ['content', 'title'],
+				'sort' => ['release_date', 'title'],
 				'expected' => ['d', 'e', 'f', 'a', 'b', 'c'],
 			]],
 		];
@@ -80,7 +80,7 @@ class SortHelperTest extends TestCase
 	public function testPerform($args)
 	{
 		$this->createRecords($args['records']);
-		$output = SortHelper::perform((new Article())->newModelQuery(), $args['sort'], new Article());
+		$output = SortHelper::perform((new Album())->newModelQuery(), $args['sort'], new Album());
 		$titles = $output->get()->pluck('title')->toArray();
 		$this->assertSame($args['expected'], $titles);
 	}

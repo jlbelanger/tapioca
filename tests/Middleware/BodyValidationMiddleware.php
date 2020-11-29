@@ -13,19 +13,19 @@ class BodyValidationMiddlewareTest extends TestCase
 	{
 		return [
 			'with a GET request' => [[
-				'uri' => '/users/',
+				'uri' => '/albums/',
 				'method' => 'GET',
 				'parameters' => [],
 				'expected' => [],
 			]],
 			'with a DELETE request' => [[
-				'uri' => '/users/1',
+				'uri' => '/albums/123',
 				'method' => 'DELETE',
 				'parameters' => [],
 				'expected' => [],
 			]],
 			'with a POST request and no data' => [[
-				'uri' => '/users/',
+				'uri' => '/albums/',
 				'method' => 'POST',
 				'parameters' => [],
 				'expected' => [
@@ -39,7 +39,7 @@ class BodyValidationMiddlewareTest extends TestCase
 				],
 			]],
 			'with a POST request and no type' => [[
-				'uri' => '/users/',
+				'uri' => '/albums/',
 				'method' => 'POST',
 				'parameters' => [
 					'data' => [],
@@ -55,7 +55,7 @@ class BodyValidationMiddlewareTest extends TestCase
 				],
 			]],
 			'with a POST request and mismatched type' => [[
-				'uri' => '/users/',
+				'uri' => '/albums/',
 				'method' => 'POST',
 				'parameters' => [
 					'data' => [
@@ -65,24 +65,24 @@ class BodyValidationMiddlewareTest extends TestCase
 				'expected' => [
 					'errors' => [
 						[
-							'title' => "The type in the body ('foo') does not match the type in the URL ('users').",
+							'title' => "The type in the body ('foo') does not match the type in the URL ('albums').",
 							'status' => '400',
 						],
 					],
 				],
 			]],
 			'with a valid POST request' => [[
-				'uri' => '/users/',
+				'uri' => '/albums/',
 				'method' => 'POST',
 				'parameters' => [
 					'data' => [
-						'type' => 'users',
+						'type' => 'albums',
 					],
 				],
 				'expected' => [],
 			]],
 			'with a PUT request and no data' => [[
-				'uri' => '/users/',
+				'uri' => '/albums/',
 				'method' => 'PUT',
 				'parameters' => [],
 				'expected' => [
@@ -96,7 +96,7 @@ class BodyValidationMiddlewareTest extends TestCase
 				],
 			]],
 			'with a PUT request and no type' => [[
-				'uri' => '/users/',
+				'uri' => '/albums/',
 				'method' => 'PUT',
 				'parameters' => [
 					'data' => [],
@@ -112,7 +112,7 @@ class BodyValidationMiddlewareTest extends TestCase
 				],
 			]],
 			'with a PUT request and mismatched type' => [[
-				'uri' => '/users/',
+				'uri' => '/albums/',
 				'method' => 'PUT',
 				'parameters' => [
 					'data' => [
@@ -122,18 +122,18 @@ class BodyValidationMiddlewareTest extends TestCase
 				'expected' => [
 					'errors' => [
 						[
-							'title' => "The type in the body ('foo') does not match the type in the URL ('users').",
+							'title' => "The type in the body ('foo') does not match the type in the URL ('albums').",
 							'status' => '400',
 						],
 					],
 				],
 			]],
 			'with a PUT request and no id' => [[
-				'uri' => '/users/',
+				'uri' => '/albums/',
 				'method' => 'PUT',
 				'parameters' => [
 					'data' => [
-						'type' => 'users',
+						'type' => 'albums',
 					],
 				],
 				'expected' => [
@@ -147,30 +147,30 @@ class BodyValidationMiddlewareTest extends TestCase
 				],
 			]],
 			'with a PUT request and mismatched id' => [[
-				'uri' => '/users/1',
+				'uri' => '/albums/123',
 				'method' => 'PUT',
 				'parameters' => [
 					'data' => [
-						'id' => '2',
-						'type' => 'users',
+						'id' => '456',
+						'type' => 'albums',
 					],
 				],
 				'expected' => [
 					'errors' => [
 						[
-							'title' => "The ID in the body ('2') does not match the ID in the URL ('1').",
+							'title' => "The ID in the body ('456') does not match the ID in the URL ('123').",
 							'status' => '400',
 						],
 					],
 				],
 			]],
 			'with a valid PUT request' => [[
-				'uri' => '/users/1',
+				'uri' => '/albums/123',
 				'method' => 'PUT',
 				'parameters' => [
 					'data' => [
-						'id' => '1',
-						'type' => 'users',
+						'id' => '123',
+						'type' => 'albums',
 					],
 				],
 				'expected' => [],

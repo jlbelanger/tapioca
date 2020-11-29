@@ -13,36 +13,36 @@ class DataRelationshipsHelperTest extends TestCase
 		return [
 			'with an empty array' => [[
 				'data' => [],
-				'whitelistedRelationships' => ['user'],
+				'whitelistedRelationships' => ['foo'],
 				'expected' => ['relationships' => []],
 			]],
 			'with an empty array for relationships' => [[
 				'data' => ['relationships' => []],
-				'whitelistedRelationships' => ['user'],
+				'whitelistedRelationships' => ['foo'],
 				'expected' => ['relationships' => []],
 			]],
 			'with an empty string for relationships' => [[
 				'data' => ['relationships' => ''],
-				'whitelistedRelationships' => ['user'],
+				'whitelistedRelationships' => ['foo'],
 				'expected' => ['relationships' => []],
 			]],
 			'with null for relationships' => [[
 				'data' => ['relationships' => null],
-				'whitelistedRelationships' => ['user'],
+				'whitelistedRelationships' => ['foo'],
 				'expected' => ['relationships' => []],
 			]],
 			'with removing a valid singular relationship' => [[
 				'data' => [
 					'attributes' => [],
 					'relationships' => [
-						'user' => null,
+						'foo' => null,
 					],
 				],
-				'whitelistedRelationships' => ['user'],
+				'whitelistedRelationships' => ['foo'],
 				'expected' => [
 					'attributes' => [],
 					'relationships' => [
-						'user' => null,
+						'foo' => null,
 					],
 				],
 			]],
@@ -50,22 +50,22 @@ class DataRelationshipsHelperTest extends TestCase
 				'data' => [
 					'attributes' => [],
 					'relationships' => [
-						'user' => [
+						'foo' => [
 							'data' => [
 								'id' => '123',
-								'type' => 'users',
+								'type' => 'foos',
 							],
 						],
 					],
 				],
-				'whitelistedRelationships' => ['user'],
+				'whitelistedRelationships' => ['foo'],
 				'expected' => [
 					'attributes' => [],
 					'relationships' => [
-						'user' => [
+						'foo' => [
 							'data' => [
 								'id' => '123',
-								'type' => 'users',
+								'type' => 'foos',
 							],
 						],
 					],
@@ -89,49 +89,70 @@ class DataRelationshipsHelperTest extends TestCase
 		return [
 			'with a string' => [[
 				'relationships' => 'foo',
-				'whitelistedRelationships' => ['user'],
+				'whitelistedRelationships' => ['artist'],
 				'expectedMessage' => '{"title":"\'relationships\' must be an object.","detail":"eg. {\"data\": {\"relationships\": {}}}","source":{"pointer":"\/data\/relationships"}}',
 			]],
 			'with a relationship string' => [[
 				'relationships' => [
-					'user' => 'foo',
+					'artist' => 'foo',
 				],
-				'whitelistedRelationships' => ['user'],
-				'expectedMessage' => '{"title":"\'user\' must be an object.","detail":"eg. {\"data\": {\"relationships\": {\"user\": {\"data\": {\"id\": \"1\", \"type\": \"foo\"}}}}","source":{"pointer":"\/data\/relationships\/user"}}',
+				'whitelistedRelationships' => ['artist'],
+				'expectedMessage' => '{"title":"\'artist\' must be an object.","detail":"eg. {\"data\": {\"relationships\": {\"artist\": {\"data\": {\"id\": \"1\", \"type\": \"foo\"}}}}","source":{"pointer":"\/data\/relationships\/artist"}}',
 			]],
 			'with a relationship without data' => [[
 				'relationships' => [
-					'user' => [
+					'artist' => [
 						'id' => '123',
-						'type' => 'user',
+						'type' => 'artists',
 					],
 				],
-				'whitelistedRelationships' => ['user'],
-				'expectedMessage' => '{"title":"\'user\' must contain a \'data\' key.","detail":"eg. {\"data\": {\"relationships\": {\"user\": {\"data\": {\"id\": \"1\", \"type\": \"foo\"}}}}","source":{"pointer":"\/data\/relationships\/user"}}',
+				'whitelistedRelationships' => ['artist'],
+				'expectedMessage' => '{"title":"\'artist\' must contain a \'data\' key.","detail":"eg. {\"data\": {\"relationships\": {\"artist\": {\"data\": {\"id\": \"1\", \"type\": \"foo\"}}}}","source":{"pointer":"\/data\/relationships\/artist"}}',
 			]],
-			// TODO: Test without id/type.
+			'with missing id' => [[
+				'relationships' => [
+					'foo' => [
+						'data' => [
+							'type' => 'artists',
+						],
+					],
+				],
+				'whitelistedRelationships' => ['artist'],
+				'expectedMessage' => '{"title":"\'foo\' is not a valid relationship.","source":{"pointer":"\/data\/relationships\/foo"}}',
+			]],
+			'with missing type' => [[
+				'relationships' => [
+					'foo' => [
+						'data' => [
+							'id' => '123',
+						],
+					],
+				],
+				'whitelistedRelationships' => ['artist'],
+				'expectedMessage' => '{"title":"\'foo\' is not a valid relationship.","source":{"pointer":"\/data\/relationships\/foo"}}',
+			]],
 			'with a non-whitelisted relationship' => [[
 				'relationships' => [
 					'foo' => [
 						'data' => [
 							'id' => '123',
-							'type' => 'user',
+							'type' => 'artists',
 						],
 					],
 				],
-				'whitelistedRelationships' => ['user'],
+				'whitelistedRelationships' => ['artist'],
 				'expectedMessage' => '{"title":"\'foo\' is not a valid relationship.","source":{"pointer":"\/data\/relationships\/foo"}}',
 			]],
 			'with a valid whitelisted relationship' => [[
 				'relationships' => [
-					'user' => [
+					'artist' => [
 						'data' => [
 							'id' => '123',
-							'type' => 'user',
+							'type' => 'artists',
 						],
 					],
 				],
-				'whitelistedRelationships' => ['user'],
+				'whitelistedRelationships' => ['artist'],
 				'expectedMessage' => null,
 			]],
 		];

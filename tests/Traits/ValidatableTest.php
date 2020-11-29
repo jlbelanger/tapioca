@@ -2,7 +2,7 @@
 
 namespace Jlbelanger\LaravelJsonApi\Tests\Traits;
 
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Article;
+use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
 use Jlbelanger\LaravelJsonApi\Tests\TestCase;
 
 class ValidatableTest extends TestCase
@@ -13,11 +13,11 @@ class ValidatableTest extends TestCase
 			[[
 				'rules' => [
 					'attributes.contact_email_address' => '',
-					'relationships.user' => '',
+					'relationships.foo' => '',
 				],
 				'expected' => [
 					'attributes.contact_email_address' => 'contact email address',
-					'relationships.user' => 'user',
+					'relationships.foo' => 'foo',
 				],
 			]],
 		];
@@ -28,8 +28,7 @@ class ValidatableTest extends TestCase
 	 */
 	public function testPrettyAttributeNames($args)
 	{
-		$article = new Article();
-		$output = $this->callPrivate($article, 'prettyAttributeNames', [$args['rules']]);
+		$output = $this->callPrivate(new Album(), 'prettyAttributeNames', [$args['rules']]);
 		$this->assertSame($args['expected'], $output);
 	}
 
@@ -41,7 +40,7 @@ class ValidatableTest extends TestCase
 				'isUpdate' => false,
 				'expected' => [
 					'attributes.title' => ['The title field is required.'],
-					'relationships.user' => ['The user field is required.'],
+					'relationships.artist' => ['The artist field is required.'],
 				],
 			]],
 			'with valid data on create' => [[
@@ -50,9 +49,9 @@ class ValidatableTest extends TestCase
 						'title' => 'foo',
 					],
 					'relationships' => [
-						'user' => [
-							'id' => '1',
-							'type' => 'users',
+						'artist' => [
+							'id' => '123',
+							'type' => 'artists',
 						],
 					],
 				],
@@ -70,9 +69,9 @@ class ValidatableTest extends TestCase
 						'title' => 'foo',
 					],
 					'relationships' => [
-						'user' => [
-							'id' => '1',
-							'type' => 'users',
+						'artist' => [
+							'id' => '123',
+							'type' => 'artists',
 						],
 					],
 				],
@@ -87,8 +86,7 @@ class ValidatableTest extends TestCase
 	 */
 	public function testValidate($args)
 	{
-		$article = new Article();
-		$output = $article->validate($args['data'], $args['isUpdate']);
+		$output = (new Album())->validate($args['data'], $args['isUpdate']);
 		$this->assertSame($args['expected'], $output);
 	}
 }

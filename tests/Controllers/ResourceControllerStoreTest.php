@@ -14,7 +14,7 @@ class ResourceControllerStoreTest extends TestCase
 		return [
 			'with no body' => [[
 				'records' => [],
-				'path' => '/users',
+				'path' => '/albums',
 				'parameters' => [],
 				'expected' => [
 					'errors' => [
@@ -29,7 +29,7 @@ class ResourceControllerStoreTest extends TestCase
 			]],
 			'with data param only' => [[
 				'records' => [],
-				'path' => '/users',
+				'path' => '/albums',
 				'parameters' => [
 					'data' => [],
 				],
@@ -46,7 +46,7 @@ class ResourceControllerStoreTest extends TestCase
 			]],
 			'with data string' => [[
 				'records' => [],
-				'path' => '/users',
+				'path' => '/albums',
 				'parameters' => [
 					'data' => 'foo',
 				],
@@ -63,7 +63,7 @@ class ResourceControllerStoreTest extends TestCase
 			]],
 			'with mismatching type' => [[
 				'records' => [],
-				'path' => '/users',
+				'path' => '/albums',
 				'parameters' => [
 					'data' => [
 						'type' => 'foo',
@@ -72,7 +72,7 @@ class ResourceControllerStoreTest extends TestCase
 				'expected' => [
 					'errors' => [
 						[
-							'title' => "The type in the body ('foo') does not match the type in the URL ('users').",
+							'title' => "The type in the body ('foo') does not match the type in the URL ('albums').",
 							'status' => '400',
 						],
 					],
@@ -81,25 +81,18 @@ class ResourceControllerStoreTest extends TestCase
 			]],
 			'with matching type and no attributes' => [[
 				'records' => [],
-				'path' => '/users',
+				'path' => '/tags',
 				'parameters' => [
 					'data' => [
-						'type' => 'users',
+						'type' => 'tags',
 					],
 				],
 				'expected' => [
 					'errors' => [
 						[
-							'title' => 'The username field is required.',
+							'title' => 'The title field is required.',
 							'source' => [
-								'pointer' => '/data/attributes/username',
-							],
-							'status' => '422',
-						],
-						[
-							'title' => 'The email field is required.',
-							'source' => [
-								'pointer' => '/data/attributes/email',
+								'pointer' => '/data/attributes/title',
 							],
 							'status' => '422',
 						],
@@ -109,23 +102,21 @@ class ResourceControllerStoreTest extends TestCase
 			]],
 			'with valid attributes' => [[
 				'records' => [],
-				'path' => '/users',
+				'path' => '/tags',
 				'parameters' => [
 					'data' => [
-						'type' => 'users',
+						'type' => 'tags',
 						'attributes' => [
-							'username' => 'foo',
-							'email' => 'foo@example.com',
+							'title' => 'foo',
 						],
 					],
 				],
 				'expected' => [
 					'data' => [
 						'id' => '%id%',
-						'type' => 'users',
+						'type' => 'tags',
 						'attributes' => [
-							'username' => 'foo',
-							'email' => 'foo@example.com',
+							'title' => 'foo',
 						],
 					],
 				],
@@ -133,23 +124,23 @@ class ResourceControllerStoreTest extends TestCase
 			]],
 			'with valid belongsTo relationship' => [[
 				'records' => [
-					'users' => [
-						['username' => 'foo'],
+					'artists' => [
+						['title' => 'foo'],
 					],
 				],
-				'path' => '/articles?include=user',
+				'path' => '/albums?include=artist',
 				'parameters' => [
 					'data' => [
 						'id' => '%id%',
-						'type' => 'articles',
+						'type' => 'albums',
 						'attributes' => [
-							'title' => 'foo',
+							'title' => 'bar',
 						],
 						'relationships' => [
-							'user' => [
+							'artist' => [
 								'data' => [
-									'id' => '%users.foo%',
-									'type' => 'users',
+									'id' => '%artists.foo%',
+									'type' => 'artists',
 								],
 							],
 						],
@@ -158,28 +149,27 @@ class ResourceControllerStoreTest extends TestCase
 				'expected' => [
 					'data' => [
 						'id' => '%id%',
-						'type' => 'articles',
+						'type' => 'albums',
 						'attributes' => [
-							'title' => 'foo',
-							'content' => null,
-							'word_count' => null,
+							'title' => 'bar',
+							'release_date' => null,
 						],
 						'relationships' => [
-							'user' => [
+							'artist' => [
 								'data' => [
-									'id' => '%users.foo%',
-									'type' => 'users',
+									'id' => '%artists.foo%',
+									'type' => 'artists',
 								],
 							],
 						],
 					],
 					'included' => [
 						[
-							'id' => '%users.foo%',
-							'type' => 'users',
+							'id' => '%artists.foo%',
+							'type' => 'artists',
 							'attributes' => [
-								'username' => 'foo',
-								'email' => 'foo@example.com',
+								'title' => 'foo',
+								'filename' => null,
 							],
 						],
 					],
@@ -188,15 +178,12 @@ class ResourceControllerStoreTest extends TestCase
 			]],
 			'with valid belongsToMany relationship' => [[
 				'records' => [
-					'users' => [
-						['username' => 'foo'],
-					],
 					'tags' => [
 						['title' => 'a'],
 						['title' => 'b'],
 					],
 				],
-				'path' => '/articles?include=tags,user',
+				'path' => '/articles?include=tags',
 				'parameters' => [
 					'data' => [
 						'id' => '%id%',
@@ -215,12 +202,6 @@ class ResourceControllerStoreTest extends TestCase
 										'id' => '%tags.b%',
 										'type' => 'tags',
 									],
-								],
-							],
-							'user' => [
-								'data' => [
-									'id' => '%users.foo%',
-									'type' => 'users',
 								],
 							],
 						],
@@ -246,12 +227,6 @@ class ResourceControllerStoreTest extends TestCase
 										'id' => '%tags.b%',
 										'type' => 'tags',
 									],
-								],
-							],
-							'user' => [
-								'data' => [
-									'id' => '%users.foo%',
-									'type' => 'users',
 								],
 							],
 						],
@@ -271,14 +246,6 @@ class ResourceControllerStoreTest extends TestCase
 								'title' => 'b',
 							],
 						],
-						[
-							'id' => '%users.foo%',
-							'type' => 'users',
-							'attributes' => [
-								'username' => 'foo',
-								'email' => 'foo@example.com',
-							],
-						],
 					],
 				],
 				'expectedStatus' => 201,
@@ -293,7 +260,7 @@ class ResourceControllerStoreTest extends TestCase
 						['title' => 'b'],
 					],
 				],
-				'path' => '/albums?include=artist,album_songs,songs',
+				'path' => '/albums?include=album_songs,songs',
 				'parameters' => [
 					'data' => [
 						'id' => '%id%',
@@ -367,21 +334,13 @@ class ResourceControllerStoreTest extends TestCase
 							'album_songs' => [
 								'data' => [
 									[
-										// TODO: This might not always be 1.
 										'id' => '1',
 										'type' => 'album-song',
 									],
 									[
-										// TODO: This might not always be 2.
 										'id' => '2',
 										'type' => 'album-song',
 									],
-								],
-							],
-							'artist' => [
-								'data' => [
-									'id' => '%artists.foo%',
-									'type' => 'artists',
 								],
 							],
 							'songs' => [
@@ -400,15 +359,6 @@ class ResourceControllerStoreTest extends TestCase
 					],
 					'included' => [
 						[
-							'id' => '%artists.foo%',
-							'type' => 'artists',
-							'attributes' => [
-								'title' => 'foo',
-								'filename' => null,
-							],
-						],
-						[
-							// TODO: This might not always be 1.
 							'id' => '1',
 							'type' => 'album-song',
 							'attributes' => [
@@ -417,7 +367,6 @@ class ResourceControllerStoreTest extends TestCase
 							],
 						],
 						[
-							// TODO: This might not always be 2.
 							'id' => '2',
 							'type' => 'album-song',
 							'attributes' => [

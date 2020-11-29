@@ -3,7 +3,8 @@
 namespace Jlbelanger\LaravelJsonApi\Tests\Controllers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Article;
+use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
+use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Artist;
 use Jlbelanger\LaravelJsonApi\Tests\TestCase;
 
 class ResourceControllerShowTest extends TestCase
@@ -17,12 +18,11 @@ class ResourceControllerShowTest extends TestCase
 				'parameters' => [],
 				'expected' => [
 					'data' => [
-						'id' => '%articles.Foo%',
-						'type' => 'articles',
+						'id' => '%id%',
+						'type' => 'albums',
 						'attributes' => [
 							'title' => 'Foo',
-							'content' => null,
-							'word_count' => null,
+							'release_date' => null,
 						],
 					],
 				],
@@ -30,13 +30,13 @@ class ResourceControllerShowTest extends TestCase
 			'with fields param' => [[
 				'parameters' => [
 					'fields' => [
-						'articles' => 'title',
+						'albums' => 'title',
 					],
 				],
 				'expected' => [
 					'data' => [
-						'id' => '%articles.Foo%',
-						'type' => 'articles',
+						'id' => '%id%',
+						'type' => 'albums',
 						'attributes' => [
 							'title' => 'Foo',
 						],
@@ -45,33 +45,32 @@ class ResourceControllerShowTest extends TestCase
 			]],
 			'with include param' => [[
 				'parameters' => [
-					'include' => 'user',
+					'include' => 'artist',
 				],
 				'expected' => [
 					'data' => [
-						'id' => '%articles.Foo%',
-						'type' => 'articles',
+						'id' => '%id%',
+						'type' => 'albums',
 						'attributes' => [
 							'title' => 'Foo',
-							'content' => null,
-							'word_count' => null,
+							'release_date' => null,
 						],
 						'relationships' => [
-							'user' => [
+							'artist' => [
 								'data' => [
-									'id' => '1',
-									'type' => 'users',
+									'id' => '%artist_id%',
+									'type' => 'artists',
 								],
 							],
 						],
 					],
 					'included' => [
 						[
-							'id' => '1',
-							'type' => 'users',
+							'id' => '%artist_id%',
+							'type' => 'artists',
 							'attributes' => [
-								'username' => 'foo',
-								'email' => 'foo@example.com',
+								'title' => 'Foo',
+								'filename' => null,
 							],
 						],
 					],
@@ -79,34 +78,35 @@ class ResourceControllerShowTest extends TestCase
 			]],
 			'with include and fields params' => [[
 				'parameters' => [
-					'include' => 'user',
+					'include' => 'artist',
 					'fields' => [
-						'articles' => 'title',
-						'users' => 'username',
+						'albums' => 'title',
+						'artist' => 'title',
 					],
 				],
 				'expected' => [
 					'data' => [
-						'id' => '%articles.Foo%',
-						'type' => 'articles',
+						'id' => '%id%',
+						'type' => 'albums',
 						'attributes' => [
 							'title' => 'Foo',
 						],
 						'relationships' => [
-							'user' => [
+							'artist' => [
 								'data' => [
-									'id' => '1',
-									'type' => 'users',
+									'id' => '%artist_id%',
+									'type' => 'artists',
 								],
 							],
 						],
 					],
 					'included' => [
 						[
-							'id' => '1',
-							'type' => 'users',
+							'id' => '%artist_id%',
+							'type' => 'artists',
 							'attributes' => [
-								'username' => 'foo',
+								'title' => 'Foo',
+								'filename' => null,
 							],
 						],
 					],
@@ -120,16 +120,13 @@ class ResourceControllerShowTest extends TestCase
 	 */
 	public function testShow($args)
 	{
-		$article = Article::factory()->create();
-		$records = [
-			'articles' => [
-				'Foo' => (string) $article->id,
-			],
-		];
-		$expected = $this->replaceIds($args['expected'], $records);
+		$artist = Artist::factory()->create();
+		$album = Album::factory()->create(['artist_id' => $artist->id]);
+		$args['expected'] = $this->replaceToken($args['expected'], '%artist_id%', $artist->id);
+		$args['expected'] = $this->replaceToken($args['expected'], '%id%', $album->id);
 
-		$response = $this->call('GET', '/articles/' . $article->id, $args['parameters']);
-		$response->assertExactJSON($expected);
+		$response = $this->call('GET', '/albums/' . $album->id, $args['parameters']);
+		$response->assertExactJSON($args['expected']);
 		$response->assertStatus(200);
 	}
 }

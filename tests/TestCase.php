@@ -10,7 +10,6 @@ use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\ArticleTag;
 use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Artist;
 use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Song;
 use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Tag;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\User;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use ReflectionClass;
 
@@ -88,20 +87,9 @@ abstract class TestCase extends BaseTestCase
 					],
 				],
 			],
-			'users' => [
-				'class' => User::class,
-				'slug' => 'username',
-			],
 			'articles' => [
 				'class' => Article::class,
 				'slug' => 'title',
-				'replace' => [
-					[
-						'old' => 'username',
-						'new' => 'user_id',
-						'table' => 'users',
-					],
-				],
 			],
 			'article_tags' => [
 				'class' => ArticleTag::class,

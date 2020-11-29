@@ -113,8 +113,6 @@ class ResourceControllerIndexTest extends TestCase
 					],
 				],
 			]],
-			// TODO: with filter param for belongsToMany
-			// TODO: with filter param for hasMany
 			'with include param for belongsTo' => [[
 				'records' => [
 					'albums' => [
@@ -187,26 +185,124 @@ class ResourceControllerIndexTest extends TestCase
 			]],
 			'with include param for belongsToMany' => [[
 				'records' => [
-					'albums' => [
+					'articles' => [
 						['title' => 'a'],
 						['title' => 'b'],
 					],
-					'songs' => [
+					'tags' => [
 						['title' => 'c'],
 						['title' => 'd'],
 						['title' => 'e'],
 						['title' => 'f'],
 					],
+					'article_tags' => [
+						['article' => 'a', 'tag' => 'c'],
+						['article' => 'a', 'tag' => 'd'],
+						['article' => 'b', 'tag' => 'e'],
+						['article' => 'b', 'tag' => 'f'],
+					],
+				],
+				'path' => '/articles',
+				'parameters' => [
+					'include' => 'tags',
+				],
+				'expected' => [
+					'data' => [
+						[
+							'id' => '%articles.a%',
+							'type' => 'articles',
+							'attributes' => [
+								'title' => 'a',
+								'content' => null,
+								'word_count' => null,
+							],
+							'relationships' => [
+								'tags' => [
+									'data' => [
+										[
+											'id' => '%tags.c%',
+											'type' => 'tags',
+										],
+										[
+											'id' => '%tags.d%',
+											'type' => 'tags',
+										],
+									],
+								],
+							],
+						],
+						[
+							'id' => '%articles.b%',
+							'type' => 'articles',
+							'attributes' => [
+								'title' => 'b',
+								'content' => null,
+								'word_count' => null,
+							],
+							'relationships' => [
+								'tags' => [
+									'data' => [
+										[
+											'id' => '%tags.e%',
+											'type' => 'tags',
+										],
+										[
+											'id' => '%tags.f%',
+											'type' => 'tags',
+										],
+									],
+								],
+							],
+						],
+					],
+					'included' => [
+						[
+							'id' => '%tags.c%',
+							'type' => 'tags',
+							'attributes' => [
+								'title' => 'c',
+							],
+						],
+						[
+							'id' => '%tags.d%',
+							'type' => 'tags',
+							'attributes' => [
+								'title' => 'd',
+							],
+						],
+						[
+							'id' => '%tags.e%',
+							'type' => 'tags',
+							'attributes' => [
+								'title' => 'e',
+							],
+						],
+						[
+							'id' => '%tags.f%',
+							'type' => 'tags',
+							'attributes' => [
+								'title' => 'f',
+							],
+						],
+					],
+				],
+			]],
+			'with include param for hasMany' => [[
+				'records' => [
+					'albums' => [
+						['title' => 'a'],
+						['title' => 'b'],
+					],
 					'album_songs' => [
-						['album' => 'a', 'song' => 'c'],
-						['album' => 'a', 'song' => 'd'],
-						['album' => 'b', 'song' => 'e'],
-						['album' => 'b', 'song' => 'f'],
+						['album' => 'a'],
+						['album' => 'a'],
+						['album' => 'b'],
+						['album' => 'b'],
 					],
 				],
 				'path' => '/albums',
 				'parameters' => [
-					'include' => 'songs',
+					'include' => 'album_songs',
 				],
 				'expected' => [
 					'data' => [
@@ -218,15 +314,15 @@ class ResourceControllerIndexTest extends TestCase
 								'release_date' => null,
 							],
 							'relationships' => [
-								'songs' => [
+								'album_songs' => [
 									'data' => [
 										[
-											'id' => '%songs.c%',
-											'type' => 'songs',
+											'id' => '%album_songs.0%',
+											'type' => 'album-song',
 										],
 										[
-											'id' => '%songs.d%',
-											'type' => 'songs',
+											'id' => '%album_songs.1%',
+											'type' => 'album-song',
 										],
 									],
 								],
@@ -240,15 +336,15 @@ class ResourceControllerIndexTest extends TestCase
 								'release_date' => null,
 							],
 							'relationships' => [
-								'songs' => [
+								'album_songs' => [
 									'data' => [
 										[
-											'id' => '%songs.e%',
-											'type' => 'songs',
+											'id' => '%album_songs.2%',
+											'type' => 'album-song',
 										],
 										[
-											'id' => '%songs.f%',
-											'type' => 'songs',
+											'id' => '%album_songs.3%',
+											'type' => 'album-song',
 										],
 									],
 								],
@@ -257,41 +353,40 @@ class ResourceControllerIndexTest extends TestCase
 					],
 					'included' => [
 						[
-							'id' => '%songs.c%',
-							'type' => 'songs',
+							'id' => '%album_songs.0%',
+							'type' => 'album-song',
 							'attributes' => [
-								'title' => 'c',
-								'content' => 'Lorem ipsum dolor.',
+								'track' => '1',
+								'length' => null,
 							],
 						],
 						[
-							'id' => '%songs.d%',
-							'type' => 'songs',
+							'id' => '%album_songs.1%',
+							'type' => 'album-song',
 							'attributes' => [
-								'title' => 'd',
-								'content' => 'Lorem ipsum dolor.',
+								'track' => '1',
+								'length' => null,
 							],
 						],
 						[
-							'id' => '%songs.e%',
-							'type' => 'songs',
+							'id' => '%album_songs.2%',
+							'type' => 'album-song',
 							'attributes' => [
-								'title' => 'e',
-								'content' => 'Lorem ipsum dolor.',
+								'track' => '1',
+								'length' => null,
 							],
 						],
 						[
-							'id' => '%songs.f%',
-							'type' => 'songs',
+							'id' => '%album_songs.3%',
+							'type' => 'album-song',
 							'attributes' => [
-								'title' => 'f',
-								'content' => 'Lorem ipsum dolor.',
+								'track' => '1',
+								'length' => null,
 							],
 						],
 					],
 				],
 			]],
-			// TODO: with include param for hasMany
 			'with include and fields params' => [[
 				'records' => [
 					'albums' => [

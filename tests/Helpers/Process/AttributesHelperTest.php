@@ -17,12 +17,12 @@ class AttributesHelperTest extends TestCase
 				'data' => [
 					'attributes' => [],
 					'relationships' => [
-						'user' => null,
+						'artist' => null,
 					],
 				],
 				'expected' => [
 					'attributes' => [
-						'user_id' => null,
+						'artist_id' => null,
 					],
 					'relationships' => [],
 				],
@@ -31,17 +31,17 @@ class AttributesHelperTest extends TestCase
 				'data' => [
 					'attributes' => [],
 					'relationships' => [
-						'user' => [
+						'artist' => [
 							'data' => [
 								'id' => '123',
-								'type' => 'users',
+								'type' => 'artists',
 							],
 						],
 					],
 				],
 				'expected' => [
 					'attributes' => [
-						'user_id' => '123',
+						'artist_id' => '123',
 					],
 					'relationships' => [],
 				],

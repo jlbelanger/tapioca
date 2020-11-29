@@ -8,10 +8,8 @@ Route::group(['middleware' => ['api']], function () {
 		'albums' => '\Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Controllers\AlbumController',
 		'articles' => '\Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Controllers\ArticleController',
 		'artists' => '\Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Controllers\ArtistController',
-		'comments' => '\Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Controllers\CommentController',
 		'songs' => '\Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Controllers\SongController',
 		'tags' => '\Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Controllers\TagController',
-		'users' => '\Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Controllers\UserController',
 	]);
 });
 

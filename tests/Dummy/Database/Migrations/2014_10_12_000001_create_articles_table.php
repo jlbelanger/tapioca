@@ -17,7 +17,6 @@ class CreateArticlesTable extends Migration
 			$table->id();
 			$table->string('title');
 			$table->string('content')->nullable();
-			$table->unsignedInteger('user_id');
 			$table->integer('word_count')->nullable();
 			$table->timestamps();
 		});

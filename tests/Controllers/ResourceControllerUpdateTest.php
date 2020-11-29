@@ -14,11 +14,11 @@ class ResourceControllerUpdateTest extends TestCase
 		return [
 			'with no body' => [[
 				'records' => [
-					'users' => [
-						['username' => 'foo'],
+					'albums' => [
+						['title' => 'foo'],
 					],
 				],
-				'path' => '/users/%users.foo%',
+				'path' => '/albums/%albums.foo%',
 				'parameters' => [],
 				'expected' => [
 					'errors' => [
@@ -33,11 +33,11 @@ class ResourceControllerUpdateTest extends TestCase
 			]],
 			'with data param only' => [[
 				'records' => [
-					'users' => [
-						['username' => 'foo'],
+					'albums' => [
+						['title' => 'foo'],
 					],
 				],
-				'path' => '/users/%users.foo%',
+				'path' => '/albums/%albums.foo%',
 				'parameters' => [
 					'data' => [],
 				],
@@ -54,11 +54,11 @@ class ResourceControllerUpdateTest extends TestCase
 			]],
 			'with data string' => [[
 				'records' => [
-					'users' => [
-						['username' => 'foo'],
+					'albums' => [
+						['title' => 'foo'],
 					],
 				],
-				'path' => '/users/%users.foo%',
+				'path' => '/albums/%albums.foo%',
 				'parameters' => [
 					'data' => 'foo',
 				],
@@ -75,11 +75,11 @@ class ResourceControllerUpdateTest extends TestCase
 			]],
 			'with mismatching type' => [[
 				'records' => [
-					'users' => [
-						['username' => 'foo'],
+					'albums' => [
+						['title' => 'foo'],
 					],
 				],
-				'path' => '/users/%users.foo%',
+				'path' => '/albums/%albums.foo%',
 				'parameters' => [
 					'data' => [
 						'type' => 'foo',
@@ -88,7 +88,7 @@ class ResourceControllerUpdateTest extends TestCase
 				'expected' => [
 					'errors' => [
 						[
-							'title' => "The type in the body ('foo') does not match the type in the URL ('users').",
+							'title' => "The type in the body ('foo') does not match the type in the URL ('albums').",
 							'status' => '400',
 						],
 					],
@@ -97,14 +97,14 @@ class ResourceControllerUpdateTest extends TestCase
 			]],
 			'with matching type and no ID' => [[
 				'records' => [
-					'users' => [
-						['username' => 'foo'],
+					'albums' => [
+						['title' => 'foo'],
 					],
 				],
-				'path' => '/users/%users.foo%',
+				'path' => '/albums/%albums.foo%',
 				'parameters' => [
 					'data' => [
-						'type' => 'users',
+						'type' => 'albums',
 					],
 				],
 				'expected' => [
@@ -120,21 +120,21 @@ class ResourceControllerUpdateTest extends TestCase
 			]],
 			'with matching type and mismatching ID' => [[
 				'records' => [
-					'users' => [
-						['username' => 'foo'],
+					'albums' => [
+						['title' => 'foo'],
 					],
 				],
-				'path' => '/users/%users.foo%',
+				'path' => '/albums/%albums.foo%',
 				'parameters' => [
 					'data' => [
 						'id' => 'foo',
-						'type' => 'users',
+						'type' => 'albums',
 					],
 				],
 				'expected' => [
 					'errors' => [
 						[
-							'title' => "The ID in the body ('foo') does not match the ID in the URL ('%users.foo%').",
+							'title' => "The ID in the body ('foo') does not match the ID in the URL ('%albums.foo%').",
 							'status' => '400',
 						],
 					],
@@ -143,24 +143,24 @@ class ResourceControllerUpdateTest extends TestCase
 			]],
 			'with no attributes' => [[
 				'records' => [
-					'users' => [
-						['username' => 'foo'],
+					'albums' => [
+						['title' => 'foo'],
 					],
 				],
-				'path' => '/users/%users.foo%',
+				'path' => '/albums/%albums.foo%',
 				'parameters' => [
 					'data' => [
-						'id' => '%users.foo%',
-						'type' => 'users',
+						'id' => '%albums.foo%',
+						'type' => 'albums',
 					],
 				],
 				'expected' => [
 					'data' => [
-						'id' => '%users.foo%',
-						'type' => 'users',
+						'id' => '%albums.foo%',
+						'type' => 'albums',
 						'attributes' => [
-							'username' => 'foo',
-							'email' => 'foo@example.com',
+							'title' => 'foo',
+							'release_date' => null,
 						],
 					],
 				],
@@ -168,27 +168,27 @@ class ResourceControllerUpdateTest extends TestCase
 			]],
 			'with valid attributes' => [[
 				'records' => [
-					'users' => [
-						['username' => 'foo'],
+					'albums' => [
+						['title' => 'foo'],
 					],
 				],
-				'path' => '/users/%users.foo%',
+				'path' => '/albums/%albums.foo%',
 				'parameters' => [
 					'data' => [
-						'id' => '%users.foo%',
-						'type' => 'users',
+						'id' => '%albums.foo%',
+						'type' => 'albums',
 						'attributes' => [
-							'username' => 'bar',
+							'title' => 'bar',
 						],
 					],
 				],
 				'expected' => [
 					'data' => [
-						'id' => '%users.foo%',
-						'type' => 'users',
+						'id' => '%albums.foo%',
+						'type' => 'albums',
 						'attributes' => [
-							'username' => 'bar',
-							'email' => 'foo@example.com',
+							'title' => 'bar',
+							'release_date' => null,
 						],
 					],
 				],
@@ -196,23 +196,23 @@ class ResourceControllerUpdateTest extends TestCase
 			]],
 			'when changing a belongsTo relationship' => [[
 				'records' => [
-					'articles' => [
+					'albums' => [
 						['title' => 'foo'],
 					],
-					'users' => [
-						['username' => 'bar'],
+					'artists' => [
+						['title' => 'bar'],
 					],
 				],
-				'path' => '/articles/%articles.foo%?include=user',
+				'path' => '/albums/%albums.foo%?include=artist',
 				'parameters' => [
 					'data' => [
-						'id' => '%articles.foo%',
-						'type' => 'articles',
+						'id' => '%albums.foo%',
+						'type' => 'albums',
 						'relationships' => [
-							'user' => [
+							'artist' => [
 								'data' => [
-									'id' => '%users.bar%',
-									'type' => 'users',
+									'id' => '%artists.bar%',
+									'type' => 'artists',
 								],
 							],
 						],
@@ -220,29 +220,28 @@ class ResourceControllerUpdateTest extends TestCase
 				],
 				'expected' => [
 					'data' => [
-						'id' => '%articles.foo%',
-						'type' => 'articles',
+						'id' => '%albums.foo%',
+						'type' => 'albums',
 						'attributes' => [
 							'title' => 'foo',
-							'content' => null,
-							'word_count' => null,
+							'release_date' => null,
 						],
 						'relationships' => [
-							'user' => [
+							'artist' => [
 								'data' => [
-									'id' => '%users.bar%',
-									'type' => 'users',
+									'id' => '%artists.bar%',
+									'type' => 'artists',
 								],
 							],
 						],
 					],
 					'included' => [
 						[
-							'id' => '%users.bar%',
-							'type' => 'users',
+							'id' => '%artists.bar%',
+							'type' => 'artists',
 							'attributes' => [
-								'username' => 'bar',
-								'email' => 'foo@example.com',
+								'title' => 'bar',
+								'filename' => null,
 							],
 						],
 					],
@@ -513,12 +512,10 @@ class ResourceControllerUpdateTest extends TestCase
 							'album_songs' => [
 								'data' => [
 									[
-										// TODO: This might not always be 1.
 										'id' => '1',
 										'type' => 'album-song',
 									],
 									[
-										// TODO: This might not always be 2.
 										'id' => '2',
 										'type' => 'album-song',
 									],
@@ -540,7 +537,6 @@ class ResourceControllerUpdateTest extends TestCase
 					],
 					'included' => [
 						[
-							// TODO: This might not always be 1.
 							'id' => '1',
 							'type' => 'album-song',
 							'attributes' => [
@@ -549,7 +545,6 @@ class ResourceControllerUpdateTest extends TestCase
 							],
 						],
 						[
-							// TODO: This might not always be 2.
 							'id' => '2',
 							'type' => 'album-song',
 							'attributes' => [
@@ -577,8 +572,88 @@ class ResourceControllerUpdateTest extends TestCase
 				],
 				'expectedStatus' => 200,
 			]],
+			'when removing a hasMany relationship' => [[
+				'records' => [
+					'albums' => [
+						['title' => 'foo'],
+					],
+					'songs' => [
+						['title' => 'a'],
+						['title' => 'b'],
+						['title' => 'c'],
+					],
+					'album_songs' => [
+						['album' => 'foo', 'song' => 'a', 'track' => 1],
+						['album' => 'foo', 'song' => 'b', 'track' => 2],
+						['album' => 'foo', 'song' => 'c', 'track' => 3],
+					],
+				],
+				'path' => '/albums/%albums.foo%?include=album_songs',
+				'parameters' => [
+					'data' => [
+						'id' => '%albums.foo%',
+						'type' => 'albums',
+						'relationships' => [
+							'album_songs' => [
+								'data' => [
+									[
+										'id' => '%album_songs.0%',
+										'type' => 'album-song',
+									],
+									[
+										'id' => '%album_songs.2%',
+										'type' => 'album-song',
+									],
+								],
+							],
+						],
+					],
+				],
+				'expected' => [
+					'data' => [
+						'id' => '%albums.foo%',
+						'type' => 'albums',
+						'attributes' => [
+							'title' => 'foo',
+							'release_date' => null,
+						],
+						'relationships' => [
+							'album_songs' => [
+								'data' => [
+									[
+										'id' => '%album_songs.0%',
+										'type' => 'album-song',
+									],
+									[
+										'id' => '%album_songs.2%',
+										'type' => 'album-song',
+									],
+								],
+							],
+						],
+					],
+					'included' => [
+						[
+							'id' => '%album_songs.0%',
+							'type' => 'album-song',
+							'attributes' => [
+								'track' => '1',
+								'length' => null,
+							],
+						],
+						[
+							'id' => '%album_songs.2%',
+							'type' => 'album-song',
+							'attributes' => [
+								'track' => '3',
+								'length' => null,
+							],
+						],
+					],
+				],
+				'expectedStatus' => 200,
+			]],
 			// TODO: when changing a hasMany relationship
-			// TODO: when removing a hasMany relationship
 		];
 	}
 

@@ -4,7 +4,6 @@ namespace Jlbelanger\LaravelJsonApi\Tests\Dummy\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Article;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\User;
 
 class ArticleFactory extends Factory
 {
@@ -25,7 +24,6 @@ class ArticleFactory extends Factory
 		return [
 			'title' => 'Foo',
 			'content' => null,
-			'user_id' => User::factory(),
 			'word_count' => null,
 		];
 	}

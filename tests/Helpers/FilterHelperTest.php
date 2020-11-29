@@ -5,7 +5,7 @@ namespace Jlbelanger\LaravelJsonApi\Tests\Helpers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException;
 use Jlbelanger\LaravelJsonApi\Helpers\FilterHelper;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Article;
+use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
 use Jlbelanger\LaravelJsonApi\Tests\TestCase;
 
 class FilterHelperTest extends TestCase
@@ -172,7 +172,7 @@ class FilterHelperTest extends TestCase
 			]],
 			'when filtering with eq' => [[
 				'records' => [
-					'articles' => [
+					'albums' => [
 						['title' => 'a'],
 						['title' => 'b'],
 					],
@@ -186,52 +186,52 @@ class FilterHelperTest extends TestCase
 			]],
 			'when filtering with ge' => [[
 				'records' => [
-					'articles' => [
-						['title' => 'a', 'word_count' => '9'],
-						['title' => 'b', 'word_count' => '10'],
-						['title' => 'c', 'word_count' => '11'],
+					'albums' => [
+						['title' => 'a', 'release_date' => '1969'],
+						['title' => 'b', 'release_date' => '1970'],
+						['title' => 'c', 'release_date' => '1971'],
 					],
 				],
 				'filter' => [
-					'word_count' => [
-						'ge' => '10',
+					'release_date' => [
+						'ge' => '1970',
 					],
 				],
 				'expected' => ['b', 'c'],
 			]],
 			'when filtering with gt' => [[
 				'records' => [
-					'articles' => [
-						['title' => 'a', 'word_count' => '9'],
-						['title' => 'b', 'word_count' => '10'],
-						['title' => 'c', 'word_count' => '11'],
+					'albums' => [
+						['title' => 'a', 'release_date' => '1969'],
+						['title' => 'b', 'release_date' => '1970'],
+						['title' => 'c', 'release_date' => '1971'],
 					],
 				],
 				'filter' => [
-					'word_count' => [
-						'gt' => '10',
+					'release_date' => [
+						'gt' => '1970',
 					],
 				],
 				'expected' => ['c'],
 			]],
 			'when filtering with le' => [[
 				'records' => [
-					'articles' => [
-						['title' => 'a', 'word_count' => '9'],
-						['title' => 'b', 'word_count' => '10'],
-						['title' => 'c', 'word_count' => '11'],
+					'albums' => [
+						['title' => 'a', 'release_date' => '1969'],
+						['title' => 'b', 'release_date' => '1970'],
+						['title' => 'c', 'release_date' => '1971'],
 					],
 				],
 				'filter' => [
-					'word_count' => [
-						'le' => '10',
+					'release_date' => [
+						'le' => '1970',
 					],
 				],
 				'expected' => ['a', 'b'],
 			]],
 			'when filtering with like and leading wildcard' => [[
 				'records' => [
-					'articles' => [
+					'albums' => [
 						['title' => 'apple'],
 						['title' => 'banana'],
 						['title' => 'coconut'],
@@ -246,7 +246,7 @@ class FilterHelperTest extends TestCase
 			]],
 			'when filtering with like and trailing wildcard' => [[
 				'records' => [
-					'articles' => [
+					'albums' => [
 						['title' => 'apple'],
 						['title' => 'banana'],
 						['title' => 'coconut'],
@@ -261,7 +261,7 @@ class FilterHelperTest extends TestCase
 			]],
 			'when filtering with like and leading and trailing wildcards' => [[
 				'records' => [
-					'articles' => [
+					'albums' => [
 						['title' => 'apple'],
 						['title' => 'banana'],
 						['title' => 'coconut'],
@@ -276,22 +276,22 @@ class FilterHelperTest extends TestCase
 			]],
 			'when filtering with lt' => [[
 				'records' => [
-					'articles' => [
-						['title' => 'a', 'word_count' => '9'],
-						['title' => 'b', 'word_count' => '10'],
-						['title' => 'c', 'word_count' => '11'],
+					'albums' => [
+						['title' => 'a', 'release_date' => '1969'],
+						['title' => 'b', 'release_date' => '1970'],
+						['title' => 'c', 'release_date' => '1971'],
 					],
 				],
 				'filter' => [
-					'word_count' => [
-						'lt' => '10',
+					'release_date' => [
+						'lt' => '1970',
 					],
 				],
 				'expected' => ['a'],
 			]],
 			'when filtering with ne' => [[
 				'records' => [
-					'articles' => [
+					'albums' => [
 						['title' => 'a'],
 						['title' => 'b'],
 					],
@@ -305,7 +305,7 @@ class FilterHelperTest extends TestCase
 			]],
 			'when filtering with in' => [[
 				'records' => [
-					'articles' => [
+					'albums' => [
 						['title' => 'a'],
 						['title' => 'b'],
 						['title' => 'c'],
@@ -320,13 +320,13 @@ class FilterHelperTest extends TestCase
 			]],
 			'when filtering with null' => [[
 				'records' => [
-					'articles' => [
-						['title' => 'a', 'content' => null],
-						['title' => 'b', 'content' => 'b'],
+					'albums' => [
+						['title' => 'a', 'release_date' => null],
+						['title' => 'b', 'release_date' => '2020'],
 					],
 				],
 				'filter' => [
-					'content' => [
+					'release_date' => [
 						'null' => '1',
 					],
 				],
@@ -334,13 +334,13 @@ class FilterHelperTest extends TestCase
 			]],
 			'when filtering with notnull' => [[
 				'records' => [
-					'articles' => [
-						['title' => 'a', 'content' => null],
-						['title' => 'b', 'content' => 'b'],
+					'albums' => [
+						['title' => 'a', 'release_date' => null],
+						['title' => 'b', 'release_date' => '2020'],
 					],
 				],
 				'filter' => [
-					'content' => [
+					'release_date' => [
 						'notnull' => '1',
 					],
 				],
@@ -348,19 +348,19 @@ class FilterHelperTest extends TestCase
 			]],
 			'when filtering a relationship with eq' => [[
 				'records' => [
-					'articles' => [
-						['title' => 'a', 'username' => 'd'],
-						['title' => 'b', 'username' => 'e'],
-						['title' => 'c', 'username' => 'f'],
+					'albums' => [
+						['title' => 'a', 'artist' => 'd'],
+						['title' => 'b', 'artist' => 'e'],
+						['title' => 'c', 'artist' => 'f'],
 					],
-					'users' => [
-						['username' => 'd'],
-						['username' => 'e'],
-						['username' => 'f'],
+					'artists' => [
+						['title' => 'd'],
+						['title' => 'e'],
+						['title' => 'f'],
 					],
 				],
 				'filter' => [
-					'user.username' => [
+					'artist.title' => [
 						'eq' => 'e',
 					],
 				],
@@ -375,7 +375,7 @@ class FilterHelperTest extends TestCase
 	public function testPerform($args)
 	{
 		$this->createRecords($args['records']);
-		$output = FilterHelper::perform((new Article())->newModelQuery(), $args['filter']);
+		$output = FilterHelper::perform((new Album())->newModelQuery(), $args['filter']);
 		$titles = $output->get()->pluck('title')->toArray();
 		$this->assertSame($args['expected'], $titles);
 	}

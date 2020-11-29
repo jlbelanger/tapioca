@@ -16,28 +16,28 @@ class ValidationExceptionTest extends TestCase
 			]],
 			'with errors' => [[
 				'data' => [
-					'attributes.email' => ['Email is not valid.', 'Email is too short.'],
-					'relationships.user' => ['User is required.'],
+					'attributes.foo' => ['Foo is not valid.', 'Foo is too short.'],
+					'relationships.bar' => ['Bar is required.'],
 				],
 				'expected' => [
 					[
-						'title' => 'Email is not valid.',
+						'title' => 'Foo is not valid.',
 						'source' => [
-							'pointer' => '/data/attributes/email',
+							'pointer' => '/data/attributes/foo',
 						],
 						'status' => '422',
 					],
 					[
-						'title' => 'Email is too short.',
+						'title' => 'Foo is too short.',
 						'source' => [
-							'pointer' => '/data/attributes/email',
+							'pointer' => '/data/attributes/foo',
 						],
 						'status' => '422',
 					],
 					[
-						'title' => 'User is required.',
+						'title' => 'Bar is required.',
 						'source' => [
-							'pointer' => '/data/relationships/user',
+							'pointer' => '/data/relationships/bar',
 						],
 						'status' => '422',
 					],
@@ -64,28 +64,28 @@ class ValidationExceptionTest extends TestCase
 			]],
 			'with errors' => [[
 				'data' => [
-					'attributes.email' => ['Email is not valid.', 'Email is too short.'],
-					'relationships.user' => ['User is required.'],
+					'attributes.foo' => ['Foo is not valid.', 'Foo is too short.'],
+					'relationships.bar' => ['Bar is required.'],
 				],
 				'expected' => [
 					[
-						'title' => 'Email is not valid.',
+						'title' => 'Foo is not valid.',
 						'source' => [
-							'pointer' => '/data/attributes/email',
+							'pointer' => '/data/attributes/foo',
 						],
 						'status' => '422',
 					],
 					[
-						'title' => 'Email is too short.',
+						'title' => 'Foo is too short.',
 						'source' => [
-							'pointer' => '/data/attributes/email',
+							'pointer' => '/data/attributes/foo',
 						],
 						'status' => '422',
 					],
 					[
-						'title' => 'User is required.',
+						'title' => 'Bar is required.',
 						'source' => [
-							'pointer' => '/data/relationships/user',
+							'pointer' => '/data/relationships/bar',
 						],
 						'status' => '422',
 					],
