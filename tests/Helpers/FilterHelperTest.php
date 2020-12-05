@@ -375,7 +375,7 @@ class FilterHelperTest extends TestCase
 	public function testPerform($args)
 	{
 		$this->createRecords($args['records']);
-		$output = FilterHelper::perform((new Album())->newModelQuery(), $args['filter']);
+		$output = FilterHelper::perform((new Album())->newQuery(), $args['filter']);
 		$titles = $output->get()->pluck('title')->toArray();
 		$this->assertSame($args['expected'], $titles);
 	}

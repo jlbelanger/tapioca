@@ -100,7 +100,7 @@ class PageHelperTest extends TestCase
 	public function testPerform($args)
 	{
 		$this->createRecords($args['records']);
-		list($output, $meta) = PageHelper::perform((new Article())->newModelQuery(), $args['page']);
+		list($output, $meta) = PageHelper::perform((new Article())->newQuery(), $args['page']);
 		$titles = $output->get()->pluck('title')->toArray();
 		$this->assertSame($args['expectedRecords'], $titles);
 		$this->assertSame($args['expectedMeta'], $meta);

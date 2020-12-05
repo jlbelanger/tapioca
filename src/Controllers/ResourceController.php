@@ -35,7 +35,7 @@ class ResourceController extends Controller
 	 */
 	public function index(Request $request) : JsonResponse
 	{
-		$records = $this->model()->newModelQuery();
+		$records = $this->model()->newQuery();
 		$req = new JsonApiRequest('index', $request, $this->model(), $records);
 		return response()->json($req->output());
 	}

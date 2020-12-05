@@ -80,7 +80,7 @@ class SortHelperTest extends TestCase
 	public function testPerform($args)
 	{
 		$this->createRecords($args['records']);
-		$output = SortHelper::perform((new Album())->newModelQuery(), $args['sort'], new Album());
+		$output = SortHelper::perform((new Album())->newQuery(), $args['sort'], new Album());
 		$titles = $output->get()->pluck('title')->toArray();
 		$this->assertSame($args['expected'], $titles);
 	}
