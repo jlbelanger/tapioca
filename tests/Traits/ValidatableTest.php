@@ -2,6 +2,7 @@
 
 namespace Jlbelanger\LaravelJsonApi\Tests\Traits;
 
+use Illuminate\Http\Request;
 use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
 use Jlbelanger\LaravelJsonApi\Tests\TestCase;
 
@@ -86,7 +87,7 @@ class ValidatableTest extends TestCase
 	 */
 	public function testValidate($args)
 	{
-		$output = (new Album())->validate($args['data'], $args['isUpdate']);
+		$output = (new Album())->validate($args['data'], new Request(), $args['isUpdate']);
 		$this->assertSame($args['expected'], $output);
 	}
 }

@@ -2,14 +2,16 @@
 
 namespace Jlbelanger\LaravelJsonApi\Traits;
 
+use Illuminate\Http\Request;
 use Validator;
 
 trait Validatable
 {
 	/**
+	 * @param  Request $request
 	 * @return array eg. ['attributes.email' => 'required|email', 'relationships.user' => 'required']
 	 */
-	protected function rules() : array
+	protected function rules(Request $request) : array
 	{
 		return [];
 	}
@@ -30,12 +32,13 @@ trait Validatable
 
 	/**
 	 * @param  array   $data
+	 * @param  Request $request
 	 * @param  boolean $isUpdate
 	 * @return array
 	 */
-	public function validate(array $data, bool $isUpdate = false) : array
+	public function validate(array $data, Request $request, bool $isUpdate = false) : array
 	{
-		$rules = $this->rules();
+		$rules = $this->rules($request);
 		foreach ($rules as $key => $value) {
 			if ($isUpdate && strpos($value, 'sometimes|') === false) {
 				// Don't validate all fields on update, because we may only be sending changed fields.
