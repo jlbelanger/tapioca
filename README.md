@@ -62,20 +62,31 @@ class User extends Model
 }
 ```
 
-Finally, add the following to the `register` function in `app/Exceptions/Handler.php`:
+Add the following to the `dontReport` property in `app/Exceptions/Handler.php`:
 
 ``` php
-$this->renderable(function (Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $e) {
-	return response()->json(['errors' => [['title' => 'URL does not exist.', 'status' => '404', 'detail' => 'Method not allowed.']]], 404);
-});
+protected $dontReport = [
+	Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException::class,
+];
+```
 
-$this->renderable(function (Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException $e) {
-	return response()->json(['errors' => $e->getErrors()], $e->getCode());
-});
+Add the following to the `register` function in the same file (`app/Exceptions/Handler.php`):
 
-$this->renderable(function (Symfony\Component\HttpKernel\Exception\HttpException $e) {
-	return response()->json(['errors' => [['title' => $e->getMessage(), 'status' => $e->getStatusCode()]]], $e->getStatusCode());
-});
+``` php
+public function register()
+{
+	$this->renderable(function (Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $e) {
+		return response()->json(['errors' => [['title' => 'URL does not exist.', 'status' => '404', 'detail' => 'Method not allowed.']]], 404);
+	});
+
+	$this->renderable(function (Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException $e) {
+		return response()->json(['errors' => $e->getErrors()], $e->getCode());
+	});
+
+	$this->renderable(function (Symfony\Component\HttpKernel\Exception\HttpException $e) {
+		return response()->json(['errors' => [['title' => $e->getMessage(), 'status' => $e->getStatusCode()]]], $e->getStatusCode());
+	});
+}
 ```
 
 ## Usage
