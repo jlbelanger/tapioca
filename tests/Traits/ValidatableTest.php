@@ -79,6 +79,7 @@ class ValidatableTest extends TestCase
 				'isUpdate' => true,
 				'expected' => [],
 			]],
+			// TODO: when rules are an array vs string
 		];
 	}
 

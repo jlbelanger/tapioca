@@ -40,7 +40,7 @@ trait Validatable
 	{
 		$rules = $this->rules($request);
 		foreach ($rules as $key => $value) {
-			if ($isUpdate && strpos($value, 'sometimes|') === false) {
+			if ($isUpdate && is_string($value) && strpos($value, 'sometimes|') === false) {
 				// Don't validate all fields on update, because we may only be sending changed fields.
 				$rules[$key] = 'sometimes|' . $value;
 			}
