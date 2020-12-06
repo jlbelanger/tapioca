@@ -57,12 +57,14 @@ class JsonApiExceptionTest extends TestCase
 				],
 				'code' => 404,
 				'expected' => [
-					'title' => 'This is the title.',
-					'source' => [
-						'pointer' => 'This is the pointer.',
+					[
+						'title' => 'This is the title.',
+						'source' => [
+							'pointer' => 'This is the pointer.',
+						],
+						'status' => '404',
+						'detail' => 'This is the detail.',
 					],
-					'status' => '404',
-					'detail' => 'This is the detail.',
 				],
 			]],
 			'with a multiple errors' => [[

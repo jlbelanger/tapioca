@@ -25,7 +25,7 @@ class JsonApiException extends Exception
 		if (is_array($json)) {
 			return array_map([$this, 'formatError'], $json);
 		}
-		return $this->formatError($json);
+		return [$this->formatError($json)];
 	}
 
 	/**
