@@ -24,11 +24,14 @@ class AttributesHelper
 				$record->update($data['attributes']);
 			}
 		} else {
+			$attributes = [];
 			if (!empty($data['attributes'])) {
-				$record = $record->create($data['attributes']);
-			} else {
-				$record->create();
+				$attributes = $data['attributes'];
 			}
+			$defaultAttributes = $record->defaultAttributes();
+			$attributes = array_merge($attributes, $defaultAttributes);
+
+			$record = $record->create($attributes);
 		}
 
 		return [$record, $data];

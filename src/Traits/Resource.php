@@ -136,6 +136,14 @@ trait Resource
 	/**
 	 * @return array
 	 */
+	public function defaultAttributes() : array
+	{
+		return [];
+	}
+
+	/**
+	 * @return array
+	 */
 	public function singularRelationships() : array
 	{
 		return [];
