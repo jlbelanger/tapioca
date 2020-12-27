@@ -24,8 +24,21 @@ class IncludedHelperTest extends TestCase
 				'expected' => [],
 			]],
 			'with valid included' => [[
-				'included' => ['foo' => 'bar'],
-				'expected' => ['foo' => 'bar'],
+				'included' => [
+					[
+						'id' => '1',
+						'type' => 'albums',
+					],
+				],
+				'expected' => [
+					[
+						'id' => '1',
+						'type' => 'albums',
+						'attributes' => [],
+						'relationships' => [],
+						'meta' => [],
+					],
+				],
 			]],
 		];
 	}
@@ -44,12 +57,46 @@ class IncludedHelperTest extends TestCase
 		return [
 			'with a string' => [[
 				'included' => 'foo',
-				'expectedMessage' => '{"title":"\'included\' must be an array.","detail":"eg. {\"data\": {\"included\": []}}","source":{"pointer":"\/data\/included"}}',
+				'expectedMessage' => '{"title":"\'included\' must be an array.","detail":"eg. {\"included\": []}","source":{"pointer":"\/included"}}',
 			]],
-			'with an array' => [[
+			'with an empty array' => [[
 				'included' => [],
 				'expectedMessage' => null,
 			]],
+			'with an associative array' => [[
+				'included' => ['foo' => 'bar'],
+				'expectedMessage' => '{"title":"\'included\' must be an array.","detail":"eg. {\"included\": []}","source":{"pointer":"\/included"}}',
+			]],
+			'with missing id and type' => [[
+				'included' => [[]],
+				'expectedMessage' => '{"title":"Included records must contain \'id\' key.","detail":"eg. {\"included\": [{\"id\": \"1\", \"type\": \"foo\"}]}","source":{"pointer":"\/included\/0"}}',
+			]],
+			'with missing id' => [[
+				'included' => [
+					[
+						'type' => 'albums',
+					],
+				],
+				'expectedMessage' => '{"title":"Included records must contain \'id\' key.","detail":"eg. {\"included\": [{\"id\": \"1\", \"type\": \"foo\"}]}","source":{"pointer":"\/included\/0"}}',
+			]],
+			'with missing type' => [[
+				'included' => [
+					[
+						'id' => '1',
+					],
+				],
+				'expectedMessage' => '{"title":"Included records must contain \'type\' key.","detail":"eg. {\"included\": [{\"id\": \"1\", \"type\": \"foo\"}]}","source":{"pointer":"\/included\/0"}}',
+			]],
+			'with invalid type' => [[
+				'included' => [
+					[
+						'id' => '1',
+						'type' => 'foo',
+					],
+				],
+				'expectedMessage' => '{"title":"Type \'foo\' is invalid.","source":{"pointer":"\/included\/0\/type"}}',
+			]],
+			// TODO: with invalid attributes/relationships/meta/etc
 		];
 	}
 

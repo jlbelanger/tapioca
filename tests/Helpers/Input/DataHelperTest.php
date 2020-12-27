@@ -18,7 +18,7 @@ class DataHelperTest extends TestCase
 		return [
 			'with a string' => [[
 				'data' => 'foo',
-				'expectedMessage' => '{"title":"\'data\' must be an array."}',
+				'expectedMessage' => '{"title":"\'data\' must be an object.","detail":"eg. {\"data\": {}}"}',
 			]],
 			'with an array with an invalid key' => [[
 				'data' => [

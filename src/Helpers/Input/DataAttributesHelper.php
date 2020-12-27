@@ -9,16 +9,17 @@ class DataAttributesHelper
 	/**
 	 * @param  array|mixed $data
 	 * @param  array       $whitelistedAttributes
+	 * @param  string      $prefix
 	 * @return array
 	 */
-	public static function normalize($data, array $whitelistedAttributes) : array
+	public static function normalize($data, array $whitelistedAttributes, string $prefix = 'data') : array
 	{
 		if (empty($data['attributes'])) {
 			$data['attributes'] = [];
 			return $data;
 		}
 
-		self::validate($data['attributes'], $whitelistedAttributes);
+		self::validate($data['attributes'], $whitelistedAttributes, $prefix);
 
 		return $data;
 	}
@@ -26,16 +27,21 @@ class DataAttributesHelper
 	/**
 	 * @param  array|mixed $attributes
 	 * @param  array       $whitelistedAttributes
+	 * @param  string      $prefix
 	 * @return void
 	 */
-	protected static function validate($attributes, array $whitelistedAttributes) : void
+	protected static function validate($attributes, array $whitelistedAttributes, string $prefix = 'data') : void
 	{
+		$isIncluded = strpos($prefix, 'included') !== false;
+
 		if (!is_array($attributes)) {
 			throw JsonApiException::generate([
 				'title' => "'attributes' must be an object.",
-				'detail' => 'eg. {"data": {"attributes": {}}}',
+				'detail' => $isIncluded
+					? 'eg. {"included": [{"attributes": {}}]}'
+					: 'eg. {"data": {"attributes": {}}}',
 				'source' => [
-					'pointer' => '/data/attributes',
+					'pointer' => '/' . $prefix . '/attributes',
 				],
 			], 400);
 		}
@@ -45,7 +51,7 @@ class DataAttributesHelper
 				throw JsonApiException::generate([
 					'title' => "'$key' is not a valid attribute.",
 					'source' => [
-						'pointer' => "/data/attributes/$key",
+						'pointer' => '/' . $prefix . '/attributes/' . $key,
 					],
 				], 400);
 			}
