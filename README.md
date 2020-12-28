@@ -2,7 +2,7 @@
 
 This packages allows you to use [JSON:API](https://jsonapi.org/) with [Laravel](https://laravel.com/).
 
-There are other Laravel packages that already do the same thing, and they probably do it much better. I felt like the other packages had too much boilerplate though, and I wanted to re-use my Laravel models as resources. I also wanted to add some features that aren't technically JSON:API, like updating a regular record and related pivot table records at the same time. And programming's kinda my thing, so I thought writing this could be fun. (Spoiler alert: it wasn't. Okay, maybe just a little.)
+There are other Laravel packages that already do the same thing, and they probably do it much better. I felt like the other packages had too much boilerplate though, and I wanted to re-use my Laravel models as resources. I also wanted to add some features that aren't technically JSON:API, like creating/updating a regular record and related/included records at the same time. And programming's kinda my thing, so I thought writing this could be fun. (Spoiler alert: it wasn't. Okay, maybe just a little.)
 
 ## Install
 
@@ -103,11 +103,13 @@ GET /articles/1?include=user&fields[articles]=title&fields[users]=username
 
 ```
 GET /articles?filter[slug][eq]=foo
-GET /articles?filter[slug][eq]=null
 GET /articles?filter[slug][ne]=foo
-GET /articles?filter[slug][ne]=null
 GET /articles?filter[slug][like]=foo%
+GET /articles?filter[slug][like]=%foo
+GET /articles?filter[slug][like]=%foo%
 GET /articles?filter[slug][in]=foo,bar
+GET /articles?filter[slug][null]=1
+GET /articles?filter[slug][notnull]=1
 GET /articles?filter[word_count][gt]=50
 GET /articles?filter[word_count][lt]=50
 GET /articles?filter[word_count][ge]=50
@@ -115,12 +117,11 @@ GET /articles?filter[word_count][le]=50
 GET /articles?filter[user.id][eq]=1
 ```
 
-Note: `null` is only supported for `eq` and `ne`
-
 ### Include
 
 ```
 GET /articles?include=user
+GET /articles?include=tags,user
 GET /articles/1?include=user
 ```
 
