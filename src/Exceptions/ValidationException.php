@@ -21,7 +21,7 @@ class ValidationException
 	 * @param  string $prefix
 	 * @return array
 	 */
-	public static function formatErrors(array $data, string $prefix) : array
+	public static function formatErrors(array $data, string $prefix = 'data') : array
 	{
 		$output = [];
 		foreach ($data as $key => $errors) {
