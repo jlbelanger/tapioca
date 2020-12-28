@@ -19,4 +19,29 @@ class UtilitiesTest extends TestCase
 		$this->assertSame(true, Utilities::isTempId('temp-1'));
 		$this->assertSame(false, Utilities::isTempId('1'));
 	}
+
+	public function prettyAttributeNamesProvider()
+	{
+		return [
+			[[
+				'rules' => [
+					'attributes.contact_email_address' => '',
+					'relationships.foo' => '',
+				],
+				'expected' => [
+					'attributes.contact_email_address' => 'contact email address',
+					'relationships.foo' => 'foo',
+				],
+			]],
+		];
+	}
+
+	/**
+	 * @dataProvider prettyAttributeNamesProvider
+	 */
+	public function testPrettyAttributeNames($args)
+	{
+		$output = Utilities::prettyAttributeNames($args['rules']);
+		$this->assertSame($args['expected'], $output);
+	}
 }

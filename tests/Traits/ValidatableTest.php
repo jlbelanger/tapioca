@@ -7,31 +7,6 @@ use Jlbelanger\LaravelJsonApi\Tests\TestCase;
 
 class ValidatableTest extends TestCase
 {
-	public function prettyAttributeNamesProvider()
-	{
-		return [
-			[[
-				'rules' => [
-					'attributes.contact_email_address' => '',
-					'relationships.foo' => '',
-				],
-				'expected' => [
-					'attributes.contact_email_address' => 'contact email address',
-					'relationships.foo' => 'foo',
-				],
-			]],
-		];
-	}
-
-	/**
-	 * @dataProvider prettyAttributeNamesProvider
-	 */
-	public function testPrettyAttributeNames($args)
-	{
-		$output = $this->callPrivate(new Album(), 'prettyAttributeNames', [$args['rules']]);
-		$this->assertSame($args['expected'], $output);
-	}
-
 	public function validateProvider()
 	{
 		return [
