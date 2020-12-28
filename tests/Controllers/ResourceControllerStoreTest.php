@@ -131,7 +131,6 @@ class ResourceControllerStoreTest extends TestCase
 				'path' => '/albums?include=artist',
 				'parameters' => [
 					'data' => [
-						'id' => '%id%',
 						'type' => 'albums',
 						'attributes' => [
 							'title' => 'bar',
@@ -186,7 +185,6 @@ class ResourceControllerStoreTest extends TestCase
 				'path' => '/articles?include=tags',
 				'parameters' => [
 					'data' => [
-						'id' => '%id%',
 						'type' => 'articles',
 						'attributes' => [
 							'title' => 'foo',
@@ -263,7 +261,6 @@ class ResourceControllerStoreTest extends TestCase
 				'path' => '/albums?include=album_songs,songs',
 				'parameters' => [
 					'data' => [
-						'id' => '%id%',
 						'type' => 'albums',
 						'attributes' => [
 							'title' => 'foo',

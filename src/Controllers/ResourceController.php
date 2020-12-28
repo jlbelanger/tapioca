@@ -52,7 +52,7 @@ class ResourceController extends Controller
 
 		// Validate the record.
 		$req = new JsonApiRequest('store', $request, $this->model(), $record);
-		$errors = $record->validate($req->getData(), $request);
+		$errors = $record->validate($req->getData(), $request->method());
 		if ($errors) {
 			throw ValidationException::generate($errors);
 		}
@@ -99,7 +99,7 @@ class ResourceController extends Controller
 
 		// Validate the record.
 		$req = new JsonApiRequest('update', $request, $this->model(), $record);
-		$errors = $record->validate($req->getData(), $request, true);
+		$errors = $record->validate($req->getData(), $request->method());
 		if ($errors) {
 			throw ValidationException::generate($errors);
 		}

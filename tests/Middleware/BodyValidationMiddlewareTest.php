@@ -71,6 +71,25 @@ class BodyValidationMiddlewareTest extends TestCase
 					],
 				],
 			]],
+			'with a POST request and id' => [[
+				'uri' => '/albums/',
+				'method' => 'POST',
+				'parameters' => [
+					'data' => [
+						'id' => '1',
+						'type' => 'albums',
+					],
+				],
+				'expected' => [
+					'errors' => [
+						[
+							'title' => "'data' cannot contain an 'id' key for POST requests.",
+							'detail' => 'eg. {"data": {"type": "foo"}}',
+							'status' => '400',
+						],
+					],
+				],
+			]],
 			'with a valid POST request' => [[
 				'uri' => '/albums/',
 				'method' => 'POST',

@@ -3,11 +3,10 @@
 namespace Jlbelanger\LaravelJsonApi\Middleware;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Jlbelanger\LaravelJsonApi\Exceptions\NotFoundException;
+use Jlbelanger\LaravelJsonApi\Helpers\Utilities;
 
 class AuthorizeMiddleware
 {
@@ -23,7 +22,8 @@ class AuthorizeMiddleware
 		$method = $request->method();
 		$path = $request->segment(1);
 		$id = $request->segment(2);
-		$model = $this->model($path);
+		$className = Utilities::getClassNameFromType($path);
+		$model = new $className;
 		$user = Auth::guard('sanctum')->user();
 		$action = null;
 
@@ -53,15 +53,5 @@ class AuthorizeMiddleware
 		}
 
 		return $next($request);
-	}
-
-	/**
-	 * @param  string $path
-	 * @return Model
-	 */
-	protected function model(string $path) : Model
-	{
-		$className = config('laraveljsonapi.models_path', 'App\\Models\\') . Str::studly(Str::singular($path));
-		return new $className;
 	}
 }

@@ -5,6 +5,7 @@ namespace Jlbelanger\LaravelJsonApi\Helpers\Output;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Jlbelanger\LaravelJsonApi\Helpers\Utilities;
 
 class IncludeHelper
 {
@@ -110,7 +111,7 @@ class IncludeHelper
 	 */
 	protected static function getRecordFromData(array $data) : Model
 	{
-		$className = config('laraveljsonapi.models_path', 'App\\Models\\') . Str::studly(Str::singular($data['type']));
+		$className = Utilities::getClassNameFromType($data['type']);
 		return (new $className)->find($data['id']);
 	}
 

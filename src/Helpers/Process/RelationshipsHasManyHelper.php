@@ -8,11 +8,10 @@ use Illuminate\Support\Arr;
 use Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException;
 use Jlbelanger\LaravelJsonApi\Helpers\Input\DataHelper;
 use Jlbelanger\LaravelJsonApi\Helpers\Process\AttributesHelper;
+use Jlbelanger\LaravelJsonApi\Helpers\Utilities;
 
 class RelationshipsHasManyHelper
 {
-	protected static $tempIdPrefix = 'temp-';
-
 	/**
 	 * Note: This is not in the JSON API spec.
 	 *
@@ -95,7 +94,7 @@ class RelationshipsHasManyHelper
 		];
 
 		foreach ($relData['data'] as $rel) {
-			$isAdd = strpos($rel['id'], self::$tempIdPrefix) === 0;
+			$isAdd = Utilities::isTempId($rel['id']);
 
 			// Find the corresponding record in 'included'.
 			$includedData = self::find($included, $rel['id'], $rel['type']);
@@ -114,7 +113,6 @@ class RelationshipsHasManyHelper
 
 			if ($isAdd) {
 				// Create the new pivot model.
-				$includedData['attributes'][$record->getForeignKey()] = $record->id;
 				$new = $relRecord->create($includedData['attributes']);
 				$output['ids'][] = (string) $new->id;
 			} else {

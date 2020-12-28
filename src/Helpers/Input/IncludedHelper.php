@@ -4,8 +4,8 @@ namespace Jlbelanger\LaravelJsonApi\Helpers\Input;
 
 use Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException;
 use Jlbelanger\LaravelJsonApi\Helpers\Input\DataHelper;
+use Jlbelanger\LaravelJsonApi\Helpers\Utilities;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class IncludedHelper
 {
@@ -22,7 +22,7 @@ class IncludedHelper
 		self::validate($included);
 
 		foreach ($included as $i => $record) {
-			$className = self::getClassName($record['type']);
+			$className = Utilities::getClassNameFromType($record['type']);
 			$model = new $className();
 			$whitelistedAttributes = $model->whitelistedAttributes();
 			$whitelistedRelationships = $model->whitelistedRelationships();
@@ -69,7 +69,7 @@ class IncludedHelper
 				], 400);
 			}
 
-			$className = self::getClassName($record['type']);
+			$className = Utilities::getClassNameFromType($record['type']);
 			if (!class_exists($className)) {
 				throw JsonApiException::generate([
 					'title' => "Type '" . $record['type'] .  "' is invalid.",
@@ -79,14 +79,5 @@ class IncludedHelper
 				], 400);
 			}
 		}
-	}
-
-	/**
-	 * @param  string $type
-	 * @return string
-	 */
-	protected static function getClassName(string $type) : string
-	{
-		return config('laraveljsonapi.models_path', 'App\\Models\\') . Str::studly(Str::singular($type));
 	}
 }

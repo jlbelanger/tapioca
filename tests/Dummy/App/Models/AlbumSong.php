@@ -35,14 +35,16 @@ class AlbumSong extends Model
 	}
 
 	/**
+	 * @param  array  $data
+	 * @param  string $method
 	 * @return array
 	 */
-	protected function rules() : array
+	protected function rules(array $data, string $method) : array
 	{
 		return [
-			'attributes.track' => 'required',
-			'relationships.album' => 'required',
-			'relationships.song' => 'required',
+			'attributes.track' => $this->requiredOnCreate($method),
+			'relationships.album' => $this->requiredOnCreate($method),
+			'relationships.song' => $this->requiredOnCreate($method),
 		];
 	}
 

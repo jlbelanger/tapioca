@@ -88,6 +88,12 @@ class RelationshipsHelperTest extends TestCase
 					'track' => 1,
 				],
 				'relationships' => [
+					'album' => [
+						'data' => [
+							'id' => (string) $album->id,
+							'type' => 'songs',
+						],
+					],
 					'song' => [
 						'data' => [
 							'id' => (string) $songToAdd->id,

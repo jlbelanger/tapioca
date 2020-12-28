@@ -31,12 +31,14 @@ class Tag extends Model
 	}
 
 	/**
+	 * @param  array  $data
+	 * @param  string $method
 	 * @return array
 	 */
-	protected function rules() : array
+	protected function rules(array $data, string $method) : array
 	{
 		return [
-			'attributes.title' => 'required',
+			'attributes.title' => $this->requiredOnCreate($method),
 		];
 	}
 

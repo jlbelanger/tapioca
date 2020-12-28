@@ -2,16 +2,16 @@
 
 namespace Jlbelanger\LaravelJsonApi\Traits;
 
-use Illuminate\Http\Request;
 use Validator;
 
 trait Validatable
 {
 	/**
-	 * @param  Request $request
+	 * @param  array  $data
+	 * @param  string $method
 	 * @return array eg. ['attributes.email' => 'required|email', 'relationships.user' => 'required']
 	 */
-	protected function rules(Request $request) : array
+	protected function rules(array $data, string $method) : array
 	{
 		return [];
 	}
@@ -31,26 +31,26 @@ trait Validatable
 	}
 
 	/**
-	 * @param  array   $data
-	 * @param  Request $request
-	 * @param  boolean $isUpdate
+	 * @param  array  $data
+	 * @param  string $method
 	 * @return array
 	 */
-	public function validate(array $data, Request $request, bool $isUpdate = false) : array
+	public function validate(array $data, string $method) : array
 	{
-		$rules = $this->rules($request);
-		foreach ($rules as $key => $value) {
-			if ($isUpdate && is_string($value) && strpos($value, 'sometimes|') === false) {
-				// Don't validate all fields on update, because we may only be sending changed fields.
-				$rules[$key] = 'sometimes|' . $value;
-			}
-		}
-
+		$rules = $this->rules($data, $method);
 		$validator = Validator::make($data, $rules, [], $this->prettyAttributeNames($rules));
 		if ($validator->fails()) {
 			return $validator->errors()->toArray();
 		}
-
 		return [];
+	}
+
+	/**
+	 * @param  string $method
+	 * @return string
+	 */
+	protected function requiredOnCreate(string $method) : string
+	{
+		return $method === 'POST' ? 'required' : 'filled';
 	}
 }

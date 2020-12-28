@@ -12,6 +12,7 @@ class ValidationExceptionTest extends TestCase
 		return [
 			'with no errors' => [[
 				'data' => [],
+				'prefix' => 'blah',
 				'expected' => [],
 			]],
 			'with errors' => [[
@@ -19,25 +20,26 @@ class ValidationExceptionTest extends TestCase
 					'attributes.foo' => ['Foo is not valid.', 'Foo is too short.'],
 					'relationships.bar' => ['Bar is required.'],
 				],
+				'prefix' => 'blah',
 				'expected' => [
 					[
 						'title' => 'Foo is not valid.',
 						'source' => [
-							'pointer' => '/data/attributes/foo',
+							'pointer' => '/blah/attributes/foo',
 						],
 						'status' => '422',
 					],
 					[
 						'title' => 'Foo is too short.',
 						'source' => [
-							'pointer' => '/data/attributes/foo',
+							'pointer' => '/blah/attributes/foo',
 						],
 						'status' => '422',
 					],
 					[
 						'title' => 'Bar is required.',
 						'source' => [
-							'pointer' => '/data/relationships/bar',
+							'pointer' => '/blah/relationships/bar',
 						],
 						'status' => '422',
 					],
@@ -51,7 +53,7 @@ class ValidationExceptionTest extends TestCase
 	 */
 	public function testGenerate($args)
 	{
-		$output = ValidationException::generate($args['data']);
+		$output = ValidationException::generate($args['data'], $args['prefix']);
 		$this->assertSame(json_encode($args['expected']), $output->getMessage());
 	}
 
@@ -60,6 +62,7 @@ class ValidationExceptionTest extends TestCase
 		return [
 			'with no errors' => [[
 				'data' => [],
+				'prefix' => 'blah',
 				'expected' => [],
 			]],
 			'with errors' => [[
@@ -67,25 +70,26 @@ class ValidationExceptionTest extends TestCase
 					'attributes.foo' => ['Foo is not valid.', 'Foo is too short.'],
 					'relationships.bar' => ['Bar is required.'],
 				],
+				'prefix' => 'blah',
 				'expected' => [
 					[
 						'title' => 'Foo is not valid.',
 						'source' => [
-							'pointer' => '/data/attributes/foo',
+							'pointer' => '/blah/attributes/foo',
 						],
 						'status' => '422',
 					],
 					[
 						'title' => 'Foo is too short.',
 						'source' => [
-							'pointer' => '/data/attributes/foo',
+							'pointer' => '/blah/attributes/foo',
 						],
 						'status' => '422',
 					],
 					[
 						'title' => 'Bar is required.',
 						'source' => [
-							'pointer' => '/data/relationships/bar',
+							'pointer' => '/blah/relationships/bar',
 						],
 						'status' => '422',
 					],
@@ -99,7 +103,7 @@ class ValidationExceptionTest extends TestCase
 	 */
 	public function testFormatErrors($args)
 	{
-		$output = $this->callPrivate(new ValidationException, 'formatErrors', [$args['data']]);
+		$output = $this->callPrivate(new ValidationException, 'formatErrors', [$args['data'], $args['prefix']]);
 		$this->assertSame($args['expected'], $output);
 	}
 }

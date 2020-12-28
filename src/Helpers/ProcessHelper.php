@@ -4,10 +4,13 @@ namespace Jlbelanger\LaravelJsonApi\Helpers;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Jlbelanger\LaravelJsonApi\Events\RelationshipUpdated;
+use Jlbelanger\LaravelJsonApi\Exceptions\ValidationException;
 use Jlbelanger\LaravelJsonApi\Helpers\JsonApiRequest;
 use Jlbelanger\LaravelJsonApi\Helpers\Process\AttributesHelper;
 use Jlbelanger\LaravelJsonApi\Helpers\Process\RelationshipsHelper;
+use Jlbelanger\LaravelJsonApi\Helpers\Utilities;
 
 class ProcessHelper
 {
@@ -43,8 +46,11 @@ class ProcessHelper
 
 		list($record, $data) = AttributesHelper::process($record, $req, $isUpdate);
 
+		$included = self::normalizeIncludedRecords($req->getIncluded(), $record);
+		self::validateIncludedRecords($included);
+
 		if (!empty($data['relationships'])) {
-			$result = RelationshipsHelper::update($record, $data['relationships'], $req->getIncluded());
+			$result = RelationshipsHelper::update($record, $data['relationships'], $included);
 			event(new RelationshipUpdated($record, $result));
 		}
 
@@ -55,5 +61,49 @@ class ProcessHelper
 		DB::commit();
 
 		return $record;
+	}
+
+	/**
+	 * @param  array $included
+	 * @param  Model $record
+	 * @return array
+	 */
+	protected static function normalizeIncludedRecords(array $included, Model $record) : array
+	{
+		foreach ($included as $i => $includedData) {
+			if (Utilities::isTempId($includedData['id'])) {
+				$table = $record->getTable();
+				$included[$i]['relationships'][Str::singular($table)] = [
+					'data' => [
+						'id' => $record->id,
+						'type' => str_replace('_', '-', $table),
+					],
+				];
+			}
+		}
+		return $included;
+	}
+
+	/**
+	 * @param  array $included
+	 * @return void
+	 */
+	protected static function validateIncludedRecords(array $included) : void
+	{
+		foreach ($included as $i => $data) {
+			$className = Utilities::getClassNameFromType($data['type']);
+			if (Utilities::isTempId($data['id'])) {
+				$record = new $className();
+				$method = 'POST';
+			} else {
+				$record = (new $className)::find($data['id']);
+				$method = 'PUT';
+			}
+
+			$errors = $record->validate($data, $method);
+			if (!empty($errors)) {
+				throw ValidationException::generate($errors, 'included/' . $i);
+			}
+		}
 	}
 }

@@ -12,8 +12,6 @@ use Jlbelanger\LaravelJsonApi\Helpers\Process\RelationshipsHasManyHelper;
 
 class RelationshipsHelper
 {
-	protected static $tempIdPrefix = 'temp-';
-
 	/**
 	 * @param  Model $record
 	 * @param  array $relationships
