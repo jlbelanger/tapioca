@@ -103,7 +103,7 @@ class ValidationExceptionTest extends TestCase
 	 */
 	public function testFormatErrors($args)
 	{
-		$output = $this->callPrivate(new ValidationException, 'formatErrors', [$args['data'], $args['prefix']]);
+		$output = ValidationException::formatErrors($args['data'], $args['prefix']);
 		$this->assertSame($args['expected'], $output);
 	}
 }
