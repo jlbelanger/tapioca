@@ -6,6 +6,19 @@ There are other Laravel packages that already do the same thing, and they probab
 
 ## Install
 
+Add to `composer.json`:
+
+``` js
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "git@github.com:jlbelanger/laravel-json-api.git"
+		}
+	],
+```
+
+Run:
+
 ``` bash
 composer require jlbelanger/laravel-json-api @dev
 php artisan vendor:publish --provider="Jlbelanger\LaravelJsonApi\LaravelJsonApiServiceProvider" --tag="config"
@@ -39,7 +52,7 @@ Route::group(['middleware' => ['api']], function () {
 	Route::apiResources([
 		'users' => '\App\Http\Controllers\UserController',
 	]);
-]);
+});
 
 Route::fallback(function () {
 	throw NotFoundException::generate();
