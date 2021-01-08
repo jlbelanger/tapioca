@@ -79,7 +79,7 @@ Add the following to the `dontReport` property in `app/Exceptions/Handler.php`:
 
 ``` php
 protected $dontReport = [
-	Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException::class,
+	\Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException::class,
 ];
 ```
 
@@ -88,15 +88,15 @@ Add the following to the `register` function in the same file (`app/Exceptions/H
 ``` php
 public function register()
 {
-	$this->renderable(function (Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $e) {
+	$this->renderable(function (\Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $e) {
 		return response()->json(['errors' => [['title' => 'URL does not exist.', 'status' => '404', 'detail' => 'Method not allowed.']]], 404);
 	});
 
-	$this->renderable(function (Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException $e) {
+	$this->renderable(function (\Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException $e) {
 		return response()->json(['errors' => $e->getErrors()], $e->getCode());
 	});
 
-	$this->renderable(function (Symfony\Component\HttpKernel\Exception\HttpException $e) {
+	$this->renderable(function (\Symfony\Component\HttpKernel\Exception\HttpException $e) {
 		return response()->json(['errors' => [['title' => $e->getMessage(), 'status' => $e->getStatusCode()]]], $e->getStatusCode());
 	});
 }
