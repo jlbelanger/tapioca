@@ -131,7 +131,7 @@ class FilterHelperTest extends TestCase
 						'equals' => 'bar, baz',
 					],
 				],
-				'expectedMessage' => '{"title":"Parameter \'filter[foo][equals]\' has invalid operation.","detail":"Permitted operations: eq, ge, gt, le, like, lt, ne, in, null, notnull"}',
+				'expectedMessage' => '{"title":"Parameter \'filter[foo][equals]\' has invalid operation.","detail":"Permitted operations: eq, ge, gt, le, like, notlike, lt, ne, in, null, notnull"}',
 			]],
 			'with a valid array' => [[
 				'filter' => [
@@ -273,6 +273,51 @@ class FilterHelperTest extends TestCase
 					],
 				],
 				'expected' => ['banana', 'coconut'],
+			]],
+			'when filtering with notlike and leading wildcard' => [[
+				'records' => [
+					'albums' => [
+						['title' => 'apple'],
+						['title' => 'banana'],
+						['title' => 'coconut'],
+					],
+				],
+				'filter' => [
+					'title' => [
+						'notlike' => '%t',
+					],
+				],
+				'expected' => ['apple', 'banana'],
+			]],
+			'when filtering with notlike and trailing wildcard' => [[
+				'records' => [
+					'albums' => [
+						['title' => 'apple'],
+						['title' => 'banana'],
+						['title' => 'coconut'],
+					],
+				],
+				'filter' => [
+					'title' => [
+						'notlike' => 'b%',
+					],
+				],
+				'expected' => ['apple', 'coconut'],
+			]],
+			'when filtering with notlike and leading and trailing wildcards' => [[
+				'records' => [
+					'albums' => [
+						['title' => 'apple'],
+						['title' => 'banana'],
+						['title' => 'coconut'],
+					],
+				],
+				'filter' => [
+					'title' => [
+						'notlike' => '%n%',
+					],
+				],
+				'expected' => ['apple'],
 			]],
 			'when filtering with lt' => [[
 				'records' => [

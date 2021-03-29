@@ -14,6 +14,7 @@ class FilterHelper
 		'gt' => '>',
 		'le' => '<=',
 		'like' => 'LIKE',
+		'notlike' => 'NOT LIKE',
 		'lt' => '<',
 		'ne' => '!=',
 		'in' => 'IN',
