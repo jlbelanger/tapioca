@@ -19,7 +19,9 @@ class LaravelJsonApiServiceProvider extends ServiceProvider
 	 */
 	public function boot() : void
 	{
-		$this->loadRoutesFrom(__DIR__ . '/../tests/Dummy/Routes/api.php');
+		if (!empty($_SERVER['LARAVEL_JSON_API_TEST'])) {
+			$this->loadRoutesFrom(__DIR__ . '/../tests/Dummy/Routes/api.php');
+		}
 
 		if ($this->app->runningInConsole()) {
 			$this->publishes([
