@@ -43,6 +43,7 @@ class SortHelper
 		foreach ($sort as $key) {
 			$direction = $key[0] === '-' ? 'DESC' : 'ASC';
 			$key = ltrim($key, '-');
+			$records = $records->orderByRaw($key . ' IS NULL');
 			$records = $records->orderBy($key, $direction);
 		}
 
