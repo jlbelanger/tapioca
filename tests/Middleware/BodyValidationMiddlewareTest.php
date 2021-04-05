@@ -4,6 +4,7 @@ namespace Jlbelanger\LaravelJsonApi\Tests\Middleware;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Jlbelanger\LaravelJsonApi\Middleware\BodyValidationMiddleware;
 use Jlbelanger\LaravelJsonApi\Tests\TestCase;
 
@@ -203,6 +204,11 @@ class BodyValidationMiddlewareTest extends TestCase
 	public function testHandle($args)
 	{
 		$request = Request::create($args['uri'], $args['method'], $args['parameters']);
+		$request->setRouteResolver(function () use ($args, $request) {
+			$uri = str_replace('123', '{id}', $args['uri']);
+			$route = new Route($args['method'], $uri, []);
+			return $route->bind($request);
+		});
 		$response = (new BodyValidationMiddleware())->handle(
 			$request,
 			function ($request) {

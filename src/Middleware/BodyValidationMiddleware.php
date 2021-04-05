@@ -43,7 +43,14 @@ class BodyValidationMiddleware
 			return response()->json(['errors' => $errors], 400);
 		}
 
-		$urlType = $request->segments()[0];
+		$segments = $request->segments();
+		$route = $request->route();
+		if (!empty($route) && !empty($route->parameters())) {
+			$urlId = array_pop($segments);
+		} else {
+			$urlId = null;
+		}
+		$urlType = array_pop($segments);
 		if ($bodyType !== $urlType) {
 			$errors[] = [
 				'title' => "The type in the body ('" . $bodyType . "') does not match the type in the URL ('" . $urlType . "').",
@@ -63,7 +70,6 @@ class BodyValidationMiddleware
 				return response()->json(['errors' => $errors], 400);
 			}
 
-			$urlId = $request->segments()[1];
 			if ($bodyId !== $urlId) {
 				$errors[] = [
 					'title' => "The ID in the body ('" . $bodyId . "') does not match the ID in the URL ('" . $urlId . "').",
