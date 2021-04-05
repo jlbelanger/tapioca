@@ -64,9 +64,10 @@ trait Resource
 		$singularRelationships = array_map(function ($s) {
 			return Str::snake($s) . '_id';
 		}, $this->singularRelationships());
-		$attributes = array_merge($this->fillable, $this->additionalAttributes());
+		$attributes = $this->fillable;
 		$attributes = array_diff($attributes, $this->hidden);
 		$attributes = array_diff($attributes, $singularRelationships);
+		$attributes = array_merge($attributes, $this->additionalAttributes());
 		foreach ($attributes as $attribute) {
 			if ($fields !== null && !in_array($attribute, $fields)) {
 				continue;
