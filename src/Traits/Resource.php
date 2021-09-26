@@ -137,7 +137,7 @@ trait Resource
 	/**
 	 * @return array
 	 */
-	public function defaultAttributes() : array
+	public function defaultAttributes(array $data) : array
 	{
 		return [];
 	}

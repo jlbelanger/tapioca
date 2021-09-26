@@ -28,9 +28,11 @@ class AttributesHelper
 			if (!empty($data['attributes'])) {
 				$attributes = $data['attributes'];
 			}
-			$defaultAttributes = $record->defaultAttributes();
+			foreach ($attributes as $key => $value) {
+				$record->$key = $value;
+			}
+			$defaultAttributes = $record->defaultAttributes($data);
 			$attributes = array_merge($attributes, $defaultAttributes);
-
 			$record = $record->create($attributes);
 		}
 
