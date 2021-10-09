@@ -4,7 +4,6 @@ namespace Jlbelanger\LaravelJsonApi\Helpers;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use Jlbelanger\LaravelJsonApi\Events\RelationshipUpdated;
 use Jlbelanger\LaravelJsonApi\Exceptions\ValidationException;
 use Jlbelanger\LaravelJsonApi\Helpers\JsonApiRequest;
