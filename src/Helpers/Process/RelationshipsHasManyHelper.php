@@ -114,11 +114,17 @@ class RelationshipsHasManyHelper
 			if ($isAdd) {
 				// Create the new pivot model.
 				$new = $relRecord->create($includedData['attributes']);
+				if (!empty($includedData['meta'])) {
+					$new->updateMeta($includedData['meta']);
+				}
 				$output['ids'][] = (string) $new->id;
 			} else {
 				// Update the existing pivot model.
 				$relRecord = $relRecord->find($rel['id']);
 				$relRecord->update($includedData['attributes']);
+				if (!empty($includedData['meta'])) {
+					$relRecord->updateMeta($includedData['meta']);
+				}
 			}
 		}
 
