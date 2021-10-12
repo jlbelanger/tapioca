@@ -113,7 +113,7 @@ class RelationshipsHasManyHelper
 
 			$relRecord = new $pivotModel();
 			$includedData = DataHelper::normalize($includedData, $relRecord->whitelistedAttributes(), $relRecord->whitelistedRelationships());
-			$includedData = AttributesHelper::convertSingularRelationships($includedData);
+			$includedData = AttributesHelper::convertSingularRelationships($includedData, $record);
 
 			if ($isAdd) {
 				// Create the new pivot model.
