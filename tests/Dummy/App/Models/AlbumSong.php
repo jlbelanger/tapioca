@@ -43,8 +43,8 @@ class AlbumSong extends Model
 	{
 		return [
 			'attributes.track' => $this->requiredOnCreate($method),
-			'relationships.album' => $this->requiredOnCreate($method),
-			'relationships.song' => $this->requiredOnCreate($method),
+			'attributes.album_id' => $this->requiredOnCreate($method),
+			'attributes.song_id' => $this->requiredOnCreate($method),
 		];
 	}
 

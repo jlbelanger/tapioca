@@ -63,9 +63,6 @@ class RelationshipsHasManyHelper
 
 		// Get the attributes for the models we are deleting; we might want to do something with this data in an event, and once the models are deleted, we won't be able to access this data.
 		$attributeNames = array_merge(['id'], $recordsToDelete->getRelated()->getFillable());
-		foreach ($attributeNames as $i => $name) {
-			$attributeNames[$i] = $table . '.' . $name;
-		}
 		$dataToDelete = $recordsToDelete->select($attributeNames)->getResults()->toArray();
 		$deletedData = [];
 		foreach ($dataToDelete as $data) {

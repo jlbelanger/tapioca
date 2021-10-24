@@ -43,20 +43,8 @@ class RelationshipsHasManyHelperTest extends TestCase
 				'type' => 'album-song',
 				'attributes' => [
 					'track' => 1,
-				],
-				'relationships' => [
-					'album' => [
-						'data' => [
-							'id' => (string) $album->id,
-							'type' => 'albums',
-						],
-					],
-					'song' => [
-						'data' => [
-							'id' => (string) $songToAdd->id,
-							'type' => 'songs',
-						],
-					],
+					'album_id' => (string) $album->id,
+					'song_id' => (string) $songToAdd->id,
 				],
 			],
 		];

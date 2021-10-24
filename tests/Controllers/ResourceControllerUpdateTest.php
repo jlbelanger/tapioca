@@ -473,14 +473,8 @@ class ResourceControllerUpdateTest extends TestCase
 							'type' => 'album-song',
 							'attributes' => [
 								'track' => 1,
-							],
-							'relationships' => [
-								'song' => [
-									'data' => [
-										'id' => '%songs.a%',
-										'type' => 'songs',
-									],
-								],
+								'album_id' => 'temp-this-id',
+								'song_id' => '%songs.a%',
 							],
 						],
 						[
@@ -488,14 +482,8 @@ class ResourceControllerUpdateTest extends TestCase
 							'type' => 'album-song',
 							'attributes' => [
 								'track' => 2,
-							],
-							'relationships' => [
-								'song' => [
-									'data' => [
-										'id' => '%songs.b%',
-										'type' => 'songs',
-									],
-								],
+								'album_id' => 'temp-this-id',
+								'song_id' => '%songs.b%',
 							],
 						],
 					],
