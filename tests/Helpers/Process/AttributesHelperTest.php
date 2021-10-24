@@ -4,6 +4,7 @@ namespace Jlbelanger\LaravelJsonApi\Tests\Helpers\Process;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jlbelanger\LaravelJsonApi\Helpers\Process\AttributesHelper;
+use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
 use Jlbelanger\LaravelJsonApi\Tests\TestCase;
 
 class AttributesHelperTest extends TestCase
@@ -17,7 +18,9 @@ class AttributesHelperTest extends TestCase
 				'data' => [
 					'attributes' => [],
 					'relationships' => [
-						'artist' => null,
+						'artist' => [
+							'data' => null,
+						],
 					],
 				],
 				'expected' => [
@@ -54,7 +57,8 @@ class AttributesHelperTest extends TestCase
 	 */
 	public function testConvertSingularRelationships($args)
 	{
-		$output = $this->callPrivate(new AttributesHelper, 'convertSingularRelationships', [$args['data']]);
+		$record = Album::factory()->create();
+		$output = $this->callPrivate(new AttributesHelper, 'convertSingularRelationships', [$args['data'], $record]);
 		$this->assertSame($args['expected'], $output);
 	}
 }

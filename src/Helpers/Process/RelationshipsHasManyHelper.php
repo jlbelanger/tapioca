@@ -58,7 +58,8 @@ class RelationshipsHasManyHelper
 		}
 
 		// Get the models to delete.
-		$recordsToDelete = $existing->whereIn('id', $deleteIds);
+		$table = explode('.', $existing->getQualifiedForeignKeyName())[0];
+		$recordsToDelete = $existing->whereIn($table . '.id', $deleteIds);
 
 		// Get the attributes for the models we are deleting; we might want to do something with this data in an event, and once the models are deleted, we won't be able to access this data.
 		$attributeNames = array_merge(['id'], $recordsToDelete->getRelated()->getFillable());
@@ -109,16 +110,22 @@ class RelationshipsHasManyHelper
 
 			$relRecord = new $pivotModel();
 			$includedData = DataHelper::normalize($includedData, $relRecord->whitelistedAttributes(), $relRecord->whitelistedRelationships());
-			$includedData = AttributesHelper::convertSingularRelationships($includedData);
+			$includedData = AttributesHelper::convertSingularRelationships($includedData, $record);
 
 			if ($isAdd) {
 				// Create the new pivot model.
 				$new = $relRecord->create($includedData['attributes']);
+				if (!empty($includedData['meta'])) {
+					$new->updateMeta($includedData['meta']);
+				}
 				$output['ids'][] = (string) $new->id;
 			} else {
 				// Update the existing pivot model.
 				$relRecord = $relRecord->find($rel['id']);
 				$relRecord->update($includedData['attributes']);
+				if (!empty($includedData['meta'])) {
+					$relRecord->updateMeta($includedData['meta']);
+				}
 			}
 		}
 

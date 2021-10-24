@@ -4,7 +4,6 @@ namespace Jlbelanger\LaravelJsonApi\Helpers;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use Jlbelanger\LaravelJsonApi\Events\RelationshipUpdated;
 use Jlbelanger\LaravelJsonApi\Exceptions\ValidationException;
 use Jlbelanger\LaravelJsonApi\Helpers\JsonApiRequest;
@@ -72,13 +71,17 @@ class ProcessHelper
 	{
 		foreach ($included as $i => $includedData) {
 			if (Utilities::isTempId($includedData['id'])) {
-				$table = $record->getTable();
-				$included[$i]['relationships'][Str::singular($table)] = [
-					'data' => [
-						'id' => $record->id,
-						'type' => str_replace('_', '-', $table),
-					],
-				];
+				foreach ($included[$i]['attributes'] as $key => $value) {
+					if ($value === 'temp-this-id') {
+						$included[$i]['attributes'][$key] = $record->id;
+					}
+				}
+
+				foreach ($included[$i]['relationships'] as $key => $value) {
+					if (!empty($value['data']['id']) && $value['data']['id'] === 'temp-this-id') {
+						$included[$i]['relationships'][$key]['data']['id'] = $record->id;
+					}
+				}
 			}
 		}
 		return $included;
