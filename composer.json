@@ -3,7 +3,7 @@
 	"description": "",
 	"version": "1.0.0",
 	"type": "library",
-	"license": "MIT",
+	"license": "GPL-3.0-only",
 	"authors": [
 		{
 			"name": "Jenny Belanger",
