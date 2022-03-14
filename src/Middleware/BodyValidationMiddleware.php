@@ -24,6 +24,10 @@ class BodyValidationMiddleware
 		$errors = [];
 		$input = $request->input();
 
+		if (strpos($request->header('Content-Type'), 'multipart/form-data') === 0) {
+			$input = json_decode($request->input('json'), true);
+		}
+
 		if (!array_key_exists('data', $input)) {
 			$errors[] = [
 				'title' => "The body must contain a 'data' key.",
@@ -33,7 +37,7 @@ class BodyValidationMiddleware
 			return response()->json(['errors' => $errors], 400);
 		}
 
-		$bodyType = $request->input('data.type');
+		$bodyType = !empty($input['data']['type']) ? $input['data']['type'] : null;
 		if (!$bodyType) {
 			$errors[] = [
 				'title' => "'data' must contain a 'type' key.",
@@ -60,7 +64,7 @@ class BodyValidationMiddleware
 		}
 
 		if ($method === 'PUT') {
-			$bodyId = $request->input('data.id');
+			$bodyId = !empty($input['data']['id']) ? $input['data']['id'] : null;
 			if (!$bodyId) {
 				$errors[] = [
 					'title' => "'data' must contain an 'id' key.",
@@ -78,7 +82,8 @@ class BodyValidationMiddleware
 				return response()->json(['errors' => $errors], 400);
 			}
 		} else {
-			if ($request->input('data.id')) {
+			$bodyId = !empty($input['data']['id']) ? $input['data']['id'] : null;
+			if ($bodyId) {
 				$errors[] = [
 					'title' => "'data' cannot contain an 'id' key for POST requests.",
 					'detail' => 'eg. {"data": {"type": "foo"}}',

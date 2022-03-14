@@ -57,6 +57,17 @@ class ProcessHelper
 			$record->updateMeta($data['meta']);
 		}
 
+		$files = $req->getFiles();
+		if (!empty($files)) {
+			foreach ($files as $key => $file) {
+				$filename = $record->uploadedFilename($key, $file->getClientOriginalName());
+				$pathInfo = pathinfo($filename);
+				$file->move(public_path($pathInfo['dirname']), $pathInfo['basename']);
+				$record->$key = $filename;
+			}
+			$record->save();
+		}
+
 		DB::commit();
 
 		return $record;

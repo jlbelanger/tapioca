@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Jlbelanger\LaravelJsonApi\Helpers\FilterHelper;
 use Jlbelanger\LaravelJsonApi\Helpers\Input\DataHelper;
 use Jlbelanger\LaravelJsonApi\Helpers\Input\FieldsHelper;
+use Jlbelanger\LaravelJsonApi\Helpers\Input\FileHelper;
 use Jlbelanger\LaravelJsonApi\Helpers\Input\IncludedHelper;
 use Jlbelanger\LaravelJsonApi\Helpers\Input\IncludeHelper;
 use Jlbelanger\LaravelJsonApi\Helpers\Input\PageHelper;
@@ -27,6 +28,7 @@ class JsonApiRequest
 	protected $filter;
 	protected $include;
 	protected $included;
+	protected $files;
 	protected $page;
 	protected $sort;
 
@@ -51,8 +53,19 @@ class JsonApiRequest
 		$this->sort = SortHelper::normalize($request->input('sort'), $model->defaultSort());
 
 		// Normalize/validate body.
-		$this->data = DataHelper::normalize($request->input('data'), $model->whitelistedAttributes(), $model->whitelistedRelationships());
-		$this->included = IncludedHelper::normalize($request->input('included'));
+		if (strpos($request->header('Content-Type'), 'multipart/form-data') === 0) {
+			$body = json_decode($request->input('json'), true);
+			$data = !empty($body['data']) ? $body['data'] : null;
+			$included = !empty($body['included']) ? $body['included'] : null;
+			$files = json_decode($request->input('files'), true);
+		} else {
+			$data = $request->input('data');
+			$included = $request->input('included');
+			$files = [];
+		}
+		$this->data = DataHelper::normalize($data, $model->whitelistedAttributes(), $model->whitelistedRelationships());
+		$this->included = IncludedHelper::normalize($included);
+		$this->files = FileHelper::normalize($files, $request);
 
 		// Create the response.
 		$this->response = new JsonApiResponse($this);
@@ -135,6 +148,14 @@ class JsonApiRequest
 	public function getFields() : array
 	{
 		return $this->fields;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getFiles() : array
+	{
+		return $this->files;
 	}
 
 	/**

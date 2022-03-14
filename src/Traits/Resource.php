@@ -160,6 +160,17 @@ trait Resource
 	}
 
 	/**
+	 * @param  string $key
+	 * @param  string $filename
+	 * @return string
+	 */
+	public function uploadedFilename(string $key, string $filename) : string
+	{
+		$pathInfo = pathinfo($filename);
+		return '/uploads/' . $this->getTable() . '-' . $key . '/' . Str::random(8) . '.' . $pathInfo['extension'];
+	}
+
+	/**
 	 * @return array
 	 */
 	public function whitelistedAttributes() : array
