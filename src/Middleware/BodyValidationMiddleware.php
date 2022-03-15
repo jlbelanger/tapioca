@@ -25,7 +25,22 @@ class BodyValidationMiddleware
 		$input = $request->input();
 
 		if (strpos($request->header('Content-Type'), 'multipart/form-data') === 0) {
+			if (!$request->has('json') || !$request->has('files')) {
+				$errors[] = [
+					'title' => "Multipart requests must contain a 'json' and a 'files' value.",
+					'status' => '400',
+				];
+				return response()->json(['errors' => $errors], 400);
+			}
+
 			$input = json_decode($request->input('json'), true);
+			if (!is_array($input)) {
+				$errors[] = [
+					'title' => "'json' must be an object.",
+					'status' => '400',
+				];
+				return response()->json(['errors' => $errors], 400);
+			}
 		}
 
 		if (!array_key_exists('data', $input)) {
