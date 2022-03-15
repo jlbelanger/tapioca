@@ -23,6 +23,6 @@
 		<server name="APP_ENV" value="testing"/>
 		<server name="LARAVEL_JSON_API_TEST" value="true"/>
 		<server name="DB_CONNECTION" value="sqlite"/>
-		<server name="DB_DATABASE" value="test.sqlite"/>
+		<server name="DB_DATABASE" value=":memory:"/>
 	</php>
 </phpunit>
