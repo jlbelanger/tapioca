@@ -159,25 +159,27 @@ GET /articles?sort=user.username
 
 ## Development
 
-Lint:
+### Lint
 
 ``` bash
 ./vendor/bin/phpcs
 ```
 
-Test:
+### Test
 
 ``` bash
 ./vendor/bin/phpunit
 ```
 
-## Multipart PUT requests
+## Notes
+
+### Multipart PUT requests
 
 [PHP does not support multipart PUT requests](https://bugs.php.net/bug.php?id=55815). As a workaround, you can install the [apfd PECL extension.](https://pecl.php.net/package/apfd).
 
 To install the extension on Ubuntu (replace 7.4 with your PHP version):
 
-``` sh
+``` bash
 apt-get install php-pear
 apt-get install php7.4-dev
 pecl install apfd

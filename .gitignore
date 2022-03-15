@@ -1,6 +1,7 @@
 .DS_Store
 .env
 .phpunit.result.cache
+*.log
 /vendor
 test.sqlite
 TODO.md
