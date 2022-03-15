@@ -20,8 +20,13 @@ class AuthorizeMiddleware
 	public function handle(Request $request, Closure $next)
 	{
 		$method = $request->method();
-		$path = $request->segment(1);
-		$id = $request->segment(2);
+		$i = 1;
+		$path = $request->segment($i);
+		if ($path === 'api') {
+			$i = 2;
+			$path = $request->segment($i);
+		}
+		$id = $request->segment($i + 1);
 		$className = Utilities::getClassNameFromType($path);
 		$model = new $className;
 		$user = Auth::guard('sanctum')->user();
