@@ -159,6 +159,20 @@ GET /articles?sort=user.username
 
 ## Development
 
+### Requirements
+
+- [Composer](https://getcomposer.org/)
+- [Git](https://git-scm.com/)
+- Web server with PHP
+
+### Setup
+
+``` bash
+git clone https://github.com/jlbelanger/laravel-json-api.git
+cd laravel-json-api
+composer install
+```
+
 ### Lint
 
 ``` bash
