@@ -1,4 +1,4 @@
-# Laravel JSON API
+# Tapioca
 
 This packages allows you to use [JSON:API](https://jsonapi.org/) with [Laravel](https://laravel.com/).
 
@@ -12,7 +12,7 @@ Add to `composer.json`:
 	"repositories": [
 		{
 			"type": "vcs",
-			"url": "git@github.com:jlbelanger/laravel-json-api.git"
+			"url": "git@github.com:jlbelanger/tapioca.git"
 		}
 	],
 ```
@@ -20,7 +20,7 @@ Add to `composer.json`:
 Run:
 
 ``` bash
-composer require jlbelanger/laravel-json-api @dev
+composer require jlbelanger/tapioca @dev
 php artisan vendor:publish --provider="Jlbelanger\LaravelJsonApi\LaravelJsonApiServiceProvider" --tag="config"
 ```
 
@@ -168,8 +168,8 @@ GET /articles?sort=user.username
 ### Setup
 
 ``` bash
-git clone https://github.com/jlbelanger/laravel-json-api.git
-cd laravel-json-api
+git clone https://github.com/jlbelanger/tapioca.git
+cd tapioca
 composer install
 ```
 
