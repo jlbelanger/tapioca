@@ -1,6 +1,6 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Traits;
+namespace Jlbelanger\Tapioca\Traits;
 
 trait Filterable
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Traits;
+namespace Jlbelanger\Tapioca\Tests\Traits;
 
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class ValidatableTest extends TestCase
 {

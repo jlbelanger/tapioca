@@ -1,8 +1,8 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Exceptions;
+namespace Jlbelanger\Tapioca\Exceptions;
 
-use Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException;
+use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 
 class ValidationException
 {

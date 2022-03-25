@@ -1,15 +1,15 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Helpers\Process;
+namespace Jlbelanger\Tapioca\Tests\Helpers\Process;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Jlbelanger\LaravelJsonApi\Helpers\Process\RelationshipsHelper;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\AlbumSong;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Article;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Song;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Tag;
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Helpers\Process\RelationshipsHelper;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\AlbumSong;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Article;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Song;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Tag;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class RelationshipsHelperTest extends TestCase
 {

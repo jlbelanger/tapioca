@@ -1,6 +1,6 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Helpers\Process;
+namespace Jlbelanger\Tapioca\Helpers\Process;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;

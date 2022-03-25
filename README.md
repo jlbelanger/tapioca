@@ -21,7 +21,7 @@ Run:
 
 ``` bash
 composer require jlbelanger/tapioca @dev
-php artisan vendor:publish --provider="Jlbelanger\LaravelJsonApi\LaravelJsonApiServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Jlbelanger\Tapioca\TapiocaServiceProvider" --tag="config"
 ```
 
 ## Setup
@@ -33,7 +33,7 @@ Each resource needs a controller. The controller needs to extend `ResourceContro
 
 namespace App\Http\Controllers;
 
-use Jlbelanger\LaravelJsonApi\Controllers\ResourceController;
+use Jlbelanger\Tapioca\Controllers\ResourceController;
 
 class UserController extends ResourceController
 {
@@ -46,7 +46,7 @@ Link the routes to the controllers in `routes/api.php`:
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Jlbelanger\LaravelJsonApi\Exceptions\NotFoundException;
+use Jlbelanger\Tapioca\Exceptions\NotFoundException;
 
 Route::group(['middleware' => ['api']], function () {
 	Route::apiResources([
@@ -67,7 +67,7 @@ Add the `Resource` trait to each model:
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Jlbelanger\LaravelJsonApi\Traits\Resource;
+use Jlbelanger\Tapioca\Traits\Resource;
 
 class User extends Model
 {
@@ -79,7 +79,7 @@ Add the following to the `dontReport` property in `app/Exceptions/Handler.php`:
 
 ``` php
 protected $dontReport = [
-	\Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException::class,
+	\Jlbelanger\Tapioca\Exceptions\JsonApiException::class,
 ];
 ```
 
@@ -92,7 +92,7 @@ public function register()
 		return response()->json(['errors' => [['title' => 'URL does not exist.', 'status' => '404', 'detail' => 'Method not allowed.']]], 404);
 	});
 
-	$this->renderable(function (\Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException $e) {
+	$this->renderable(function (\Jlbelanger\Tapioca\Exceptions\JsonApiException $e) {
 		return response()->json(['errors' => $e->getErrors()], $e->getCode());
 	});
 

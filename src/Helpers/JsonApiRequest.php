@@ -1,20 +1,20 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Helpers;
+namespace Jlbelanger\Tapioca\Helpers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Jlbelanger\LaravelJsonApi\Helpers\FilterHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Input\DataHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Input\FieldsHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Input\FileHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Input\IncludedHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Input\IncludeHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Input\PageHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Input\SortHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Output\IncludeHelper as IncludeOutputHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Output\PageHelper as PageOutputHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Output\SortHelper as SortOutputHelper;
+use Jlbelanger\Tapioca\Helpers\FilterHelper;
+use Jlbelanger\Tapioca\Helpers\Input\DataHelper;
+use Jlbelanger\Tapioca\Helpers\Input\FieldsHelper;
+use Jlbelanger\Tapioca\Helpers\Input\FileHelper;
+use Jlbelanger\Tapioca\Helpers\Input\IncludedHelper;
+use Jlbelanger\Tapioca\Helpers\Input\IncludeHelper;
+use Jlbelanger\Tapioca\Helpers\Input\PageHelper;
+use Jlbelanger\Tapioca\Helpers\Input\SortHelper;
+use Jlbelanger\Tapioca\Helpers\Output\IncludeHelper as IncludeOutputHelper;
+use Jlbelanger\Tapioca\Helpers\Output\PageHelper as PageOutputHelper;
+use Jlbelanger\Tapioca\Helpers\Output\SortHelper as SortOutputHelper;
 
 class JsonApiRequest
 {

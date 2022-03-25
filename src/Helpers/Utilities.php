@@ -1,6 +1,6 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Helpers;
+namespace Jlbelanger\Tapioca\Helpers;
 
 use Illuminate\Support\Str;
 
@@ -12,7 +12,7 @@ class Utilities
 	 */
 	public static function getClassNameFromType(string $type) : string
 	{
-		return config('laraveljsonapi.models_path', 'App\\Models\\') . Str::studly(Str::singular($type));
+		return config('tapioca.models_path', 'App\\Models\\') . Str::studly(Str::singular($type));
 	}
 
 	/**

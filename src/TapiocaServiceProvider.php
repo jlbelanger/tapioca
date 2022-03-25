@@ -1,17 +1,17 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi;
+namespace Jlbelanger\Tapioca;
 
 use Illuminate\Support\ServiceProvider;
 
-class LaravelJsonApiServiceProvider extends ServiceProvider
+class TapiocaServiceProvider extends ServiceProvider
 {
 	/**
 	 * @return void
 	 */
 	public function register() : void
 	{
-		$this->mergeConfigFrom(__DIR__ . '/../tests/Dummy/Config/config.php', 'laraveljsonapi');
+		$this->mergeConfigFrom(__DIR__ . '/../tests/Dummy/Config/config.php', 'tapioca');
 	}
 
 	/**
@@ -25,7 +25,7 @@ class LaravelJsonApiServiceProvider extends ServiceProvider
 
 		if ($this->app->runningInConsole()) {
 			$this->publishes([
-				__DIR__ . '/../config/config.php' => config_path('laraveljsonapi.php'),
+				__DIR__ . '/../config/config.php' => config_path('tapioca.php'),
 			], 'config');
 		}
 	}

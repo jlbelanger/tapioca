@@ -1,6 +1,6 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Helpers\Input;
+namespace Jlbelanger\Tapioca\Helpers\Input;
 
 use Illuminate\Http\Request;
 

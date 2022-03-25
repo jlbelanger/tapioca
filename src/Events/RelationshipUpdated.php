@@ -1,6 +1,6 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Events;
+namespace Jlbelanger\Tapioca\Events;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Queue\SerializesModels;

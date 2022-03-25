@@ -1,10 +1,10 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Helpers;
+namespace Jlbelanger\Tapioca\Helpers;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
-use Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException;
+use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 
 class FilterHelper
 {

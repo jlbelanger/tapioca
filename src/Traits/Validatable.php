@@ -1,8 +1,8 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Traits;
+namespace Jlbelanger\Tapioca\Traits;
 
-use Jlbelanger\LaravelJsonApi\Helpers\Utilities;
+use Jlbelanger\Tapioca\Helpers\Utilities;
 use Validator;
 
 trait Validatable

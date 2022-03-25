@@ -1,11 +1,11 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Controllers;
+namespace Jlbelanger\Tapioca\Tests\Controllers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Artist;
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Artist;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class ResourceControllerShowTest extends TestCase
 {

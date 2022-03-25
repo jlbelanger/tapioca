@@ -1,9 +1,9 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Controllers;
+namespace Jlbelanger\Tapioca\Tests\Controllers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class ResourceControllerUpdateTest extends TestCase
 {

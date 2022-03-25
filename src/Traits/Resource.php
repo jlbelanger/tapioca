@@ -1,11 +1,11 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Traits;
+namespace Jlbelanger\Tapioca\Traits;
 
 use Illuminate\Support\Str;
-use Jlbelanger\LaravelJsonApi\Traits\Filterable;
-use Jlbelanger\LaravelJsonApi\Traits\Sortable;
-use Jlbelanger\LaravelJsonApi\Traits\Validatable;
+use Jlbelanger\Tapioca\Traits\Filterable;
+use Jlbelanger\Tapioca\Traits\Sortable;
+use Jlbelanger\Tapioca\Traits\Validatable;
 
 trait Resource
 {

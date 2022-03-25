@@ -1,6 +1,6 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Exceptions;
+namespace Jlbelanger\Tapioca\Exceptions;
 
 use Exception;
 

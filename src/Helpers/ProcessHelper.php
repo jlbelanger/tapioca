@@ -1,15 +1,15 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Helpers;
+namespace Jlbelanger\Tapioca\Helpers;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
-use Jlbelanger\LaravelJsonApi\Events\RelationshipUpdated;
-use Jlbelanger\LaravelJsonApi\Exceptions\ValidationException;
-use Jlbelanger\LaravelJsonApi\Helpers\JsonApiRequest;
-use Jlbelanger\LaravelJsonApi\Helpers\Process\AttributesHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Process\RelationshipsHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Utilities;
+use Jlbelanger\Tapioca\Events\RelationshipUpdated;
+use Jlbelanger\Tapioca\Exceptions\ValidationException;
+use Jlbelanger\Tapioca\Helpers\JsonApiRequest;
+use Jlbelanger\Tapioca\Helpers\Process\AttributesHelper;
+use Jlbelanger\Tapioca\Helpers\Process\RelationshipsHelper;
+use Jlbelanger\Tapioca\Helpers\Utilities;
 
 class ProcessHelper
 {

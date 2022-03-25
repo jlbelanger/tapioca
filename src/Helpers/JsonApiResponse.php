@@ -1,9 +1,9 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Helpers;
+namespace Jlbelanger\Tapioca\Helpers;
 
-use Jlbelanger\LaravelJsonApi\Helpers\JsonApiRequest;
-use Jlbelanger\LaravelJsonApi\Helpers\Output\IncludeHelper;
+use Jlbelanger\Tapioca\Helpers\JsonApiRequest;
+use Jlbelanger\Tapioca\Helpers\Output\IncludeHelper;
 
 class JsonApiResponse
 {

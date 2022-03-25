@@ -1,10 +1,10 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Helpers\Input;
+namespace Jlbelanger\Tapioca\Helpers\Input;
 
-use Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException;
-use Jlbelanger\LaravelJsonApi\Helpers\Input\DataHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Utilities;
+use Jlbelanger\Tapioca\Exceptions\JsonApiException;
+use Jlbelanger\Tapioca\Helpers\Input\DataHelper;
+use Jlbelanger\Tapioca\Helpers\Utilities;
 use Illuminate\Support\Arr;
 
 class IncludedHelper

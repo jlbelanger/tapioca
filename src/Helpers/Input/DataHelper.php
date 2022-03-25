@@ -1,11 +1,11 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Helpers\Input;
+namespace Jlbelanger\Tapioca\Helpers\Input;
 
-use Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException;
-use Jlbelanger\LaravelJsonApi\Helpers\Input\DataAttributesHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Input\DataMetaHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Input\DataRelationshipsHelper;
+use Jlbelanger\Tapioca\Exceptions\JsonApiException;
+use Jlbelanger\Tapioca\Helpers\Input\DataAttributesHelper;
+use Jlbelanger\Tapioca\Helpers\Input\DataMetaHelper;
+use Jlbelanger\Tapioca\Helpers\Input\DataRelationshipsHelper;
 
 class DataHelper
 {

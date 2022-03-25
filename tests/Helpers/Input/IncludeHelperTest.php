@@ -1,9 +1,9 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Helpers\Input;
+namespace Jlbelanger\Tapioca\Tests\Helpers\Input;
 
-use Jlbelanger\LaravelJsonApi\Helpers\Input\IncludeHelper;
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Helpers\Input\IncludeHelper;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class IncludeHelperTest extends TestCase
 {

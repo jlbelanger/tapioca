@@ -1,12 +1,12 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Middleware;
+namespace Jlbelanger\Tapioca\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Jlbelanger\LaravelJsonApi\Exceptions\NotFoundException;
-use Jlbelanger\LaravelJsonApi\Helpers\Utilities;
+use Jlbelanger\Tapioca\Exceptions\NotFoundException;
+use Jlbelanger\Tapioca\Helpers\Utilities;
 
 class AuthorizeMiddleware
 {

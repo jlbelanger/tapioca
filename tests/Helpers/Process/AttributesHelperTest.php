@@ -1,11 +1,11 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Helpers\Process;
+namespace Jlbelanger\Tapioca\Tests\Helpers\Process;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Jlbelanger\LaravelJsonApi\Helpers\Process\AttributesHelper;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Helpers\Process\AttributesHelper;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class AttributesHelperTest extends TestCase
 {

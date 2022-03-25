@@ -1,8 +1,8 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Traits;
+namespace Jlbelanger\Tapioca\Tests\Traits;
 
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class ResourceTest extends TestCase
 {

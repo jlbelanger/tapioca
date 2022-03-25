@@ -1,8 +1,8 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Middleware;
+namespace Jlbelanger\Tapioca\Tests\Middleware;
 
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class AuthorizeMiddlewareTest extends TestCase
 {

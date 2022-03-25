@@ -1,10 +1,10 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Helpers\Process;
+namespace Jlbelanger\Tapioca\Helpers\Process;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Jlbelanger\LaravelJsonApi\Helpers\JsonApiRequest;
+use Jlbelanger\Tapioca\Helpers\JsonApiRequest;
 
 class AttributesHelper
 {

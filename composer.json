@@ -18,18 +18,18 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Jlbelanger\\LaravelJsonApi\\": "src"
+			"Jlbelanger\\Tapioca\\": "src"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Jlbelanger\\LaravelJsonApi\\Tests\\": "tests"
+			"Jlbelanger\\Tapioca\\Tests\\": "tests"
 		}
 	},
 	"extra": {
 		"laravel": {
 			"providers": [
-				"Jlbelanger\\LaravelJsonApi\\LaravelJsonApiServiceProvider"
+				"Jlbelanger\\Tapioca\\TapiocaServiceProvider"
 			]
 		}
 	}

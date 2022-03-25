@@ -1,14 +1,14 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models;
+namespace Jlbelanger\Tapioca\Tests\Dummy\App\Models;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\Database\Factories\ArtistFactory;
-use Jlbelanger\LaravelJsonApi\Traits\Resource;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
+use Jlbelanger\Tapioca\Tests\Dummy\Database\Factories\ArtistFactory;
+use Jlbelanger\Tapioca\Traits\Resource;
 
 class Artist extends Model
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Helpers\Output;
+namespace Jlbelanger\Tapioca\Tests\Helpers\Output;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Jlbelanger\LaravelJsonApi\Helpers\Output\PageHelper;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Article;
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Helpers\Output\PageHelper;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Article;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class PageHelperTest extends TestCase
 {

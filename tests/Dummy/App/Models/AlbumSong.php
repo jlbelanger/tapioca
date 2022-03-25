@@ -1,15 +1,15 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models;
+namespace Jlbelanger\Tapioca\Tests\Dummy\App\Models;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Song;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\Database\Factories\AlbumSongFactory;
-use Jlbelanger\LaravelJsonApi\Traits\Resource;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Song;
+use Jlbelanger\Tapioca\Tests\Dummy\Database\Factories\AlbumSongFactory;
+use Jlbelanger\Tapioca\Traits\Resource;
 
 class AlbumSong extends Model
 {

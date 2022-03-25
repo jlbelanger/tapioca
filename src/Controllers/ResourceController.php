@@ -1,18 +1,18 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Controllers;
+namespace Jlbelanger\Tapioca\Controllers;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Jlbelanger\LaravelJsonApi\Exceptions\NotFoundException;
-use Jlbelanger\LaravelJsonApi\Exceptions\ValidationException;
-use Jlbelanger\LaravelJsonApi\Helpers\JsonApiRequest;
-use Jlbelanger\LaravelJsonApi\Helpers\ProcessHelper;
-use Jlbelanger\LaravelJsonApi\Middleware\BodyValidationMiddleware;
-use Jlbelanger\LaravelJsonApi\Middleware\ContentTypeMiddleware;
+use Jlbelanger\Tapioca\Exceptions\NotFoundException;
+use Jlbelanger\Tapioca\Exceptions\ValidationException;
+use Jlbelanger\Tapioca\Helpers\JsonApiRequest;
+use Jlbelanger\Tapioca\Helpers\ProcessHelper;
+use Jlbelanger\Tapioca\Middleware\BodyValidationMiddleware;
+use Jlbelanger\Tapioca\Middleware\ContentTypeMiddleware;
 
 class ResourceController extends Controller
 {
@@ -141,7 +141,7 @@ class ResourceController extends Controller
 		$className = explode('\\', $className);
 		$className = array_pop($className);
 		$className = preg_replace('/Controller$/', '', $className);
-		$className = config('laraveljsonapi.models_path', 'App\\Models\\') . $className;
+		$className = config('tapioca.models_path', 'App\\Models\\') . $className;
 		return new $className;
 	}
 }

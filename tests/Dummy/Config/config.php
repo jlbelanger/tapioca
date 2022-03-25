@@ -1,5 +1,5 @@
 <?php
 
 return [
-	'models_path' => 'Jlbelanger\\LaravelJsonApi\\Tests\\Dummy\\App\\Models\\',
+	'models_path' => 'Jlbelanger\\Tapioca\\Tests\\Dummy\\App\\Models\\',
 ];

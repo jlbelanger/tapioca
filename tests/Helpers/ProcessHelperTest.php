@@ -1,8 +1,8 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Helpers;
+namespace Jlbelanger\Tapioca\Tests\Helpers;
 
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class ProcessHelperTest extends TestCase
 {

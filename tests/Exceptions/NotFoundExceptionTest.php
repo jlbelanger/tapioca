@@ -1,9 +1,9 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Exceptions;
+namespace Jlbelanger\Tapioca\Tests\Exceptions;
 
-use Jlbelanger\LaravelJsonApi\Exceptions\NotFoundException;
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Exceptions\NotFoundException;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class NotFoundExceptionTest extends TestCase
 {

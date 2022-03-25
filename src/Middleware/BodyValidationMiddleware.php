@@ -1,6 +1,6 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Middleware;
+namespace Jlbelanger\Tapioca\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;

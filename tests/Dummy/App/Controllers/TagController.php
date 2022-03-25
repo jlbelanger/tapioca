@@ -1,8 +1,8 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Controllers;
+namespace Jlbelanger\Tapioca\Tests\Dummy\App\Controllers;
 
-use Jlbelanger\LaravelJsonApi\Controllers\ResourceController;
+use Jlbelanger\Tapioca\Controllers\ResourceController;
 
 class TagController extends ResourceController
 {
@@ -11,7 +11,7 @@ class TagController extends ResourceController
 		parent::__construct();
 		\App::singleton(
 			\Illuminate\Contracts\Debug\ExceptionHandler::class,
-			\Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Exceptions\Handler::class
+			\Jlbelanger\Tapioca\Tests\Dummy\App\Exceptions\Handler::class
 		);
 	}
 }

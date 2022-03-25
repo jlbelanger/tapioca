@@ -1,10 +1,10 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Helpers\Input;
+namespace Jlbelanger\Tapioca\Tests\Helpers\Input;
 
-use Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException;
-use Jlbelanger\LaravelJsonApi\Helpers\Input\PageHelper;
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Exceptions\JsonApiException;
+use Jlbelanger\Tapioca\Helpers\Input\PageHelper;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class PageHelperTest extends TestCase
 {

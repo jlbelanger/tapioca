@@ -1,12 +1,12 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Middleware;
+namespace Jlbelanger\Tapioca\Tests\Middleware;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
-use Jlbelanger\LaravelJsonApi\Middleware\BodyValidationMiddleware;
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Middleware\BodyValidationMiddleware;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class BodyValidationMiddlewareTest extends TestCase
 {

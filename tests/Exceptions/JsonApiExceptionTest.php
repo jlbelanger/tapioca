@@ -1,9 +1,9 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Exceptions;
+namespace Jlbelanger\Tapioca\Tests\Exceptions;
 
-use Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException;
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Exceptions\JsonApiException;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class JsonApiExceptionTest extends TestCase
 {

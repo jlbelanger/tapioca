@@ -1,14 +1,14 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models;
+namespace Jlbelanger\Tapioca\Tests\Dummy\App\Models;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Tag;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\Database\Factories\ArticleFactory;
-use Jlbelanger\LaravelJsonApi\Traits\Resource;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Tag;
+use Jlbelanger\Tapioca\Tests\Dummy\Database\Factories\ArticleFactory;
+use Jlbelanger\Tapioca\Traits\Resource;
 
 class Article extends Model
 {

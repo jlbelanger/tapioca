@@ -1,15 +1,15 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests;
+namespace Jlbelanger\Tapioca\Tests;
 
-use Jlbelanger\LaravelJsonApi\LaravelJsonApiServiceProvider;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\AlbumSong;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Article;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\ArticleTag;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Artist;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Song;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Tag;
+use Jlbelanger\Tapioca\TapiocaServiceProvider;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\AlbumSong;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Article;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\ArticleTag;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Artist;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Song;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Tag;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use ReflectionClass;
 
@@ -24,7 +24,7 @@ abstract class TestCase extends BaseTestCase
 	protected function getPackageProviders($app)
 	{
 		return [
-			LaravelJsonApiServiceProvider::class,
+			TapiocaServiceProvider::class,
 		];
 	}
 

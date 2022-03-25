@@ -1,12 +1,12 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Helpers;
+namespace Jlbelanger\Tapioca\Tests\Helpers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException;
-use Jlbelanger\LaravelJsonApi\Helpers\FilterHelper;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Exceptions\JsonApiException;
+use Jlbelanger\Tapioca\Helpers\FilterHelper;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class FilterHelperTest extends TestCase
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Exceptions;
+namespace Jlbelanger\Tapioca\Tests\Exceptions;
 
-use Jlbelanger\LaravelJsonApi\Exceptions\ValidationException;
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Exceptions\ValidationException;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class ValidationExceptionTest extends TestCase
 {

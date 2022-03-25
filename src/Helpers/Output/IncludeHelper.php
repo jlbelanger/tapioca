@@ -1,11 +1,11 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Helpers\Output;
+namespace Jlbelanger\Tapioca\Helpers\Output;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Jlbelanger\LaravelJsonApi\Helpers\Utilities;
+use Jlbelanger\Tapioca\Helpers\Utilities;
 
 class IncludeHelper
 {

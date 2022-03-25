@@ -1,8 +1,8 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Helpers\Input;
+namespace Jlbelanger\Tapioca\Helpers\Input;
 
-use Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException;
+use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 
 class FieldsHelper
 {

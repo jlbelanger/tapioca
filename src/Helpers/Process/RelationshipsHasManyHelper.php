@@ -1,14 +1,14 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Helpers\Process;
+namespace Jlbelanger\Tapioca\Helpers\Process;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
-use Jlbelanger\LaravelJsonApi\Exceptions\JsonApiException;
-use Jlbelanger\LaravelJsonApi\Helpers\Input\DataHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Process\AttributesHelper;
-use Jlbelanger\LaravelJsonApi\Helpers\Utilities;
+use Jlbelanger\Tapioca\Exceptions\JsonApiException;
+use Jlbelanger\Tapioca\Helpers\Input\DataHelper;
+use Jlbelanger\Tapioca\Helpers\Process\AttributesHelper;
+use Jlbelanger\Tapioca\Helpers\Utilities;
 
 class RelationshipsHasManyHelper
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Dummy\Database\Factories;
+namespace Jlbelanger\Tapioca\Tests\Dummy\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Article;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\ArticleTag;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Tag;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Article;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\ArticleTag;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Tag;
 
 class ArticleTagFactory extends Factory
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Dummy\Database\Factories;
+namespace Jlbelanger\Tapioca\Tests\Dummy\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Album;
-use Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Artist;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Artist;
 
 class AlbumFactory extends Factory
 {

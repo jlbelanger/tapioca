@@ -1,17 +1,17 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Tests\Helpers;
+namespace Jlbelanger\Tapioca\Tests\Helpers;
 
-use Jlbelanger\LaravelJsonApi\Helpers\Utilities;
-use Jlbelanger\LaravelJsonApi\Tests\TestCase;
+use Jlbelanger\Tapioca\Helpers\Utilities;
+use Jlbelanger\Tapioca\Tests\TestCase;
 
 class UtilitiesTest extends TestCase
 {
 	public function testGetClassNameFromType()
 	{
-		$this->assertSame('Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\EventType', Utilities::getClassNameFromType('event-types'));
-		$this->assertSame('Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\Quiz', Utilities::getClassNameFromType('quizzes'));
-		$this->assertSame('Jlbelanger\LaravelJsonApi\Tests\Dummy\App\Models\User', Utilities::getClassNameFromType('users'));
+		$this->assertSame('Jlbelanger\Tapioca\Tests\Dummy\App\Models\EventType', Utilities::getClassNameFromType('event-types'));
+		$this->assertSame('Jlbelanger\Tapioca\Tests\Dummy\App\Models\Quiz', Utilities::getClassNameFromType('quizzes'));
+		$this->assertSame('Jlbelanger\Tapioca\Tests\Dummy\App\Models\User', Utilities::getClassNameFromType('users'));
 	}
 
 	public function testIsTempId()

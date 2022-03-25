@@ -1,9 +1,9 @@
 <?php
 
-namespace Jlbelanger\LaravelJsonApi\Controllers;
+namespace Jlbelanger\Tapioca\Controllers;
 
-use Jlbelanger\LaravelJsonApi\Controllers\ResourceController;
-use Jlbelanger\LaravelJsonApi\Middleware\AuthorizeMiddleware;
+use Jlbelanger\Tapioca\Controllers\ResourceController;
+use Jlbelanger\Tapioca\Middleware\AuthorizeMiddleware;
 
 class AuthorizedResourceController extends ResourceController
 {
