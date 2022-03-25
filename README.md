@@ -6,6 +6,8 @@ There are other Laravel packages that already do the same thing, and they probab
 
 ## Install
 
+**Warning: This package is still a work-in-progress. Use at your own risk.**
+
 Add to `composer.json`:
 
 ``` js
@@ -48,6 +50,7 @@ Link the routes to the controllers in `routes/api.php`:
 use Illuminate\Support\Facades\Route;
 use Jlbelanger\Tapioca\Exceptions\NotFoundException;
 
+// Add 'auth:sanctum' to the middleware if using AuthorizedResourceController.
 Route::group(['middleware' => ['api']], function () {
 	Route::apiResources([
 		'users' => '\App\Http\Controllers\UserController',
@@ -99,6 +102,40 @@ public function register()
 	$this->renderable(function (\Symfony\Component\HttpKernel\Exception\HttpException $e) {
 		return response()->json(['errors' => [['title' => $e->getMessage(), 'status' => $e->getStatusCode()]]], $e->getStatusCode());
 	});
+}
+```
+
+Update `app/Http/Middleware/Authenticate.php`:
+
+``` php
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Jlbelanger\Tapioca\Exceptions\NotFoundException;
+
+class Authenticate extends Middleware
+{
+	/**
+	 * Handles an incoming request.
+	 *
+	 * @param  Request     $request
+	 * @param  Closure     $next
+	 * @param  string|null $guard
+	 * @return mixed
+	 */
+	public function handle(Request $request, Closure $next, $guard = null)
+	{
+		if (!Auth::guard($guard)->check()) {
+			throw NotFoundException::generate();
+		}
+
+		return $next($request);
+	}
 }
 ```
 
