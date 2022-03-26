@@ -28,56 +28,6 @@ php artisan vendor:publish --provider="Jlbelanger\Tapioca\TapiocaServiceProvider
 
 ## Setup
 
-Each resource needs a controller. The controller needs to extend `ResourceController` (or `AuthorizedResourceController` if you are using Sanctum):
-
-``` php
-<?php
-
-namespace App\Http\Controllers;
-
-use Jlbelanger\Tapioca\Controllers\ResourceController;
-
-class UserController extends ResourceController
-{
-}
-```
-
-Link the routes to the controllers in `routes/api.php`:
-
-``` php
-<?php
-
-use Illuminate\Support\Facades\Route;
-use Jlbelanger\Tapioca\Exceptions\NotFoundException;
-
-// Add 'auth:sanctum' to the middleware if using AuthorizedResourceController.
-Route::group(['middleware' => ['api']], function () {
-	Route::apiResources([
-		'users' => '\App\Http\Controllers\UserController',
-	]);
-});
-
-Route::fallback(function () {
-	throw NotFoundException::generate();
-});
-```
-
-Add the `Resource` trait to each model:
-
-``` php
-<?php
-
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-use Jlbelanger\Tapioca\Traits\Resource;
-
-class User extends Model
-{
-	use Resource;
-}
-```
-
 Add the following to the `dontReport` property in `app/Exceptions/Handler.php`:
 
 ``` php
@@ -137,6 +87,71 @@ class Authenticate extends Middleware
 		return $next($request);
 	}
 }
+```
+
+Add the following at the ends of `routes/api.php`:
+
+``` php
+Route::fallback(function () {
+	throw \Jlbelanger\Tapioca\Exceptions\NotFoundException::generate();
+});
+```
+
+Then, you can either create each resource automatically or manually.
+
+### Option A: Automatically
+
+To automatically generate a controller, model, and route, run the following command (replacing "User" with the name of the resource):
+
+``` bash
+php artisan make:tapioca User
+```
+
+### Option B: Manually
+
+The controller must extend `ResourceController` (or `AuthorizedResourceController` if you are using Sanctum):
+
+``` php
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use Jlbelanger\Tapioca\Controllers\ResourceController;
+
+class UserController extends ResourceController
+{
+	// Additional routes can be defined here. Otherwise, the controller should be empty.
+}
+```
+
+The model must include the `Resource` trait:
+
+``` php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Jlbelanger\Tapioca\Traits\Resource;
+
+class User extends Model
+{
+	use Resource;
+}
+```
+
+The route must be defined in `routes/api.php` (optionally including `'auth:sanctum'` in the middleware if you are using Sanctum):
+
+``` php
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+Route::apiResource('users', '\App\Http\Controllers\Api\UserController')->middleware(['api']);
+
+Route::fallback(function () {
+	throw \Jlbelanger\Tapioca\Exceptions\NotFoundException::generate();
+});
 ```
 
 ## Usage

@@ -3,6 +3,7 @@
 namespace Jlbelanger\Tapioca;
 
 use Illuminate\Support\ServiceProvider;
+use Jlbelanger\Tapioca\Console\Generate;
 
 class TapiocaServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,8 @@ class TapiocaServiceProvider extends ServiceProvider
 			$this->publishes([
 				__DIR__ . '/../config/config.php' => config_path('tapioca.php'),
 			], 'config');
+
+			$this->commands([Generate::class]);
 		}
 	}
 }
