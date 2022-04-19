@@ -38,9 +38,7 @@ class DataRelationshipsHelper
 		if (!is_array($relationships)) {
 			throw JsonApiException::generate([
 				'title' => "'relationships' must be an object.",
-				'detail' => $isIncluded
-					? 'eg. {"included": [{"relationships": {}}]}'
-					: 'eg. {"data": {"relationships": {}}}',
+				'detail' => $isIncluded ? 'eg. {"included": [{"relationships": {}}]}' : 'eg. {"data": {"relationships": {}}}',
 				'source' => [
 					'pointer' => '/' . $prefix . '/relationships',
 				],
@@ -52,12 +50,13 @@ class DataRelationshipsHelper
 				continue;
 			}
 
+			$detailIncluded = 'eg. {"included": [{"relationships": {"' . $key . '": {"data": {"id": "1", "type": "foo"}}}]}';
+			$detail = 'eg. {"data": {"relationships": {"' . $key . '": {"data": {"id": "1", "type": "foo"}}}}';
+
 			if (!is_array($value)) {
 				throw JsonApiException::generate([
 					'title' => "'$key' must be an object.",
-					'detail' => $isIncluded
-						? 'eg. {"included": [{"relationships": {"' . $key . '": {"data": {"id": "1", "type": "foo"}}}}]'
-						: 'eg. {"data": {"relationships": {"' . $key . '": {"data": {"id": "1", "type": "foo"}}}}',
+					'detail' => $isIncluded ? $detailIncluded : $detail,
 					'source' => [
 						'pointer' => '/' . $prefix . '/relationships/' . $key,
 					],
@@ -67,9 +66,7 @@ class DataRelationshipsHelper
 			if (!array_key_exists('data', $value)) {
 				throw JsonApiException::generate([
 					'title' => "'$key' must contain a 'data' key.",
-					'detail' => $isIncluded
-						? 'eg. {"included": [{"relationships": {"' . $key . '": {"data": {"id": "1", "type": "foo"}}}]}'
-						: 'eg. {"data": {"relationships": {"' . $key . '": {"data": {"id": "1", "type": "foo"}}}}',
+					'detail' => $isIncluded ? $detailIncluded : $detail,
 					'source' => [
 						'pointer' => '/' . $prefix . '/relationships/' . $key,
 					],
@@ -81,9 +78,7 @@ class DataRelationshipsHelper
 				if (!array_key_exists('id', $value['data'])) {
 					throw JsonApiException::generate([
 						'title' => "'$key' must contain an 'id' key.",
-						'detail' => $isIncluded
-							? 'eg. {"included": [{"relationships": {"' . $key . '": {"data": {"id": "1", "type": "foo"}}}]}'
-							: 'eg. {"data": {"relationships": {"' . $key . '": {"data": {"id": "1", "type": "foo"}}}}',
+						'detail' => $isIncluded ? $detailIncluded : $detail,
 						'source' => [
 							'pointer' => '/' . $prefix . '/relationships/' . $key . '/data,
 						],
@@ -93,9 +88,7 @@ class DataRelationshipsHelper
 				if (!array_key_exists('type', $value['data'])) {
 					throw JsonApiException::generate([
 						'title' => "'$key' must contain a 'type' key.",
-						'detail' => $isIncluded
-							? 'eg. {"included": [{"relationships": {"' . $key . '": {"data": {"id": "1", "type": "foo"}}}]}'
-							: 'eg. {"data": {"relationships": {"' . $key . '": {"data": {"id": "1", "type": "foo"}}}}',
+						'detail' => $isIncluded ? $detailIncluded : $detail,
 						'source' => [
 							'pointer' => '/' . $prefix . '/relationships/' . $key . '/data,
 						],

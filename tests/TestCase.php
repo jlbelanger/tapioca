@@ -36,7 +36,7 @@ abstract class TestCase extends BaseTestCase
 		return $method->invokeArgs($obj, $args);
 	}
 
-	protected function createRecords($records) : array
+	protected function createRecords($records) : array // phpcs:ignore Generic.Metrics.NestingLevel.TooHigh
 	{
 		$output = [];
 

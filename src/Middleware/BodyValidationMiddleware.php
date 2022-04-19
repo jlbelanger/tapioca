@@ -9,12 +9,13 @@ class BodyValidationMiddleware
 {
 	/**
 	 * Handles incoming requests.
+	 * TODO: Fix cyclomatic complexity.
 	 *
 	 * @param  Request $request
 	 * @param  Closure $next
 	 * @return mixed
 	 */
-	public function handle(Request $request, Closure $next)
+	public function handle(Request $request, Closure $next) // phpcs:ignore Generic.Metrics.CyclomaticComplexity.TooHigh
 	{
 		$method = $request->method();
 		if (!in_array($method, ['PUT', 'POST'])) {

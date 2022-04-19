@@ -37,9 +37,7 @@ class DataAttributesHelper
 		if (!is_array($attributes)) {
 			throw JsonApiException::generate([
 				'title' => "'attributes' must be an object.",
-				'detail' => $isIncluded
-					? 'eg. {"included": [{"attributes": {}}]}'
-					: 'eg. {"data": {"attributes": {}}}',
+				'detail' => $isIncluded ? 'eg. {"included": [{"attributes": {}}]}' : 'eg. {"data": {"attributes": {}}}',
 				'source' => [
 					'pointer' => '/' . $prefix . '/attributes',
 				],

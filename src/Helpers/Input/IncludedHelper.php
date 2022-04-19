@@ -72,7 +72,7 @@ class IncludedHelper
 			$className = Utilities::getClassNameFromType($record['type']);
 			if (!class_exists($className)) {
 				throw JsonApiException::generate([
-					'title' => "Type '" . $record['type'] .  "' is invalid.",
+					'title' => "Type '" . $record['type'] . "' is invalid.",
 					'source' => [
 						'pointer' => '/included/' . $i . '/type',
 					],
