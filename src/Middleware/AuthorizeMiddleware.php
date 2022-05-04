@@ -5,6 +5,7 @@ namespace Jlbelanger\Tapioca\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 use Jlbelanger\Tapioca\Exceptions\NotFoundException;
 use Jlbelanger\Tapioca\Helpers\Utilities;
 
@@ -17,6 +18,7 @@ class AuthorizeMiddleware
 	 * @param  Closure $next
 	 * @return mixed
 	 */
+	// phpcs:ignore Generic.Metrics.CyclomaticComplexity.TooHigh
 	public function handle(Request $request, Closure $next)
 	{
 		$method = $request->method();
@@ -29,11 +31,19 @@ class AuthorizeMiddleware
 		$id = $request->segment($i + 1);
 		$className = Utilities::getClassNameFromType($path);
 		$model = new $className;
-		$user = Auth::guard('sanctum')->user();
 		$action = null;
+
+		$user = Auth::guard('sanctum')->user();
+		if (!$user) {
+			throw NotFoundException::generate();
+		}
 
 		if ($id) {
 			$record = $model->find($id);
+			if (!$record) {
+				throw NotFoundException::generate();
+			}
+
 			if ($method === 'GET') {
 				$action = 'view';
 			} elseif ($method === 'PUT') {
@@ -42,8 +52,14 @@ class AuthorizeMiddleware
 				$action = 'delete';
 			}
 
-			if (!$user || !$record || !$user->can($action, $record)) {
+			if (!$user->can('view', $record)) {
 				throw NotFoundException::generate();
+			}
+
+			if ($action !== 'view' && !$user->can($action, $record)) {
+				throw JsonApiException::generate([
+					'title' => 'You do not have permission to ' . $action . ' this record.',
+				], 403);
 			}
 		} else {
 			if ($method === 'GET') {
@@ -52,7 +68,7 @@ class AuthorizeMiddleware
 				$action = 'create';
 			}
 
-			if (!$user || !$user->can($action, $model)) {
+			if (!$user->can($action, $model)) {
 				throw NotFoundException::generate();
 			}
 		}
