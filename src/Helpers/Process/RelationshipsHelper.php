@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 use Jlbelanger\Tapioca\Helpers\Process\RelationshipsHasManyHelper;
@@ -69,7 +70,11 @@ class RelationshipsHelper
 
 		$addIds = array_values(array_diff($newIds, $existingIds));
 		if (!empty($addIds)) {
-			$existing->attach($addIds);
+			$attributes = [];
+			if ($existing->createdAt()) {
+				$attributes[$existing->createdAt()] = Date::now();
+			}
+			$existing->attach($addIds, $attributes);
 		}
 
 		return [
