@@ -35,7 +35,7 @@ trait Resource
 	 */
 	protected function dataType() : string
 	{
-		return str_replace('_', '-', $this->table);
+		return str_replace('_', '-', $this->getTable());
 	}
 
 	/**
