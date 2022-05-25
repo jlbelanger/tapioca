@@ -209,6 +209,12 @@ GET /users?sort=username,email
 GET /articles?sort=user.username
 ```
 
+## Examples
+
+- [Corrieography API](https://github.com/jlbelanger/corrie)
+- [Glick API](https://github.com/jlbelanger/glick-api)
+- [Jenny's Wardrobe API](https://github.com/jlbelanger/wardrobe)
+
 ## Development
 
 ### Requirements
