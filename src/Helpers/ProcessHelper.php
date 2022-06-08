@@ -43,6 +43,20 @@ class ProcessHelper
 	{
 		DB::beginTransaction();
 
+		$files = $req->getFiles();
+		if (!empty($files)) {
+			foreach ($files as $key => $file) {
+				if (empty($file)) {
+					$filename = null;
+				} else {
+					$filename = $record->uploadedFilename($key, $file->getClientOriginalName(), $req->getData());
+					$pathInfo = pathinfo($filename);
+					$file->move(public_path($pathInfo['dirname']), $pathInfo['basename']);
+				}
+				$req->setDataAttribute($key, $filename);
+			}
+		}
+
 		list($record, $data) = AttributesHelper::process($record, $req, $isUpdate);
 
 		$included = self::normalizeIncludedRecords($req->getIncluded(), $record);
@@ -55,17 +69,6 @@ class ProcessHelper
 
 		if (!empty($data['meta'])) {
 			$record->updateMeta($data['meta']);
-		}
-
-		$files = $req->getFiles();
-		if (!empty($files)) {
-			foreach ($files as $key => $file) {
-				$filename = $record->uploadedFilename($key, $file->getClientOriginalName());
-				$pathInfo = pathinfo($filename);
-				$file->move(public_path($pathInfo['dirname']), $pathInfo['basename']);
-				$record->$key = $filename;
-			}
-			$record->save();
 		}
 
 		DB::commit();
