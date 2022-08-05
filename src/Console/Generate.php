@@ -64,7 +64,12 @@ class Generate extends Command
 		$path = $this->laravel->basePath() . '/app/Http/Controllers/' . $name . '.php';
 		$this->replaceInFile($path, ' extends Controller', 'Controller extends \Jlbelanger\Tapioca\Controllers\ResourceController');
 		$this->replaceInFile($path, '\Controllers;', '\Controllers\Api;');
-		rename($path, $this->laravel->basePath() . '/app/Http/Controllers/Api/' . $name . 'Controller.php');
+
+		$folder = $this->laravel->basePath() . '/app/Http/Controllers/Api';
+		if (!is_dir($folder)) {
+			mkdir($folder);
+		}
+		rename($path, $folder . '/' . $name . 'Controller.php');
 	}
 
 	/**
