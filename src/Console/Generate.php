@@ -80,7 +80,7 @@ class Generate extends Command
 	protected function addRoute(string $routeName, string $name) : void
 	{
 		$this->info('Adding route...');
-		$line = "Route::apiResource('" . $routeName . "', '\App\Http\Controllers\Api\\" . $name . "Controller')->middleware(['api']);";
+		$line = "Route::apiResource('" . $routeName . "', \App\Http\Controllers\Api\\" . $name . "Controller::class)->middleware(['api']);";
 		$path = $this->laravel->basePath() . '/routes/api.php';
 		$this->appendLineToFile($path, $line);
 	}

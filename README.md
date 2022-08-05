@@ -147,7 +147,7 @@ The route must be defined in `routes/api.php` (optionally including `'auth:sanct
 
 use Illuminate\Support\Facades\Route;
 
-Route::apiResource('users', '\App\Http\Controllers\Api\UserController')->middleware(['api']);
+Route::apiResource('users', \App\Http\Controllers\Api\UserController::class)->middleware(['api']);
 
 Route::fallback(function () {
 	throw \Jlbelanger\Tapioca\Exceptions\NotFoundException::generate();
