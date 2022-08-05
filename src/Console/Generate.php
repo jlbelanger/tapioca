@@ -23,7 +23,7 @@ class Generate extends Command
 	protected $description = 'Create a new Tapioca resource';
 
 	/**
-	 * Execute the console command.
+	 * Executes the console command.
 	 *
 	 * @return integer
 	 */
