@@ -48,10 +48,10 @@ class ResourceController extends Controller
 	 */
 	public function store(Request $request) : JsonResponse
 	{
-		$record = $this->model();
+		$record = $this->model($request);
 
 		// Validate the record.
-		$req = new JsonApiRequest('store', $request, $this->model(), $record);
+		$req = new JsonApiRequest('store', $request, $this->model($request), $record);
 		$errors = $record->validate($req->getData(), $request->method());
 		if ($errors) {
 			throw ValidationException::generate($errors);
@@ -133,9 +133,10 @@ class ResourceController extends Controller
 	}
 
 	/**
+	 * @param  Request $request
 	 * @return Model
 	 */
-	protected function model() : Model
+	protected function model(Request $request = null) : Model
 	{
 		$className = get_class($this);
 		$className = explode('\\', $className);
