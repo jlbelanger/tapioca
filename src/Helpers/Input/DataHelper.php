@@ -60,4 +60,20 @@ class DataHelper
 			], 400);
 		}
 	}
+
+	/**
+	 * @param  array $data
+	 * @return array
+	 */
+	public static function convertEmptyStringsToNull(array $data) : array
+	{
+		foreach ($data as $key => $value) {
+			if (is_string($value) && $value === '') {
+				$data[$key] = null;
+			} elseif (is_array($value)) {
+				$data[$key] = self::convertEmptyStringsToNull($data[$key]);
+			}
+		}
+		return $data;
+	}
 }
