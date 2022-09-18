@@ -58,6 +58,19 @@ class JsonApiRequest
 			$data = !empty($body['data']) ? $body['data'] : null;
 			$included = !empty($body['included']) ? $body['included'] : null;
 			$files = json_decode($request->input('files'), true);
+
+			$class = 'Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull';
+			$routeMiddleware = app()->get('router')->gatherRouteMiddleware($request->route());
+			if ($data || $included) {
+				if (app()->make(\Illuminate\Contracts\Http\Kernel::class)->hasMiddleware($class) || in_array($class, $routeMiddleware)) {
+					if ($data) {
+						$data = DataHelper::convertEmptyStringsToNull($data);
+					}
+					if ($included) {
+						$included = DataHelper::convertEmptyStringsToNull($included);
+					}
+				}
+			}
 		} else {
 			$data = $request->input('data');
 			$included = $request->input('included');
