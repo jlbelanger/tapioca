@@ -212,6 +212,7 @@ GET /articles?sort=user.username
 ## Examples
 
 - [Corrieography API](https://github.com/jlbelanger/corrie)
+- [Food Tracker API](https://github.com/jlbelanger/food-api)
 - [Glick API](https://github.com/jlbelanger/glick-api)
 - [Jenny's Wardrobe API](https://github.com/jlbelanger/wardrobe)
 
