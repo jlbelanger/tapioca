@@ -167,7 +167,11 @@ trait Resource
 	public function uploadedFilename(string $key, string $filename) : string
 	{
 		$pathInfo = pathinfo($filename);
-		return '/uploads/' . $this->getTable() . '-' . $key . '/' . Str::random(8) . '.' . $pathInfo['extension'];
+		$extension = strtolower($pathInfo['extension']);
+		if ($extension === 'jpeg') {
+			$extension = 'jpg';
+		}
+		return '/uploads/' . $this->getTable() . '-' . $key . '/' . Str::random(8) . '.' . $extension;
 	}
 
 	/**
