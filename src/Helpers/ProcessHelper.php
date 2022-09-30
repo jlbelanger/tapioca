@@ -52,6 +52,7 @@ class ProcessHelper
 					$filename = $record->uploadedFilename($key, $file->getClientOriginalName(), $req->getData());
 					$pathInfo = pathinfo($filename);
 					$file->move(public_path($pathInfo['dirname']), $pathInfo['basename']);
+					$record->processFile($key, $filename);
 				}
 				$req->setDataAttribute($key, $filename);
 			}

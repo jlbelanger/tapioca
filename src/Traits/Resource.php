@@ -162,6 +162,15 @@ trait Resource
 	/**
 	 * @param  string $key
 	 * @param  string $filename
+	 * @return void
+	 */
+	public function processFile(string $key, string $filename) : void
+	{
+	}
+
+	/**
+	 * @param  string $key
+	 * @param  string $filename
 	 * @return string
 	 */
 	public function uploadedFilename(string $key, string $filename) : string
