@@ -13,7 +13,7 @@ use Jlbelanger\Tapioca\Helpers\Utilities;
 class RelationshipsHasManyHelper
 {
 	/**
-	 * Note: This is not in the JSON API spec.
+	 * Note: This is not in the JSON:API spec.
 	 *
 	 * @param  array   $relData
 	 * @param  HasMany $existing

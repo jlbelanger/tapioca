@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 class RelationshipsHasOneThroughHelper
 {
 	/**
-	 * Note: This is not in the JSON API spec.
+	 * Note: This is not in the JSON:API spec.
 	 *
 	 * @param  array         $relData
 	 * @param  HasOneThrough $existing

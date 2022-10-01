@@ -1,6 +1,6 @@
 {
 	"name": "jlbelanger/tapioca",
-	"description": "",
+	"description": "Laravel package for JSON:API.",
 	"version": "1.0.0",
 	"type": "library",
 	"license": "GPL-3.0-only",
