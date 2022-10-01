@@ -258,3 +258,5 @@ apt-get install php7.4-dev
 pecl install apfd
 echo "extension=apfd.so" >> /etc/php/7.4/fpm/php.ini
 ```
+
+Then restart PHP (eg. `service php7.4-fpm restart`)
