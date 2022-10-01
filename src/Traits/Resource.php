@@ -180,7 +180,7 @@ trait Resource
 		if ($extension === 'jpeg') {
 			$extension = 'jpg';
 		}
-		return '/uploads/' . $this->getTable() . '-' . $key . '/' . Str::random(8) . '.' . $extension;
+		return '/uploads/' . $this->getTable() . '-' . $key . '/' . strtolower(Str::random(8)) . '.' . $extension;
 	}
 
 	/**
