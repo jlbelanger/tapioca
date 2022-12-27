@@ -26,6 +26,9 @@
 			"Jlbelanger\\Tapioca\\Tests\\": "tests"
 		}
 	},
+	"config": {
+		"discard-changes" : true
+	},
 	"extra": {
 		"laravel": {
 			"providers": [
