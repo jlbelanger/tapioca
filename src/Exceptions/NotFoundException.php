@@ -7,12 +7,13 @@ use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 class NotFoundException
 {
 	/**
+	 * @param  string $title
 	 * @return JsonApiException
 	 */
-	public static function generate() : JsonApiException
+	public static function generate(string $title = 'URL does not exist.') : JsonApiException
 	{
 		$data = [
-			'title' => 'URL does not exist.',
+			'title' => $title,
 			'status' => '404',
 		];
 		return new JsonApiException(json_encode($data), 404);

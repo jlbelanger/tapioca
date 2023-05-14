@@ -35,13 +35,13 @@ class AuthorizeMiddleware
 
 		$user = Auth::guard('sanctum')->user();
 		if (!$user) {
-			throw NotFoundException::generate();
+			throw JsonApiException::generate([['title' => 'You are not logged in.', 'status' => '401']], 401);
 		}
 
 		if ($id) {
 			$record = $model->find($id);
 			if (!$record) {
-				throw NotFoundException::generate();
+				throw NotFoundException::generate('This record does not exist.');
 			}
 
 			if ($method === 'GET') {
@@ -53,7 +53,7 @@ class AuthorizeMiddleware
 			}
 
 			if (!$user->can('view', $record)) {
-				throw NotFoundException::generate();
+				throw NotFoundException::generate('This record does not exist.');
 			}
 
 			if ($action !== 'view' && !$user->can($action, $record)) {
@@ -69,7 +69,11 @@ class AuthorizeMiddleware
 			}
 
 			if (!$user->can($action, $model)) {
-				throw NotFoundException::generate();
+				if ($action === 'view') {
+					throw NotFoundException::generate('This record does not exist.');
+				} else {
+					throw NotFoundException::generate();
+				}
 			}
 		}
 

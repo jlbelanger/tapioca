@@ -52,6 +52,21 @@ public function register()
 	$this->renderable(function (\Symfony\Component\HttpKernel\Exception\HttpException $e) {
 		return response()->json(['errors' => [['title' => $e->getMessage(), 'status' => $e->getStatusCode()]]], $e->getStatusCode());
 	});
+
+	$this->renderable(function (\Throwable $e) {
+		$code = $e->getCode() ? $e->getCode() : 500;
+		$error = ['title' => 'There was an error connecting to the server.', 'status' => (string) $code];
+		if (config('app.debug')) {
+			$error['detail'] = $e->getMessage();
+			$error['meta'] = [
+				'exception' => get_class($e),
+				'file' => $e->getFile(),
+				'line' => $e->getLine(),
+				'trace' => $e->getTrace(),
+			];
+		}
+		return response()->json(['errors' => [$error]], $code);
+	});
 }
 ```
 
