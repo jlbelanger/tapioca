@@ -36,7 +36,7 @@ class Generate extends Command
 		$this->createController($name);
 		$this->addRoute($routeName, $name);
 
-		$this->info('Done: ' . env('APP_URL') . '/api/' . $routeName);
+		$this->info('Done: ' . config('app.url') . '/api/' . $routeName);
 
 		return 0;
 	}
