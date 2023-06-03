@@ -53,6 +53,10 @@ public function register()
 		return response()->json(['errors' => [['title' => $e->getMessage(), 'status' => $e->getStatusCode()]]], $e->getStatusCode());
 	});
 
+	$this->renderable(function (\Illuminate\Http\Exceptions\ThrottleRequestsException $e) {
+		return response()->json(['errors' => [['title' => 'Please wait before retrying.', 'status' => '429']]], 429);
+	});
+
 	$this->renderable(function (\Throwable $e) {
 		$code = $e->getCode() ? $e->getCode() : 500;
 		$error = ['title' => 'There was an error connecting to the server.', 'status' => (string) $code];
