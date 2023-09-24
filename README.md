@@ -1,27 +1,31 @@
 # Tapioca
 
-This packages allows you to use [JSON:API](https://jsonapi.org/) with [Laravel](https://laravel.com/).
+Tapioca is a Composer package that allows you to use [JSON:API](https://jsonapi.org/) with [Laravel](https://laravel.com/).
 
 There are other Laravel packages that already do the same thing, and they probably do it much better. I felt like the other packages had too much boilerplate though, and I wanted to re-use my Laravel models as resources. I also wanted to add some features that aren't technically JSON:API, like creating/updating a regular record and related/included records at the same time. And programming's kinda my thing, so I thought writing this could be fun. (Spoiler alert: it wasn't. Okay, maybe just a little.)
+
+## Features
+
+- Add/update/delete/view/view-all
+- Sparse fieldsets: `?fields[articles]=title`
+- Filter (with operation) `?filter[slug][eq]=foo`
+- Include relationships: `?include=user`
+- Pagination: `?page[size]=10&page[number]=1`
+- Sort: `?sort=-created_at,user.username`
+
+## Requirements
+
+- PHP 7.4+
+- [Laravel](https://laravel.com/) 8+
 
 ## Install
 
 **Warning: This package is still a work-in-progress. Use at your own risk.**
 
-Add to `composer.json`:
-
-``` js
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "git@github.com:jlbelanger/tapioca.git"
-		}
-	],
-```
-
 Run:
 
 ``` bash
+composer config repositories.tapioca vcs git@github.com:jlbelanger/tapioca.git
 composer require jlbelanger/tapioca @dev
 php artisan vendor:publish --provider="Jlbelanger\Tapioca\TapiocaServiceProvider" --tag="config"
 ```
