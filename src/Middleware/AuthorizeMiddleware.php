@@ -68,7 +68,11 @@ class AuthorizeMiddleware
 			}
 
 			if (!$user->can($action, $model)) {
-				abort(404, 'This record does not exist.');
+				if ($action === 'view') {
+					abort(404, 'This record does not exist.');
+				} else {
+					abort(404);
+				}
 			}
 		}
 
