@@ -6,7 +6,6 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Jlbelanger\Tapioca\Exceptions\JsonApiException;
-use Jlbelanger\Tapioca\Exceptions\NotFoundException;
 use Jlbelanger\Tapioca\Helpers\Utilities;
 
 class AuthorizeMiddleware
@@ -41,7 +40,7 @@ class AuthorizeMiddleware
 		if ($id) {
 			$record = $model->find($id);
 			if (!$record) {
-				throw NotFoundException::generate('This record does not exist.');
+				abort(404, 'This record does not exist.');
 			}
 
 			if ($method === 'GET') {
@@ -53,7 +52,7 @@ class AuthorizeMiddleware
 			}
 
 			if (!$user->can('view', $record)) {
-				throw NotFoundException::generate('This record does not exist.');
+				abort(404, 'This record does not exist.');
 			}
 
 			if ($action !== 'view' && !$user->can($action, $record)) {
@@ -69,11 +68,7 @@ class AuthorizeMiddleware
 			}
 
 			if (!$user->can($action, $model)) {
-				if ($action === 'view') {
-					throw NotFoundException::generate('This record does not exist.');
-				} else {
-					throw NotFoundException::generate();
-				}
+				abort(404, 'This record does not exist.');
 			}
 		}
 

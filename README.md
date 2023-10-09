@@ -89,7 +89,6 @@ use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Jlbelanger\Tapioca\Exceptions\NotFoundException;
 
 class Authenticate extends Middleware
 {
@@ -104,20 +103,12 @@ class Authenticate extends Middleware
 	public function handle(Request $request, Closure $next, $guard = null)
 	{
 		if (!Auth::guard($guard)->check()) {
-			throw NotFoundException::generate();
+			abort(404);
 		}
 
 		return $next($request);
 	}
 }
-```
-
-Add the following at the ends of `routes/api.php`:
-
-``` php
-Route::fallback(function () {
-	throw \Jlbelanger\Tapioca\Exceptions\NotFoundException::generate();
-});
 ```
 
 Then, you can either create each resource automatically or manually.
@@ -171,10 +162,6 @@ The route must be defined in `routes/api.php` (optionally including `'auth:sanct
 use Illuminate\Support\Facades\Route;
 
 Route::apiResource('users', \App\Http\Controllers\Api\UserController::class)->middleware(['api']);
-
-Route::fallback(function () {
-	throw \Jlbelanger\Tapioca\Exceptions\NotFoundException::generate();
-});
 ```
 
 ## Usage

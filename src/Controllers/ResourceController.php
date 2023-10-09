@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Jlbelanger\Tapioca\Exceptions\NotFoundException;
 use Jlbelanger\Tapioca\Exceptions\ValidationException;
 use Jlbelanger\Tapioca\Helpers\JsonApiRequest;
 use Jlbelanger\Tapioca\Helpers\ProcessHelper;
@@ -76,7 +75,7 @@ class ResourceController extends Controller
 	{
 		$record = $this->model()->find($id);
 		if (!$record) {
-			throw NotFoundException::generate('This record does not exist.');
+			abort(404, 'This record does not exist.');
 		}
 		$req = new JsonApiRequest('show', $request, $this->model(), $record);
 		return response()->json($req->output());
@@ -94,7 +93,7 @@ class ResourceController extends Controller
 		// Fetch the record.
 		$record = $this->model()->find($id);
 		if (!$record) {
-			throw NotFoundException::generate('This record does not exist.');
+			abort(404, 'This record does not exist.');
 		}
 
 		// Validate the record.
@@ -121,7 +120,7 @@ class ResourceController extends Controller
 		// Fetch the record.
 		$record = $this->model()->find($id);
 		if (!$record) {
-			throw NotFoundException::generate('This record does not exist.');
+			abort(404, 'This record does not exist.');
 		}
 
 		// Destroy the record.

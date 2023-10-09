@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Jlbelanger\Tapioca\Exceptions\NotFoundException;
 
 Route::group(['middleware' => ['api']], function () {
 	Route::apiResources([
@@ -11,8 +10,4 @@ Route::group(['middleware' => ['api']], function () {
 		'songs' => '\Jlbelanger\Tapioca\Tests\Dummy\App\Controllers\SongController',
 		'tags' => '\Jlbelanger\Tapioca\Tests\Dummy\App\Controllers\TagController',
 	]);
-});
-
-Route::fallback(function () {
-	throw NotFoundException::generate();
 });
