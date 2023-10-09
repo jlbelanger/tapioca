@@ -34,7 +34,7 @@ class Handler extends ExceptionHandler
 		});
 
 		$this->renderable(function (NotFoundHttpException $e) {
-			return response()->json(['errors' => [['title' => $e->getMessage() ?? 'URL does not exist.', 'status' => '404']]], 404);
+			return response()->json(['errors' => [['title' => $e->getMessage() ? $e->getMessage() : 'URL does not exist.', 'status' => '404']]], 404);
 		});
 
 		$this->renderable(function (ThrottleRequestsException $e) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
