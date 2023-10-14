@@ -105,7 +105,7 @@ class RelationshipsHasManyHelper
 			$includedData = self::find($included, $rel['id'], $rel['type']);
 			if ($isAdd && empty($includedData)) {
 				throw JsonApiException::generate([
-					'title' => "Record with id '" . $rel['id'] . "' and type '" . $rel['type'] . "' not found in 'included'.",
+					'title' => __("Record with id ':id' and type ':type' not found in 'included'.", ['id' => $rel['id'], 'type' => $rel['type']]),
 					'source' => [
 						'pointer' => "/data/relationships/$key",
 					],

@@ -37,8 +37,8 @@ class DataHelper
 	{
 		if (!is_array($data)) {
 			throw JsonApiException::generate([
-				'title' => "'data' must be an object.",
-				'detail' => 'eg. {"data": {}}',
+				'title' => __("':key' must be an object.", ['key' => 'data']),
+				'detail' => __('eg. :example', ['example' => '{"data": {}}']),
 			], 400);
 		}
 
@@ -56,7 +56,7 @@ class DataHelper
 		$disallowedKeys = array_diff($keys, $allowedKeys);
 		if (!empty($disallowedKeys)) {
 			throw JsonApiException::generate([
-				'title' => "'data' contains disallowed keys: '" . implode("', '", $disallowedKeys) . "'.",
+				'title' => __("':key' contains disallowed keys: :list.", ['key' => 'data', 'list' => "'" . implode("', '", $disallowedKeys) . "'"]),
 			], 400);
 		}
 	}

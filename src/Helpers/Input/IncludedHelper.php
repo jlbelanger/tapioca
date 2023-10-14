@@ -40,8 +40,8 @@ class IncludedHelper
 	{
 		if (!is_array($included) || Arr::isAssoc($included)) {
 			throw JsonApiException::generate([
-				'title' => "'included' must be an array.",
-				'detail' => 'eg. {"included": []}',
+				'title' => __("':key' must be an array.", ['key' => 'included']),
+				'detail' => __('eg. :example', ['example' => '{"included": []}']),
 				'source' => [
 					'pointer' => '/included',
 				],
@@ -51,8 +51,8 @@ class IncludedHelper
 		foreach ($included as $i => $record) {
 			if (empty($record['id'])) {
 				throw JsonApiException::generate([
-					'title' => "Included records must contain 'id' key.",
-					'detail' => 'eg. {"included": [{"id": "1", "type": "foo"}]}',
+					'title' => __("Included records must contain ':key' key.", ['key' => 'id']),
+					'detail' => __('eg. :example', ['example' => '{"included": [{"id": "1", "type": "foo"}]}']),
 					'source' => [
 						'pointer' => '/included/' . $i,
 					],
@@ -61,8 +61,8 @@ class IncludedHelper
 
 			if (empty($record['type'])) {
 				throw JsonApiException::generate([
-					'title' => "Included records must contain 'type' key.",
-					'detail' => 'eg. {"included": [{"id": "1", "type": "foo"}]}',
+					'title' => __("Included records must contain ':key' key.", ['key' => 'type']),
+					'detail' => __('eg. :example', ['example' => '{"included": [{"id": "1", "type": "foo"}]}']),
 					'source' => [
 						'pointer' => '/included/' . $i,
 					],
@@ -72,7 +72,7 @@ class IncludedHelper
 			$className = Utilities::getClassNameFromType($record['type']);
 			if (!class_exists($className)) {
 				throw JsonApiException::generate([
-					'title' => "Type '" . $record['type'] . "' is invalid.",
+					'title' => __("Type ':key' is invalid.", ['key' => $record['type']]),
 					'source' => [
 						'pointer' => '/included/' . $i . '/type',
 					],

@@ -28,7 +28,7 @@ class BodyValidationMiddleware
 		if (strpos($request->header('Content-Type'), 'multipart/form-data') === 0) {
 			if (!$request->has('json') || !$request->has('files')) {
 				$errors[] = [
-					'title' => "Multipart requests must contain a 'json' and a 'files' value.",
+					'title' => __("Multipart requests must contain a 'json' and a 'files' value."),
 					'status' => '400',
 				];
 				return response()->json(['errors' => $errors], 400);
@@ -37,7 +37,7 @@ class BodyValidationMiddleware
 			$input = json_decode($request->input('json'), true);
 			if (!is_array($input)) {
 				$errors[] = [
-					'title' => "'json' must be an object.",
+					'title' => __("':key' must be an object.", ['key' => 'json']),
 					'status' => '400',
 				];
 				return response()->json(['errors' => $errors], 400);
@@ -46,8 +46,8 @@ class BodyValidationMiddleware
 
 		if (!array_key_exists('data', $input)) {
 			$errors[] = [
-				'title' => "The body must contain a 'data' key.",
-				'detail' => 'eg. {"data": {"type": "foo"}}',
+				'title' => __("The body must contain a 'data' key."),
+				'detail' => __('eg. :example', ['example' => '{"data": {"type": "foo"}}']),
 				'status' => '400',
 			];
 			return response()->json(['errors' => $errors], 400);
@@ -56,8 +56,8 @@ class BodyValidationMiddleware
 		$bodyType = !empty($input['data']['type']) ? $input['data']['type'] : null;
 		if (!$bodyType) {
 			$errors[] = [
-				'title' => "'data' must contain a 'type' key.",
-				'detail' => 'eg. {"data": {"type": "foo"}}',
+				'title' => __("':key1' must contain ':key2' key.", ['key1' => 'data', 'key2' => 'type']),
+				'detail' => __('eg. :example', ['example' => '{"data": {"type": "foo"}}']),
 				'status' => '400',
 			];
 			return response()->json(['errors' => $errors], 400);
@@ -73,7 +73,7 @@ class BodyValidationMiddleware
 		$urlType = array_pop($segments);
 		if ($bodyType !== $urlType) {
 			$errors[] = [
-				'title' => "The type in the body ('" . $bodyType . "') does not match the type in the URL ('" . $urlType . "').",
+				'title' => __("The type in the body (':key1') does not match the type in the URL (':key2').", ['key1' => $bodyType, 'key2' => $urlType]),
 				'status' => '400',
 			];
 			return response()->json(['errors' => $errors], 400);
@@ -83,8 +83,8 @@ class BodyValidationMiddleware
 			$bodyId = !empty($input['data']['id']) ? $input['data']['id'] : null;
 			if (!$bodyId) {
 				$errors[] = [
-					'title' => "'data' must contain an 'id' key.",
-					'detail' => 'eg. {"data": {"id": "1", "type": "foo"}}',
+					'title' => __("':key1' must contain ':key2' key.", ['key1' => 'data', 'key2' => 'id']),
+					'detail' => __('eg. :example', ['example' => '{"data": {"id": "1", "type": "foo"}}']),
 					'status' => '400',
 				];
 				return response()->json(['errors' => $errors], 400);
@@ -92,7 +92,7 @@ class BodyValidationMiddleware
 
 			if ($bodyId !== $urlId) {
 				$errors[] = [
-					'title' => "The ID in the body ('" . $bodyId . "') does not match the ID in the URL ('" . $urlId . "').",
+					'title' => __("The ID in the body (':key1') does not match the ID in the URL (':key2').", ['key1' => $bodyId, 'key2' => $urlId]),
 					'status' => '400',
 				];
 				return response()->json(['errors' => $errors], 400);
@@ -101,8 +101,8 @@ class BodyValidationMiddleware
 			$bodyId = !empty($input['data']['id']) ? $input['data']['id'] : null;
 			if ($bodyId) {
 				$errors[] = [
-					'title' => "'data' cannot contain an 'id' key for POST requests.",
-					'detail' => 'eg. {"data": {"type": "foo"}}',
+					'title' => __("'data' cannot contain an 'id' key for POST requests."),
+					'detail' => __('eg. :example', ['example' => '{"data": {"type": "foo"}}']),
 					'status' => '400',
 				];
 				return response()->json(['errors' => $errors], 400);

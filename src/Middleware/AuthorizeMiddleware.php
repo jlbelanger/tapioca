@@ -34,13 +34,13 @@ class AuthorizeMiddleware
 
 		$user = Auth::guard('sanctum')->user();
 		if (!$user) {
-			throw JsonApiException::generate([['title' => 'You are not logged in.', 'status' => '401']], 401);
+			throw JsonApiException::generate([['title' => __('You are not logged in.'), 'status' => '401']], 401);
 		}
 
 		if ($id) {
 			$record = $model->find($id);
 			if (!$record) {
-				abort(404, 'This record does not exist.');
+				abort(404, __('This record does not exist.'));
 			}
 
 			if ($method === 'GET') {
@@ -52,12 +52,12 @@ class AuthorizeMiddleware
 			}
 
 			if (!$user->can('view', $record)) {
-				abort(404, 'This record does not exist.');
+				abort(404, __('This record does not exist.'));
 			}
 
 			if ($action !== 'view' && !$user->can($action, $record)) {
 				throw JsonApiException::generate([
-					'title' => 'You do not have permission to ' . $action . ' this record.',
+					'title' => __('You do not have permission to :action this record.', ['action' => $action]),
 				], 403);
 			}
 		} else {
@@ -69,7 +69,7 @@ class AuthorizeMiddleware
 
 			if (!$user->can($action, $model)) {
 				if ($action === 'view') {
-					abort(404, 'This record does not exist.');
+					abort(404, __('This record does not exist.'));
 				} else {
 					abort(404);
 				}

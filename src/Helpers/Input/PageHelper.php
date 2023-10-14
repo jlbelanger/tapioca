@@ -42,26 +42,26 @@ class PageHelper
 	{
 		if (!is_array($page)) {
 			throw JsonApiException::generate([
-				'title' => "Parameter 'page' must be an array.",
-				'detail' => 'eg. ?page[number]=1&page[size]=50',
+				'title' => __("Parameter ':key' must be an array.", ['key' => 'page']),
+				'detail' => __('eg. :example', ['example' => '?page[number]=1&page[size]=50']),
 			], 400);
 		}
 
 		if (!array_key_exists('size', $page)) {
 			throw JsonApiException::generate([
-				'title' => "Parameter 'page[size]' is not specified.",
+				'title' => __("Parameter ':key' is not specified.", ['key' => 'page[size]']),
 			], 400);
 		}
 
 		if ($page['number'] <= 0) {
 			throw JsonApiException::generate([
-				'title' => "Parameter 'page[number]' must be greater than 0.",
+				'title' => __("Parameter ':key' must be greater than 0.", ['key' => 'page[number]']),
 			], 400);
 		}
 
 		if ($page['size'] <= 0) {
 			throw JsonApiException::generate([
-				'title' => "Parameter 'page[size]' must be greater than 0.",
+				'title' => __("Parameter ':key' must be greater than 0.", ['key' => 'page[size]']),
 			], 400);
 		}
 	}

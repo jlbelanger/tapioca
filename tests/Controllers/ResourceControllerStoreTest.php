@@ -36,7 +36,7 @@ class ResourceControllerStoreTest extends TestCase
 				'expected' => [
 					'errors' => [
 						[
-							'title' => "'data' must contain a 'type' key.",
+							'title' => "'data' must contain 'type' key.",
 							'detail' => 'eg. {"data": {"type": "foo"}}',
 							'status' => '400',
 						],
@@ -53,7 +53,7 @@ class ResourceControllerStoreTest extends TestCase
 				'expected' => [
 					'errors' => [
 						[
-							'title' => "'data' must contain a 'type' key.",
+							'title' => "'data' must contain 'type' key.",
 							'detail' => 'eg. {"data": {"type": "foo"}}',
 							'status' => '400',
 						],
@@ -385,7 +385,7 @@ class ResourceControllerStoreTest extends TestCase
 	/**
 	 * @dataProvider storeProvider
 	 */
-	public function testStore($args = [])
+	public function testStore(array $args = [])
 	{
 		$records = $this->createRecords($args['records']);
 		$args['parameters'] = $this->replaceIds($args['parameters'], $records);

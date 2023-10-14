@@ -37,8 +37,8 @@ class FieldsHelper
 	{
 		if (!is_array($fields)) {
 			throw JsonApiException::generate([
-				'title' => "Parameter 'fields' must be an array.",
-				'detail' => 'eg. ?fields[foo]=bar',
+				'title' => __("Parameter ':key' must be an array.", ['key' => 'fields']),
+				'detail' => __('eg. :example', ['example' => '?fields[foo]=bar']),
 			], 400);
 		}
 

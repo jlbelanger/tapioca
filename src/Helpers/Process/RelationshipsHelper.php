@@ -36,7 +36,7 @@ class RelationshipsHelper
 				$result = RelationshipsHasOneThroughHelper::update($relData, $existing, $record);
 			} else {
 				throw JsonApiException::generate([
-					'title' => "Relationship type '$className' is not supported.",
+					'title' => __("Relationship type ':key' is not supported.", ['key' => $className]),
 					'source' => [
 						'pointer' => "/data/relationships/$key",
 					],

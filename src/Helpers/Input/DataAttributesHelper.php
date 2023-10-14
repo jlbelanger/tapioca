@@ -36,8 +36,8 @@ class DataAttributesHelper
 
 		if (!is_array($attributes)) {
 			throw JsonApiException::generate([
-				'title' => "'attributes' must be an object.",
-				'detail' => $isIncluded ? 'eg. {"included": [{"attributes": {}}]}' : 'eg. {"data": {"attributes": {}}}',
+				'title' => __("':key' must be an object.", ['key' => 'attributes']),
+				'detail' => __('eg. :example', ['example' => $isIncluded ? '{"included": [{"attributes": {}}]}' : '{"data": {"attributes": {}}}']),
 				'source' => [
 					'pointer' => '/' . $prefix . '/attributes',
 				],
@@ -47,7 +47,7 @@ class DataAttributesHelper
 		foreach ($attributes as $key => $value) {
 			if (!in_array($key, $whitelistedAttributes)) {
 				throw JsonApiException::generate([
-					'title' => "'$key' is not a valid attribute.",
+					'title' => __("':key' is not a valid attribute.", ['key' => $key]),
 					'source' => [
 						'pointer' => '/' . $prefix . '/attributes/' . $key,
 					],

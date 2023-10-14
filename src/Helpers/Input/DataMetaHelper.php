@@ -32,8 +32,8 @@ class DataMetaHelper
 
 		if (!is_array($meta)) {
 			throw JsonApiException::generate([
-				'title' => "'meta' must be an object.",
-				'detail' => $isIncluded ? 'eg. {"included": [{"meta": {}}]}' : 'eg. {"data": {"meta": {}}}',
+				'title' => __("':key' must be an object.", ['key' => 'meta']),
+				'detail' => __('eg. :example', ['example' => $isIncluded ? '{"included": [{"meta": {}}]}' : '{"data": {"meta": {}}}']),
 				'source' => [
 					'pointer' => '/' . $prefix . '/meta',
 				],

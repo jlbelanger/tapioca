@@ -37,8 +37,8 @@ class DataRelationshipsHelper
 
 		if (!is_array($relationships)) {
 			throw JsonApiException::generate([
-				'title' => "'relationships' must be an object.",
-				'detail' => $isIncluded ? 'eg. {"included": [{"relationships": {}}]}' : 'eg. {"data": {"relationships": {}}}',
+				'title' => __("':key' must be an object.", ['key' => 'relationships']),
+				'detail' => __('eg. :example', ['example' => $isIncluded ? '{"included": [{"relationships": {}}]}' : '{"data": {"relationships": {}}}']),
 				'source' => [
 					'pointer' => '/' . $prefix . '/relationships',
 				],
@@ -50,12 +50,12 @@ class DataRelationshipsHelper
 				continue;
 			}
 
-			$detailIncluded = 'eg. {"included": [{"relationships": {"' . $key . '": {"data": {"id": "1", "type": "foo"}}}]}';
-			$detail = 'eg. {"data": {"relationships": {"' . $key . '": {"data": {"id": "1", "type": "foo"}}}}';
+			$detailIncluded = __('eg. :example', ['example' => '{"included": [{"relationships": {"' . $key . '": {"data": {"id": "1", "type": "foo"}}}]}']);
+			$detail = __('eg. :example', ['example' => '{"data": {"relationships": {"' . $key . '": {"data": {"id": "1", "type": "foo"}}}}']);
 
 			if (!is_array($value)) {
 				throw JsonApiException::generate([
-					'title' => "'$key' must be an object.",
+					'title' => __("':key' must be an object.", ['key' => $key]),
 					'detail' => $isIncluded ? $detailIncluded : $detail,
 					'source' => [
 						'pointer' => '/' . $prefix . '/relationships/' . $key,
@@ -65,7 +65,7 @@ class DataRelationshipsHelper
 
 			if (!array_key_exists('data', $value)) {
 				throw JsonApiException::generate([
-					'title' => "'$key' must contain a 'data' key.",
+					'title' => __("':key1' must contain ':key2' key.", ['key1' => $key, 'key2' => 'data']),
 					'detail' => $isIncluded ? $detailIncluded : $detail,
 					'source' => [
 						'pointer' => '/' . $prefix . '/relationships/' . $key,
@@ -77,7 +77,7 @@ class DataRelationshipsHelper
 				// TODO: This won't work for to-many relationships.
 				if (!array_key_exists('id', $value['data'])) {
 					throw JsonApiException::generate([
-						'title' => "'$key' must contain an 'id' key.",
+						'title' => __("':key' must contain ':key2' key.", ['key1' => $key, 'key2' => 'id']),
 						'detail' => $isIncluded ? $detailIncluded : $detail,
 						'source' => [
 							'pointer' => '/' . $prefix . '/relationships/' . $key . '/data,
@@ -87,7 +87,7 @@ class DataRelationshipsHelper
 
 				if (!array_key_exists('type', $value['data'])) {
 					throw JsonApiException::generate([
-						'title' => "'$key' must contain a 'type' key.",
+						'title' => __("':key' must contain ':key2' key.", ['key1' => $key, 'key2' => 'type']),
 						'detail' => $isIncluded ? $detailIncluded : $detail,
 						'source' => [
 							'pointer' => '/' . $prefix . '/relationships/' . $key . '/data,
@@ -98,7 +98,7 @@ class DataRelationshipsHelper
 
 			if (!in_array($key, $whitelistedRelationships)) {
 				throw JsonApiException::generate([
-					'title' => "'$key' is not a valid relationship.",
+					'title' => __("':key' is not a valid relationship.", ['key' => $key]),
 					'source' => [
 						'pointer' => '/' . $prefix . '/relationships/' . $key,
 					],

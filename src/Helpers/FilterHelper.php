@@ -46,24 +46,24 @@ class FilterHelper
 	{
 		if (!is_array($filter)) {
 			throw JsonApiException::generate([
-				'title' => "Parameter 'filter' must be an array.",
-				'detail' => 'eg. ?filter[foo][eq]=bar',
+				'title' => __("Parameter ':key' must be an array.", ['key' => 'filter']),
+				'detail' => __('eg. :example', ['example' => '?filter[foo][eq]=bar']),
 			], 400);
 		}
 
 		foreach ($filter as $key => $data) {
 			if (!is_array($data)) {
 				throw JsonApiException::generate([
-					'title' => "Parameter 'filter[$key]' has missing operation.",
-					'detail' => 'eg. ?filter[foo][eq]=bar',
+					'title' => __("Parameter ':key' has missing operation.", ['key' => "filter[$key]"]),
+					'detail' => __('eg. :example', ['example' => '?filter[foo][eq]=bar']),
 				], 400);
 			}
 
 			foreach ($data as $op => $value) {
 				if (!array_key_exists($op, self::$filterOps)) {
 					throw JsonApiException::generate([
-						'title' => "Parameter 'filter[$key][$op]' has invalid operation.",
-						'detail' => 'Permitted operations: ' . implode(', ', array_keys(self::$filterOps)),
+						'title' => __("Parameter ':key' has invalid operation.", ['key' => "filter[$key][$op]"]),
+						'detail' => __('Permitted operations: :list', ['list' => implode(', ', array_keys(self::$filterOps))]),
 					], 400);
 				}
 			}

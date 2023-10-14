@@ -18,8 +18,8 @@ class IncludeHelper
 
 		if (!is_string($include)) {
 			throw JsonApiException::generate([
-				'title' => "Parameter 'include' must be a string.",
-				'detail' => 'eg. ?include=foo,bar',
+				'title' => __("Parameter ':key' must be a string.", ['key' => 'include']),
+				'detail' => __('eg. :example', ['example' => '?include=foo,bar']),
 			], 400);
 		}
 

@@ -44,7 +44,7 @@ class ResourceControllerUpdateTest extends TestCase
 				'expected' => [
 					'errors' => [
 						[
-							'title' => "'data' must contain a 'type' key.",
+							'title' => "'data' must contain 'type' key.",
 							'detail' => 'eg. {"data": {"type": "foo"}}',
 							'status' => '400',
 						],
@@ -65,7 +65,7 @@ class ResourceControllerUpdateTest extends TestCase
 				'expected' => [
 					'errors' => [
 						[
-							'title' => "'data' must contain a 'type' key.",
+							'title' => "'data' must contain 'type' key.",
 							'detail' => 'eg. {"data": {"type": "foo"}}',
 							'status' => '400',
 						],
@@ -110,7 +110,7 @@ class ResourceControllerUpdateTest extends TestCase
 				'expected' => [
 					'errors' => [
 						[
-							'title' => "'data' must contain an 'id' key.",
+							'title' => "'data' must contain 'id' key.",
 							'detail' => 'eg. {"data": {"id": "1", "type": "foo"}}',
 							'status' => '400',
 						],
@@ -753,7 +753,7 @@ class ResourceControllerUpdateTest extends TestCase
 	/**
 	 * @dataProvider updateProvider
 	 */
-	public function testUpdate($args = [])
+	public function testUpdate(array $args = [])
 	{
 		$records = $this->createRecords($args['records']);
 		$args['parameters'] = $this->replaceIds($args['parameters'], $records);

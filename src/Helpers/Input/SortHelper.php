@@ -33,8 +33,8 @@ class SortHelper
 	{
 		if (!is_string($sort)) {
 			throw JsonApiException::generate([
-				'title' => "Parameter 'sort' must be a string.",
-				'detail' => 'eg. ?sort=foo,-bar',
+				'title' => __("Parameter ':key' must be a string.", ['key' => 'sort']),
+				'detail' => __('eg. :example', ['example' => '?sort=foo,-bar']),
 			], 400);
 		}
 

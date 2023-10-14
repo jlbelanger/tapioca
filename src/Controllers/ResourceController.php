@@ -75,7 +75,7 @@ class ResourceController extends Controller
 	{
 		$record = $this->model()->find($id);
 		if (!$record) {
-			abort(404, 'This record does not exist.');
+			abort(404, __('This record does not exist.'));
 		}
 		$req = new JsonApiRequest('show', $request, $this->model(), $record);
 		return response()->json($req->output());
@@ -93,7 +93,7 @@ class ResourceController extends Controller
 		// Fetch the record.
 		$record = $this->model()->find($id);
 		if (!$record) {
-			abort(404, 'This record does not exist.');
+			abort(404, __('This record does not exist.'));
 		}
 
 		// Validate the record.
@@ -120,7 +120,7 @@ class ResourceController extends Controller
 		// Fetch the record.
 		$record = $this->model()->find($id);
 		if (!$record) {
-			abort(404, 'This record does not exist.');
+			abort(404, __('This record does not exist.'));
 		}
 
 		// Destroy the record.

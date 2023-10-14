@@ -107,7 +107,7 @@ class DataRelationshipsHelperTest extends TestCase
 					],
 				],
 				'whitelistedRelationships' => ['artist'],
-				'expectedMessage' => '{"title":"\'artist\' must contain a \'data\' key.","detail":"eg. {\"data\": {\"relationships\": {\"artist\": {\"data\": {\"id\": \"1\", \"type\": \"foo\"}}}}","source":{"pointer":"\/data\/relationships\/artist"}}',
+				'expectedMessage' => '{"title":"\'artist\' must contain \'data\' key.","detail":"eg. {\"data\": {\"relationships\": {\"artist\": {\"data\": {\"id\": \"1\", \"type\": \"foo\"}}}}","source":{"pointer":"\/data\/relationships\/artist"}}',
 			]],
 			'with missing id' => [[
 				'relationships' => [
