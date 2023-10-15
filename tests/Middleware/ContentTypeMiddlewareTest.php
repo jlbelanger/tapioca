@@ -9,7 +9,7 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class ContentTypeMiddlewareTest extends TestCase
 {
-	public function testHandle()
+	public function testHandle() : void
 	{
 		$request = new Request();
 		$response = (new ContentTypeMiddleware())->handle(

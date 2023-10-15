@@ -6,7 +6,7 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class AuthorizeMiddlewareTest extends TestCase
 {
-	public function testHandle()
+	public function testHandle() : void
 	{
 		$this->markTestIncomplete();
 	}

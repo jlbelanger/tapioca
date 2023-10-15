@@ -8,7 +8,7 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class SortHelperTest extends TestCase
 {
-	public function normalizeProvider()
+	public function normalizeProvider() : array
 	{
 		return [
 			'with an empty array and no default sort' => [[
@@ -57,13 +57,13 @@ class SortHelperTest extends TestCase
 	/**
 	 * @dataProvider normalizeProvider
 	 */
-	public function testNormalize($args)
+	public function testNormalize(array $args) : void
 	{
 		$output = SortHelper::normalize($args['sort'], $args['defaultSort']);
 		$this->assertSame($args['expected'], $output);
 	}
 
-	public function validateProvider()
+	public function validateProvider() : array
 	{
 		return [
 			'with an array' => [[
@@ -80,7 +80,7 @@ class SortHelperTest extends TestCase
 	/**
 	 * @dataProvider validateProvider
 	 */
-	public function testValidate($args)
+	public function testValidate(array $args) : void
 	{
 		if (!empty($args['expectedMessage'])) {
 			$this->expectException(JsonApiException::class);

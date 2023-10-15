@@ -8,7 +8,7 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class IncludedHelperTest extends TestCase
 {
-	public function normalizeProvider()
+	public function normalizeProvider() : array
 	{
 		return [
 			'with an empty array' => [[
@@ -46,13 +46,13 @@ class IncludedHelperTest extends TestCase
 	/**
 	 * @dataProvider normalizeProvider
 	 */
-	public function testNormalize($args)
+	public function testNormalize(array $args) : void
 	{
 		$output = IncludedHelper::normalize($args['included']);
 		$this->assertSame($args['expected'], $output);
 	}
 
-	public function validateProvider()
+	public function validateProvider() : array
 	{
 		return [
 			'with a string' => [[
@@ -103,7 +103,7 @@ class IncludedHelperTest extends TestCase
 	/**
 	 * @dataProvider validateProvider
 	 */
-	public function testValidate($args)
+	public function testValidate(array $args) : void
 	{
 		if (!empty($args['expectedMessage'])) {
 			$this->expectException(JsonApiException::class);

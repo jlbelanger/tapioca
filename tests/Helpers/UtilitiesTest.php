@@ -7,20 +7,20 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class UtilitiesTest extends TestCase
 {
-	public function testGetClassNameFromType()
+	public function testGetClassNameFromType() : void
 	{
 		$this->assertSame('Jlbelanger\Tapioca\Tests\Dummy\App\Models\EventType', Utilities::getClassNameFromType('event-types'));
 		$this->assertSame('Jlbelanger\Tapioca\Tests\Dummy\App\Models\Quiz', Utilities::getClassNameFromType('quizzes'));
 		$this->assertSame('Jlbelanger\Tapioca\Tests\Dummy\App\Models\User', Utilities::getClassNameFromType('users'));
 	}
 
-	public function testIsTempId()
+	public function testIsTempId() : void
 	{
 		$this->assertSame(true, Utilities::isTempId('temp-1'));
 		$this->assertSame(false, Utilities::isTempId('1'));
 	}
 
-	public function prettyAttributeNamesProvider()
+	public function prettyAttributeNamesProvider() : array
 	{
 		return [
 			[[
@@ -39,7 +39,7 @@ class UtilitiesTest extends TestCase
 	/**
 	 * @dataProvider prettyAttributeNamesProvider
 	 */
-	public function testPrettyAttributeNames($args)
+	public function testPrettyAttributeNames(array $args) : void
 	{
 		$output = Utilities::prettyAttributeNames($args['rules']);
 		$this->assertSame($args['expected'], $output);

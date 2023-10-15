@@ -7,7 +7,7 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class ValidatableTest extends TestCase
 {
-	public function validateProvider()
+	public function validateProvider() : array
 	{
 		return [
 			'with invalid data on create' => [[

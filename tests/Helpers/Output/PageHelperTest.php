@@ -11,7 +11,7 @@ class PageHelperTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function performProvider()
+	public function performProvider() : array
 	{
 		return [
 			'with no records' => [[
@@ -97,7 +97,7 @@ class PageHelperTest extends TestCase
 	/**
 	 * @dataProvider performProvider
 	 */
-	public function testPerform($args)
+	public function testPerform(array $args) : void
 	{
 		$this->createRecords($args['records']);
 		list($output, $meta) = PageHelper::perform((new Article())->newQuery(), $args['page']);

@@ -12,7 +12,7 @@ class FilterHelperTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function normalizeProvider()
+	public function normalizeProvider() : array
 	{
 		return [
 			'with an empty array and no default filter' => [[
@@ -106,13 +106,13 @@ class FilterHelperTest extends TestCase
 	/**
 	 * @dataProvider normalizeProvider
 	 */
-	public function testNormalize($args)
+	public function testNormalize(array $args) : void
 	{
 		$output = FilterHelper::normalize($args['filter'], $args['defaultFilter']);
 		$this->assertSame($args['expected'], $output);
 	}
 
-	public function validateProvider()
+	public function validateProvider() : array
 	{
 		return [
 			'with a string' => [[
@@ -147,7 +147,7 @@ class FilterHelperTest extends TestCase
 	/**
 	 * @dataProvider validateProvider
 	 */
-	public function testValidate($args)
+	public function testValidate(array $args) : void
 	{
 		if (!empty($args['expectedMessage'])) {
 			$this->expectException(JsonApiException::class);
@@ -158,7 +158,7 @@ class FilterHelperTest extends TestCase
 		$this->callPrivate(new FilterHelper, 'validate', [$args['filter']]);
 	}
 
-	public function performProvider()
+	public function performProvider() : array
 	{
 		return [
 			'with no records' => [[
@@ -187,13 +187,13 @@ class FilterHelperTest extends TestCase
 			'when filtering with ge' => [[
 				'records' => [
 					'albums' => [
-						['title' => 'a', 'release_date' => '1969'],
-						['title' => 'b', 'release_date' => '1970'],
-						['title' => 'c', 'release_date' => '1971'],
+						['title' => 'a', 'release_year' => '1969'],
+						['title' => 'b', 'release_year' => '1970'],
+						['title' => 'c', 'release_year' => '1971'],
 					],
 				],
 				'filter' => [
-					'release_date' => [
+					'release_year' => [
 						'ge' => '1970',
 					],
 				],
@@ -202,13 +202,13 @@ class FilterHelperTest extends TestCase
 			'when filtering with gt' => [[
 				'records' => [
 					'albums' => [
-						['title' => 'a', 'release_date' => '1969'],
-						['title' => 'b', 'release_date' => '1970'],
-						['title' => 'c', 'release_date' => '1971'],
+						['title' => 'a', 'release_year' => '1969'],
+						['title' => 'b', 'release_year' => '1970'],
+						['title' => 'c', 'release_year' => '1971'],
 					],
 				],
 				'filter' => [
-					'release_date' => [
+					'release_year' => [
 						'gt' => '1970',
 					],
 				],
@@ -217,13 +217,13 @@ class FilterHelperTest extends TestCase
 			'when filtering with le' => [[
 				'records' => [
 					'albums' => [
-						['title' => 'a', 'release_date' => '1969'],
-						['title' => 'b', 'release_date' => '1970'],
-						['title' => 'c', 'release_date' => '1971'],
+						['title' => 'a', 'release_year' => '1969'],
+						['title' => 'b', 'release_year' => '1970'],
+						['title' => 'c', 'release_year' => '1971'],
 					],
 				],
 				'filter' => [
-					'release_date' => [
+					'release_year' => [
 						'le' => '1970',
 					],
 				],
@@ -322,13 +322,13 @@ class FilterHelperTest extends TestCase
 			'when filtering with lt' => [[
 				'records' => [
 					'albums' => [
-						['title' => 'a', 'release_date' => '1969'],
-						['title' => 'b', 'release_date' => '1970'],
-						['title' => 'c', 'release_date' => '1971'],
+						['title' => 'a', 'release_year' => '1969'],
+						['title' => 'b', 'release_year' => '1970'],
+						['title' => 'c', 'release_year' => '1971'],
 					],
 				],
 				'filter' => [
-					'release_date' => [
+					'release_year' => [
 						'lt' => '1970',
 					],
 				],
@@ -366,12 +366,12 @@ class FilterHelperTest extends TestCase
 			'when filtering with null' => [[
 				'records' => [
 					'albums' => [
-						['title' => 'a', 'release_date' => null],
-						['title' => 'b', 'release_date' => '2020'],
+						['title' => 'a', 'release_year' => null],
+						['title' => 'b', 'release_year' => '2020'],
 					],
 				],
 				'filter' => [
-					'release_date' => [
+					'release_year' => [
 						'null' => '1',
 					],
 				],
@@ -380,12 +380,12 @@ class FilterHelperTest extends TestCase
 			'when filtering with notnull' => [[
 				'records' => [
 					'albums' => [
-						['title' => 'a', 'release_date' => null],
-						['title' => 'b', 'release_date' => '2020'],
+						['title' => 'a', 'release_year' => null],
+						['title' => 'b', 'release_year' => '2020'],
 					],
 				],
 				'filter' => [
-					'release_date' => [
+					'release_year' => [
 						'notnull' => '1',
 					],
 				],
@@ -417,7 +417,7 @@ class FilterHelperTest extends TestCase
 	/**
 	 * @dataProvider performProvider
 	 */
-	public function testPerform($args)
+	public function testPerform(array $args) : void
 	{
 		$this->createRecords($args['records']);
 		$output = FilterHelper::perform((new Album())->newQuery(), $args['filter']);

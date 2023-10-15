@@ -6,32 +6,32 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class ResourceTest extends TestCase
 {
-	public function testBaseData()
+	public function testBaseData() : void
 	{
 		$this->markTestIncomplete();
 	}
 
-	public function testDataId()
+	public function testDataId() : void
 	{
 		$this->markTestIncomplete();
 	}
 
-	public function testDataType()
+	public function testDataType() : void
 	{
 		$this->markTestIncomplete();
 	}
 
-	public function testData()
+	public function testData() : void
 	{
 		$this->markTestIncomplete();
 	}
 
-	public function testDataAttributes()
+	public function testDataAttributes() : void
 	{
 		$this->markTestIncomplete();
 	}
 
-	public function testDataRelationships()
+	public function testDataRelationships() : void
 	{
 		$this->markTestIncomplete();
 	}

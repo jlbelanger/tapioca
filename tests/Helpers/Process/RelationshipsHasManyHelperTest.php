@@ -13,7 +13,7 @@ class RelationshipsHasManyHelperTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function testUpdateHasMany()
+	public function testUpdateHasMany() : void
 	{
 		$album = Album::factory()->create();
 		$songToAdd = Song::factory()->create();
@@ -80,7 +80,7 @@ class RelationshipsHasManyHelperTest extends TestCase
 		]);
 	}
 
-	public function findProvider()
+	public function findProvider() : array
 	{
 		return [
 			'when there is no matching record' => [[
@@ -131,7 +131,7 @@ class RelationshipsHasManyHelperTest extends TestCase
 	/**
 	 * @dataProvider findProvider
 	 */
-	public function testFind($args)
+	public function testFind(array $args) : void
 	{
 		$output = $this->callPrivate(new RelationshipsHasManyHelper, 'find', [$args['included'], $args['id'], $args['type']]);
 		$this->assertSame($args['expected'], $output);

@@ -11,7 +11,7 @@ class SortHelperTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function performProvider()
+	public function performProvider() : array
 	{
 		return [
 			'with no records' => [[
@@ -60,15 +60,15 @@ class SortHelperTest extends TestCase
 			'when sorting by multiple fields' => [[
 				'records' => [
 					'albums' => [
-						['title' => 'a', 'release_date' => '1968'],
-						['title' => 'b', 'release_date' => '1968'],
-						['title' => 'c', 'release_date' => '1968'],
-						['title' => 'd', 'release_date' => '1967'],
-						['title' => 'e', 'release_date' => '1967'],
-						['title' => 'f', 'release_date' => '1967'],
+						['title' => 'a', 'release_year' => '1968'],
+						['title' => 'b', 'release_year' => '1968'],
+						['title' => 'c', 'release_year' => '1968'],
+						['title' => 'd', 'release_year' => '1967'],
+						['title' => 'e', 'release_year' => '1967'],
+						['title' => 'f', 'release_year' => '1967'],
 					],
 				],
-				'sort' => ['release_date', 'title'],
+				'sort' => ['release_year', 'title'],
 				'expected' => ['d', 'e', 'f', 'a', 'b', 'c'],
 			]],
 		];
@@ -77,7 +77,7 @@ class SortHelperTest extends TestCase
 	/**
 	 * @dataProvider performProvider
 	 */
-	public function testPerform($args)
+	public function testPerform(array $args) : void
 	{
 		$this->createRecords($args['records']);
 		$output = SortHelper::perform((new Album())->newQuery(), $args['sort'], new Album());

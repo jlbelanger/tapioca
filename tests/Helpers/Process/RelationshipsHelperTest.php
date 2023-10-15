@@ -15,7 +15,7 @@ class RelationshipsHelperTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function testUpdate()
+	public function testUpdate() : void
 	{
 		$article = Article::factory()->create();
 		$tagToAdd = Tag::factory()->create();
@@ -126,7 +126,7 @@ class RelationshipsHelperTest extends TestCase
 		// TODO: With an unsupported relationship.
 	}
 
-	public function testUpdateBelongsToMany()
+	public function testUpdateBelongsToMany() : void
 	{
 		$article = Article::factory()->create();
 		$tagToAdd = Tag::factory()->create();

@@ -8,7 +8,7 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class DataRelationshipsHelperTest extends TestCase
 {
-	public function normalizeProvider()
+	public function normalizeProvider() : array
 	{
 		return [
 			'with an empty array' => [[
@@ -78,13 +78,13 @@ class DataRelationshipsHelperTest extends TestCase
 	/**
 	 * @dataProvider normalizeProvider
 	 */
-	public function testNormalize($args)
+	public function testNormalize(array $args) : void
 	{
 		$output = DataRelationshipsHelper::normalize($args['data'], $args['whitelistedRelationships']);
 		$this->assertSame($args['expected'], $output);
 	}
 
-	public function validateProvider()
+	public function validateProvider() : array
 	{
 		return [
 			'with a string' => [[
@@ -161,7 +161,7 @@ class DataRelationshipsHelperTest extends TestCase
 	/**
 	 * @dataProvider validateProvider
 	 */
-	public function testValidate($args)
+	public function testValidate(array $args) : void
 	{
 		if (!empty($args['expectedMessage'])) {
 			$this->expectException(JsonApiException::class);

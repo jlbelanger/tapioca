@@ -7,7 +7,7 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class JsonApiExceptionTest extends TestCase
 {
-	public function generateProvider()
+	public function generateProvider() : array
 	{
 		return [
 			'with a single error' => [[
@@ -37,14 +37,14 @@ class JsonApiExceptionTest extends TestCase
 	/**
 	 * @dataProvider generateProvider
 	 */
-	public function testGenerate($args)
+	public function testGenerate(array $args) : void
 	{
 		$output = JsonApiException::generate($args['data'], $args['code']);
 		$this->assertSame(json_encode($args['data']), $output->getMessage());
 		$this->assertSame($args['code'], $output->getCode());
 	}
 
-	public function getErrorsProvider()
+	public function getErrorsProvider() : array
 	{
 		return [
 			'with a single error' => [[
@@ -94,13 +94,13 @@ class JsonApiExceptionTest extends TestCase
 	/**
 	 * @dataProvider getErrorsProvider
 	 */
-	public function testGetErrors($args)
+	public function testGetErrors(array $args) : void
 	{
 		$exception = JsonApiException::generate($args['message'], $args['code']);
 		$this->assertSame($args['expected'], $exception->getErrors());
 	}
 
-	public function formatErrorProvider()
+	public function formatErrorProvider() : array
 	{
 		return [
 			'with all values' => [[
@@ -134,7 +134,7 @@ class JsonApiExceptionTest extends TestCase
 	/**
 	 * @dataProvider formatErrorProvider
 	 */
-	public function testFormatError($args)
+	public function testFormatError(array $args) : void
 	{
 		$exception = JsonApiException::generate([], $args['code']);
 		$output = $this->callPrivate($exception, 'formatError', [$args['error']]);

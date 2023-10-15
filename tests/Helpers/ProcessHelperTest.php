@@ -6,27 +6,27 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class ProcessHelperTest extends TestCase
 {
-	public function testCreate()
+	public function testCreate() : void
 	{
 		$this->markTestIncomplete();
 	}
 
-	public function testUpdate()
+	public function testUpdate() : void
 	{
 		$this->markTestIncomplete();
 	}
 
-	public function testProcess()
+	public function testProcess() : void
 	{
 		$this->markTestIncomplete();
 	}
 
-	public function testNormalizeIncludedRecords()
+	public function testNormalizeIncludedRecords() : void
 	{
 		$this->markTestIncomplete();
 	}
 
-	public function testValidateIncludedRecords()
+	public function testValidateIncludedRecords() : void
 	{
 		$this->markTestIncomplete();
 	}

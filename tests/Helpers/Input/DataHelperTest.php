@@ -8,12 +8,12 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class DataHelperTest extends TestCase
 {
-	public function testNormalize()
+	public function testNormalize() : void
 	{
 		$this->markTestIncomplete();
 	}
 
-	public function validateProvider()
+	public function validateProvider() : array
 	{
 		return [
 			'with a string' => [[
@@ -50,7 +50,7 @@ class DataHelperTest extends TestCase
 	/**
 	 * @dataProvider validateProvider
 	 */
-	public function testValidate($args)
+	public function testValidate(array $args) : void
 	{
 		if (!empty($args['expectedMessage'])) {
 			$this->expectException(JsonApiException::class);

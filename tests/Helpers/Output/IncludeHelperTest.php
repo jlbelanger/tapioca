@@ -7,27 +7,27 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class IncludeHelperTest extends TestCase
 {
-	public function testPrepare()
+	public function testPrepare() : void
 	{
 		$this->markTestIncomplete();
 	}
 
-	public function testPerform()
+	public function testPerform() : void
 	{
 		$this->markTestIncomplete();
 	}
 
-	public function testInclude()
+	public function testInclude() : void
 	{
 		$this->markTestIncomplete();
 	}
 
-	public function testGetRecordFromData()
+	public function testGetRecordFromData() : void
 	{
 		$this->markTestIncomplete();
 	}
 
-	public function isKnownProvider()
+	public function isKnownProvider() : array
 	{
 		return [
 			'when the record is not known' => [[
@@ -56,13 +56,13 @@ class IncludeHelperTest extends TestCase
 	/**
 	 * @dataProvider isKnownProvider
 	 */
-	public function testIsKnown($data)
+	public function testIsKnown(array $data) : void
 	{
 		$output = $this->callPrivate(new IncludeHelper, 'isKnown', [$data['record'], $data['knownRecords']]);
 		$this->assertSame($data['expected'], $output);
 	}
 
-	public function addKnownRecordProvider()
+	public function addKnownRecordProvider() : array
 	{
 		return [
 			'when knownRecords is empty' => [[
@@ -86,13 +86,13 @@ class IncludeHelperTest extends TestCase
 	/**
 	 * @dataProvider addKnownRecordProvider
 	 */
-	public function testAddKnownRecord($data)
+	public function testAddKnownRecord(array $data) : void
 	{
 		$output = $this->callPrivate(new IncludeHelper, 'addKnownRecord', [$data['knownRecords'], $data['data']]);
 		$this->assertSame($data['expected'], $output);
 	}
 
-	public function testFilterParams()
+	public function testFilterParams() : void
 	{
 		$keys = [
 			'articles.issue',

@@ -10,7 +10,7 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class BodyValidationMiddlewareTest extends TestCase
 {
-	public function handleProvider()
+	public function handleProvider() : array
 	{
 		return [
 			'with a GET request' => [[
@@ -201,7 +201,7 @@ class BodyValidationMiddlewareTest extends TestCase
 	/**
 	 * @dataProvider handleProvider
 	 */
-	public function testHandle($args)
+	public function testHandle(array $args) : void
 	{
 		$request = Request::create($args['uri'], $args['method'], $args['parameters']);
 		$request->setRouteResolver(function () use ($args, $request) {

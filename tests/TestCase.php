@@ -21,7 +21,7 @@ abstract class TestCase extends BaseTestCase
 		$this->loadMigrationsFrom(__DIR__ . '/Dummy/Database/Migrations');
 	}
 
-	protected function getPackageProviders($app)
+	protected function getPackageProviders($app) : array
 	{
 		return [
 			TapiocaServiceProvider::class,
@@ -36,7 +36,7 @@ abstract class TestCase extends BaseTestCase
 		return $method->invokeArgs($obj, $args);
 	}
 
-	protected function createRecords($records) : array // phpcs:ignore Generic.Metrics.NestingLevel.TooHigh
+	protected function createRecords(array $records) : array // phpcs:ignore Generic.Metrics.NestingLevel.TooHigh
 	{
 		$output = [];
 

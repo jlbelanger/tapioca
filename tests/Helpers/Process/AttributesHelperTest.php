@@ -11,7 +11,7 @@ class AttributesHelperTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function convertSingularRelationshipsProvider()
+	public function convertSingularRelationshipsProvider() : array
 	{
 		return [
 			'when removing a valid singular relationship' => [[
@@ -55,7 +55,7 @@ class AttributesHelperTest extends TestCase
 	/**
 	 * @dataProvider convertSingularRelationshipsProvider
 	 */
-	public function testConvertSingularRelationships($args)
+	public function testConvertSingularRelationships(array $args) : void
 	{
 		$record = Album::factory()->create();
 		$output = $this->callPrivate(new AttributesHelper, 'convertSingularRelationships', [$args['data'], $record]);

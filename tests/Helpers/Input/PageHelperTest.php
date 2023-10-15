@@ -8,7 +8,7 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class PageHelperTest extends TestCase
 {
-	public function normalizeProvider()
+	public function normalizeProvider() : array
 	{
 		return [
 			'with an empty array' => [[
@@ -58,13 +58,13 @@ class PageHelperTest extends TestCase
 	/**
 	 * @dataProvider normalizeProvider
 	 */
-	public function testNormalize($args)
+	public function testNormalize(array $args) : void
 	{
 		$output = PageHelper::normalize($args['page']);
 		$this->assertSame($args['expected'], $output);
 	}
 
-	public function validateProvider()
+	public function validateProvider() : array
 	{
 		return [
 			'with a string' => [[
@@ -118,7 +118,7 @@ class PageHelperTest extends TestCase
 	/**
 	 * @dataProvider validateProvider
 	 */
-	public function testValidate($args)
+	public function testValidate(array $args) : void
 	{
 		if (!empty($args['expectedMessage'])) {
 			$this->expectException(JsonApiException::class);

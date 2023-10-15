@@ -7,7 +7,7 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class IncludeHelperTest extends TestCase
 {
-	public function normalizeProvider()
+	public function normalizeProvider() : array
 	{
 		return [
 			'with an empty array' => [[
@@ -32,7 +32,7 @@ class IncludeHelperTest extends TestCase
 	/**
 	 * @dataProvider normalizeProvider
 	 */
-	public function testNormalize($args)
+	public function testNormalize(array $args) : void
 	{
 		$output = IncludeHelper::normalize($args['include']);
 		$this->assertSame($args['expected'], $output);
