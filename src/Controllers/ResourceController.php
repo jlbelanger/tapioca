@@ -4,17 +4,20 @@ namespace Jlbelanger\Tapioca\Controllers;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Jlbelanger\Tapioca\Exceptions\ValidationException;
 use Jlbelanger\Tapioca\Helpers\JsonApiRequest;
 use Jlbelanger\Tapioca\Helpers\ProcessHelper;
+use Jlbelanger\Tapioca\Helpers\Utilities;
 use Jlbelanger\Tapioca\Middleware\BodyValidationMiddleware;
 use Jlbelanger\Tapioca\Middleware\ContentTypeMiddleware;
 
 class ResourceController extends Controller
 {
+	use ValidatesRequests;
+
 	/**
 	 * Creates a new controller instance.
 	 *
@@ -51,10 +54,8 @@ class ResourceController extends Controller
 
 		// Validate the record.
 		$req = new JsonApiRequest('store', $request, $this->model($request), $record);
-		$errors = $record->validate($req->getData(), $request->method());
-		if ($errors) {
-			throw ValidationException::generate($errors);
-		}
+		$rules = $record->rules();
+		$this->validate($request, $rules, [], Utilities::prettyAttributeNames($rules));
 
 		// Store the record.
 		$record = ProcessHelper::create($record, $req);
@@ -98,10 +99,8 @@ class ResourceController extends Controller
 
 		// Validate the record.
 		$req = new JsonApiRequest('update', $request, $this->model(), $record);
-		$errors = $record->validate($req->getData(), $request->method());
-		if ($errors) {
-			throw ValidationException::generate($errors);
-		}
+		$rules = $record->rules();
+		$this->validate($request, $rules, [], Utilities::prettyAttributeNames($rules));
 
 		// Update the record.
 		ProcessHelper::update($record, $req);

@@ -292,8 +292,20 @@ class ResourceControllerStoreTest extends TestCase
 							'type' => 'album-song',
 							'attributes' => [
 								'track' => 1,
-								'album_id' => 'temp-this-id',
-								'song_id' => '%songs.a%',
+							],
+							'relationships' => [
+								'album' => [
+									'data' => [
+										'id' => 'temp-this-id',
+										'type' => 'album',
+									],
+								],
+								'song' => [
+									'data' => [
+										'id' => '%songs.a%',
+										'type' => 'song',
+									],
+								],
 							],
 						],
 						[
@@ -301,8 +313,20 @@ class ResourceControllerStoreTest extends TestCase
 							'type' => 'album-song',
 							'attributes' => [
 								'track' => 2,
-								'album_id' => 'temp-this-id',
-								'song_id' => '%songs.b%',
+							],
+							'relationships' => [
+								'album' => [
+									'data' => [
+										'id' => 'temp-this-id',
+										'type' => 'album',
+									],
+								],
+								'song' => [
+									'data' => [
+										'id' => '%songs.b%',
+										'type' => 'song',
+									],
+								],
 							],
 						],
 					],

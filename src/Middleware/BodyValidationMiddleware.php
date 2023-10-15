@@ -4,6 +4,7 @@ namespace Jlbelanger\Tapioca\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class BodyValidationMiddleware
 {
@@ -23,26 +24,21 @@ class BodyValidationMiddleware
 		}
 
 		$errors = [];
-		$input = $request->input();
 
 		if (strpos($request->header('Content-Type'), 'multipart/form-data') === 0) {
-			if (!$request->has('json') || !$request->has('files')) {
+			if (!$request->has('data') || !$request->has('meta.files')) {
 				$errors[] = [
-					'title' => __("Multipart requests must contain a 'json' and a 'files' value."),
+					'title' => __("Multipart requests must contain 'data' and 'meta.files' value."),
 					'status' => '400',
 				];
 				return response()->json(['errors' => $errors], 400);
 			}
 
-			$input = json_decode($request->input('json'), true);
-			if (!is_array($input)) {
-				$errors[] = [
-					'title' => __("':key' must be an object.", ['key' => 'json']),
-					'status' => '400',
-				];
-				return response()->json(['errors' => $errors], 400);
-			}
+			$newData = self::decodeValues($request->all(), collect())->undot()->toArray();
+			$request->replace($newData);
 		}
+
+		$input = $request->input();
 
 		if (!array_key_exists('data', $input)) {
 			$errors[] = [
@@ -110,5 +106,26 @@ class BodyValidationMiddleware
 		}
 
 		return $next($request);
+	}
+
+	/**
+	 * @param  array      $values
+	 * @param  Collection $data
+	 * @param  string     $prefix
+	 * @return Collection
+	 */
+	protected static function decodeValues(array $values, Collection $data, string $prefix = '') : Collection
+	{
+		foreach ($values as $key => $value) {
+			$newKey = ($prefix ? $prefix . '.' : '') . $key;
+			if (is_array($value)) {
+				$data = self::decodeValues($value, $data, $newKey);
+			} elseif (!is_string($value)) { // Eg. Illuminate\Http\UploadedFile.
+				$data[$newKey] = $value;
+			} else {
+				$data[$newKey] = json_decode($value, true);
+			}
+		}
+		return $data;
 	}
 }

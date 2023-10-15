@@ -33,15 +33,13 @@ class ArticleTag extends Model
 	}
 
 	/**
-	 * @param  array  $data
-	 * @param  string $method
 	 * @return array
 	 */
-	protected function rules(array $data, string $method) : array
+	public function rules() : array
 	{
 		return [
-			'relationships.article' => $this->requiredOnCreate($method),
-			'relationships.tag' => $this->requiredOnCreate($method),
+			'data.relationships.article' => [$this->requiredOnCreate()],
+			'data.relationships.tag' => [$this->requiredOnCreate()],
 		];
 	}
 

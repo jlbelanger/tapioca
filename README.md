@@ -61,6 +61,23 @@ public function register()
 		return response()->json(['errors' => [['title' => 'Please wait before retrying.', 'status' => '429']]], 429);
 	});
 
+	$this->renderable(function (\Illuminate\Validation\ValidationException $e) {
+		$output = [];
+		$errors = $e->validator->errors()->toArray();
+		foreach ($errors as $pointer => $titles) {
+			foreach ($titles as $title) {
+				$output[] = [
+					'title' => $title,
+					'source' => [
+						'pointer' => '/' . str_replace('.', '/', $pointer),
+					],
+					'status' => '422',
+				];
+			}
+		}
+		return response()->json(['errors' => $output], 422);
+	});
+
 	$this->renderable(function (\Throwable $e) {
 		$code = $e->getCode() ? $e->getCode() : 500;
 		$error = ['title' => 'There was an error connecting to the server.', 'status' => (string) $code];

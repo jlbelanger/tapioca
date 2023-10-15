@@ -5,11 +5,11 @@ namespace Jlbelanger\Tapioca\Helpers;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Jlbelanger\Tapioca\Events\RelationshipUpdated;
-use Jlbelanger\Tapioca\Exceptions\ValidationException;
 use Jlbelanger\Tapioca\Helpers\JsonApiRequest;
 use Jlbelanger\Tapioca\Helpers\Process\AttributesHelper;
 use Jlbelanger\Tapioca\Helpers\Process\RelationshipsHelper;
 use Jlbelanger\Tapioca\Helpers\Utilities;
+use Validator;
 
 class ProcessHelper
 {
@@ -112,16 +112,17 @@ class ProcessHelper
 			$className = Utilities::getClassNameFromType($data['type']);
 			if (Utilities::isTempId($data['id'])) {
 				$record = new $className();
-				$method = 'POST';
 			} else {
 				$record = (new $className)::find($data['id']);
-				$method = 'PUT';
 			}
 
-			$errors = $record->validate($data, $method);
-			if (!empty($errors)) {
-				throw ValidationException::generate($errors, 'included/' . $i);
+			$rules = $record->rules();
+			$newRules = [];
+			foreach ($rules as $key => $value) {
+				$newKey = preg_replace('/^data\./', 'included.' . $i . '.', $key);
+				$newRules[$newKey] = $value;
 			}
+			Validator::make(['included' => [$i => $data]], $newRules, [], Utilities::prettyAttributeNames($newRules))->validate();
 		}
 	}
 }

@@ -53,11 +53,10 @@ class JsonApiRequest
 		$this->sort = SortHelper::normalize($request->input('sort'), $model->defaultSort());
 
 		// Normalize/validate body.
+		$data = $request->input('data');
+		$included = $request->input('included');
 		if (strpos($request->header('Content-Type'), 'multipart/form-data') === 0) {
-			$body = json_decode($request->input('json'), true);
-			$data = !empty($body['data']) ? $body['data'] : null;
-			$included = !empty($body['included']) ? $body['included'] : null;
-			$files = json_decode($request->input('files'), true);
+			$files = $request->input('meta.files');
 
 			$class = 'Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull';
 			$routeMiddleware = app()->get('router')->gatherRouteMiddleware($request->route());
@@ -72,8 +71,6 @@ class JsonApiRequest
 				}
 			}
 		} else {
-			$data = $request->input('data');
-			$included = $request->input('included');
 			$files = [];
 		}
 		$this->data = DataHelper::normalize($data, $model->whitelistedAttributes(), $model->whitelistedRelationships());

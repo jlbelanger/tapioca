@@ -25,12 +25,12 @@ class UtilitiesTest extends TestCase
 		return [
 			[[
 				'rules' => [
-					'attributes.contact_email_address' => '',
-					'relationships.foo' => '',
+					'data.attributes.contact_email_address' => '',
+					'data.relationships.foo' => '',
 				],
 				'expected' => [
-					'attributes.contact_email_address' => 'contact email address',
-					'relationships.foo' => 'foo',
+					'data.attributes.contact_email_address' => 'contact email address',
+					'data.relationships.foo' => 'foo',
 				],
 			]],
 		];

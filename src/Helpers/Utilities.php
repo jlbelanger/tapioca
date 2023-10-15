@@ -26,14 +26,14 @@ class Utilities
 
 	/**
 	 * @param  array $rules
-	 * @return array eg. ['attributes.email_address' => 'email address', 'relationships.user' => 'user']
+	 * @return array eg. ['data.attributes.email_address' => 'email address', 'data.relationships.user' => 'user']
 	 */
 	public static function prettyAttributeNames(array $rules) : array
 	{
 		$output = [];
 		$keys = array_keys($rules);
 		foreach ($keys as $key) {
-			$output[$key] = preg_replace('/^[^\.]+\./', '', str_replace('_', ' ', $key));
+			$output[$key] = preg_replace('/^.+\.([^\.]+)$/', '$1', str_replace('_', ' ', $key));
 		}
 		return $output;
 	}

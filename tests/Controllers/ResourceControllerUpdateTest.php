@@ -166,6 +166,35 @@ class ResourceControllerUpdateTest extends TestCase
 				],
 				'expectedStatus' => 200,
 			]],
+			'with invalid attributes' => [[
+				'records' => [
+					'albums' => [
+						['title' => 'foo'],
+					],
+				],
+				'path' => '/albums/%albums.foo%',
+				'parameters' => [
+					'data' => [
+						'id' => '%albums.foo%',
+						'type' => 'albums',
+						'attributes' => [
+							'release_year' => 'foo',
+						],
+					],
+				],
+				'expected' => [
+					'errors' => [
+						[
+							'title' => 'The release year must be an integer.',
+							'status' => '422',
+							'source' => [
+								'pointer' => '/data/attributes/release_year',
+							],
+						],
+					],
+				],
+				'expectedStatus' => 422,
+			]],
 			'with valid attributes' => [[
 				'records' => [
 					'albums' => [
