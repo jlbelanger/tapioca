@@ -11,7 +11,7 @@ class ResourceControllerShowTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function showProvider()
+	public function showProvider() : array
 	{
 		return [
 			'with no params' => [[
@@ -22,7 +22,7 @@ class ResourceControllerShowTest extends TestCase
 						'type' => 'albums',
 						'attributes' => [
 							'title' => 'Foo',
-							'release_date' => null,
+							'release_year' => null,
 						],
 					],
 				],
@@ -53,7 +53,7 @@ class ResourceControllerShowTest extends TestCase
 						'type' => 'albums',
 						'attributes' => [
 							'title' => 'Foo',
-							'release_date' => null,
+							'release_year' => null,
 						],
 						'relationships' => [
 							'artist' => [
@@ -118,12 +118,12 @@ class ResourceControllerShowTest extends TestCase
 	/**
 	 * @dataProvider showProvider
 	 */
-	public function testShow($args)
+	public function testShow(array $args) : void
 	{
 		$artist = Artist::factory()->create();
 		$album = Album::factory()->create(['artist_id' => $artist->id]);
-		$args['expected'] = $this->replaceToken($args['expected'], '%artist_id%', $artist->id);
-		$args['expected'] = $this->replaceToken($args['expected'], '%id%', $album->id);
+		$args['expected'] = $this->replaceToken($args['expected'], (string) '%artist_id%', $artist->id);
+		$args['expected'] = $this->replaceToken($args['expected'], (string) '%id%', $album->id);
 
 		$response = $this->call('GET', '/albums/' . $album->id, $args['parameters']);
 		$response->assertExactJSON($args['expected']);

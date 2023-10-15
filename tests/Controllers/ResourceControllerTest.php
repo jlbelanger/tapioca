@@ -11,7 +11,7 @@ class ResourceControllerTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function testDestroy()
+	public function testDestroy() : void
 	{
 		$article = Article::factory()->create();
 		$this->assertDatabaseHas('articles', ['id' => $article->id]);
@@ -21,7 +21,7 @@ class ResourceControllerTest extends TestCase
 		$this->assertDatabaseMissing('articles', ['id' => $article->id]);
 	}
 
-	public function testModel()
+	public function testModel() : void
 	{
 		$this->markTestIncomplete();
 	}

@@ -9,7 +9,7 @@ class ResourceControllerUpdateTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function updateProvider()
+	public function updateProvider() : array
 	{
 		return [
 			'with no body' => [[
@@ -160,7 +160,7 @@ class ResourceControllerUpdateTest extends TestCase
 						'type' => 'albums',
 						'attributes' => [
 							'title' => 'foo',
-							'release_date' => null,
+							'release_year' => null,
 						],
 					],
 				],
@@ -188,7 +188,7 @@ class ResourceControllerUpdateTest extends TestCase
 						'type' => 'albums',
 						'attributes' => [
 							'title' => 'bar',
-							'release_date' => null,
+							'release_year' => null,
 						],
 					],
 				],
@@ -224,7 +224,7 @@ class ResourceControllerUpdateTest extends TestCase
 						'type' => 'albums',
 						'attributes' => [
 							'title' => 'foo',
-							'release_date' => null,
+							'release_year' => null,
 						],
 						'relationships' => [
 							'artist' => [
@@ -473,8 +473,20 @@ class ResourceControllerUpdateTest extends TestCase
 							'type' => 'album-song',
 							'attributes' => [
 								'track' => 1,
-								'album_id' => 'temp-this-id',
-								'song_id' => '%songs.a%',
+							],
+							'relationships' => [
+								'album' => [
+									'data' => [
+										'id' => 'temp-this-id',
+										'type' => 'album',
+									],
+								],
+								'song' => [
+									'data' => [
+										'id' => '%songs.a%',
+										'type' => 'song',
+									],
+								],
 							],
 						],
 						[
@@ -482,8 +494,20 @@ class ResourceControllerUpdateTest extends TestCase
 							'type' => 'album-song',
 							'attributes' => [
 								'track' => 2,
-								'album_id' => 'temp-this-id',
-								'song_id' => '%songs.b%',
+							],
+							'relationships' => [
+								'album' => [
+									'data' => [
+										'id' => 'temp-this-id',
+										'type' => 'album',
+									],
+								],
+								'song' => [
+									'data' => [
+										'id' => '%songs.b%',
+										'type' => 'song',
+									],
+								],
 							],
 						],
 					],
@@ -494,7 +518,7 @@ class ResourceControllerUpdateTest extends TestCase
 						'type' => 'albums',
 						'attributes' => [
 							'title' => 'foo',
-							'release_date' => null,
+							'release_year' => null,
 						],
 						'relationships' => [
 							'album_songs' => [
@@ -603,7 +627,7 @@ class ResourceControllerUpdateTest extends TestCase
 						'type' => 'albums',
 						'attributes' => [
 							'title' => 'foo',
-							'release_date' => null,
+							'release_year' => null,
 						],
 						'relationships' => [
 							'album_songs' => [
@@ -697,7 +721,7 @@ class ResourceControllerUpdateTest extends TestCase
 						'type' => 'albums',
 						'attributes' => [
 							'title' => 'foo',
-							'release_date' => null,
+							'release_year' => null,
 						],
 						'relationships' => [
 							'album_songs' => [
@@ -753,7 +777,7 @@ class ResourceControllerUpdateTest extends TestCase
 	/**
 	 * @dataProvider updateProvider
 	 */
-	public function testUpdate(array $args = [])
+	public function testUpdate(array $args = []) : void
 	{
 		$records = $this->createRecords($args['records']);
 		$args['parameters'] = $this->replaceIds($args['parameters'], $records);

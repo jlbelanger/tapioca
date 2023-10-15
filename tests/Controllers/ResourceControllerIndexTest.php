@@ -9,7 +9,7 @@ class ResourceControllerIndexTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function indexProvider()
+	public function indexProvider() : array
 	{
 		return [
 			'with no params' => [[
@@ -27,7 +27,7 @@ class ResourceControllerIndexTest extends TestCase
 							'type' => 'albums',
 							'attributes' => [
 								'title' => 'foo',
-								'release_date' => null,
+								'release_year' => null,
 							],
 						],
 					],
@@ -77,7 +77,7 @@ class ResourceControllerIndexTest extends TestCase
 							'type' => 'albums',
 							'attributes' => [
 								'title' => 'bar',
-								'release_date' => null,
+								'release_year' => null,
 							],
 						],
 					],
@@ -107,7 +107,7 @@ class ResourceControllerIndexTest extends TestCase
 							'type' => 'albums',
 							'attributes' => [
 								'title' => 'b',
-								'release_date' => null,
+								'release_year' => null,
 							],
 						],
 					],
@@ -135,7 +135,7 @@ class ResourceControllerIndexTest extends TestCase
 							'type' => 'albums',
 							'attributes' => [
 								'title' => 'a',
-								'release_date' => null,
+								'release_year' => null,
 							],
 							'relationships' => [
 								'artist' => [
@@ -151,7 +151,7 @@ class ResourceControllerIndexTest extends TestCase
 							'type' => 'albums',
 							'attributes' => [
 								'title' => 'b',
-								'release_date' => null,
+								'release_year' => null,
 							],
 							'relationships' => [
 								'artist' => [
@@ -311,7 +311,7 @@ class ResourceControllerIndexTest extends TestCase
 							'type' => 'albums',
 							'attributes' => [
 								'title' => 'a',
-								'release_date' => null,
+								'release_year' => null,
 							],
 							'relationships' => [
 								'album_songs' => [
@@ -333,7 +333,7 @@ class ResourceControllerIndexTest extends TestCase
 							'type' => 'albums',
 							'attributes' => [
 								'title' => 'b',
-								'release_date' => null,
+								'release_year' => null,
 							],
 							'relationships' => [
 								'album_songs' => [
@@ -481,7 +481,7 @@ class ResourceControllerIndexTest extends TestCase
 							'type' => 'albums',
 							'attributes' => [
 								'title' => 'apple',
-								'release_date' => null,
+								'release_year' => null,
 							],
 						],
 						[
@@ -489,7 +489,7 @@ class ResourceControllerIndexTest extends TestCase
 							'type' => 'albums',
 							'attributes' => [
 								'title' => 'banana',
-								'release_date' => null,
+								'release_year' => null,
 							],
 						],
 					],
@@ -521,7 +521,7 @@ class ResourceControllerIndexTest extends TestCase
 							'type' => 'albums',
 							'attributes' => [
 								'title' => 'bar',
-								'release_date' => null,
+								'release_year' => null,
 							],
 						],
 						[
@@ -529,7 +529,7 @@ class ResourceControllerIndexTest extends TestCase
 							'type' => 'albums',
 							'attributes' => [
 								'title' => 'foo',
-								'release_date' => null,
+								'release_year' => null,
 							],
 						],
 					],
@@ -541,7 +541,7 @@ class ResourceControllerIndexTest extends TestCase
 	/**
 	 * @dataProvider indexProvider
 	 */
-	public function testIndex($args)
+	public function testIndex(array $args) : void
 	{
 		$records = $this->createRecords($args['records']);
 		$expected = $this->replaceIds($args['expected'], $records);

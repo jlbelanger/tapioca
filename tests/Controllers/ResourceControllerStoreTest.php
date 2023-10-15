@@ -9,13 +9,13 @@ class ResourceControllerStoreTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function storeProvider()
+	public function storeProvider() : array
 	{
 		return [
 			'with no body' => [[
 				'records' => [],
 				'path' => '/albums',
-				'parameters' => [],
+				'body' => [],
 				'expected' => [
 					'errors' => [
 						[
@@ -30,7 +30,7 @@ class ResourceControllerStoreTest extends TestCase
 			'with data param only' => [[
 				'records' => [],
 				'path' => '/albums',
-				'parameters' => [
+				'body' => [
 					'data' => [],
 				],
 				'expected' => [
@@ -47,7 +47,7 @@ class ResourceControllerStoreTest extends TestCase
 			'with data string' => [[
 				'records' => [],
 				'path' => '/albums',
-				'parameters' => [
+				'body' => [
 					'data' => 'foo',
 				],
 				'expected' => [
@@ -64,7 +64,7 @@ class ResourceControllerStoreTest extends TestCase
 			'with mismatching type' => [[
 				'records' => [],
 				'path' => '/albums',
-				'parameters' => [
+				'body' => [
 					'data' => [
 						'type' => 'foo',
 					],
@@ -82,7 +82,7 @@ class ResourceControllerStoreTest extends TestCase
 			'with matching type and no attributes' => [[
 				'records' => [],
 				'path' => '/tags',
-				'parameters' => [
+				'body' => [
 					'data' => [
 						'type' => 'tags',
 					],
@@ -103,7 +103,7 @@ class ResourceControllerStoreTest extends TestCase
 			'with valid attributes' => [[
 				'records' => [],
 				'path' => '/tags',
-				'parameters' => [
+				'body' => [
 					'data' => [
 						'type' => 'tags',
 						'attributes' => [
@@ -129,7 +129,7 @@ class ResourceControllerStoreTest extends TestCase
 					],
 				],
 				'path' => '/albums?include=artist',
-				'parameters' => [
+				'body' => [
 					'data' => [
 						'type' => 'albums',
 						'attributes' => [
@@ -151,7 +151,7 @@ class ResourceControllerStoreTest extends TestCase
 						'type' => 'albums',
 						'attributes' => [
 							'title' => 'bar',
-							'release_date' => null,
+							'release_year' => null,
 						],
 						'relationships' => [
 							'artist' => [
@@ -183,7 +183,7 @@ class ResourceControllerStoreTest extends TestCase
 					],
 				],
 				'path' => '/articles?include=tags',
-				'parameters' => [
+				'body' => [
 					'data' => [
 						'type' => 'articles',
 						'attributes' => [
@@ -259,7 +259,7 @@ class ResourceControllerStoreTest extends TestCase
 					],
 				],
 				'path' => '/albums?include=album_songs,songs',
-				'parameters' => [
+				'body' => [
 					'data' => [
 						'type' => 'albums',
 						'attributes' => [
@@ -313,7 +313,7 @@ class ResourceControllerStoreTest extends TestCase
 						'type' => 'albums',
 						'attributes' => [
 							'title' => 'foo',
-							'release_date' => null,
+							'release_year' => null,
 						],
 						'relationships' => [
 							'album_songs' => [
@@ -385,15 +385,15 @@ class ResourceControllerStoreTest extends TestCase
 	/**
 	 * @dataProvider storeProvider
 	 */
-	public function testStore(array $args = [])
+	public function testStore(array $args = []) : void
 	{
 		$records = $this->createRecords($args['records']);
-		$args['parameters'] = $this->replaceIds($args['parameters'], $records);
+		$args['body'] = $this->replaceIds($args['body'], $records);
 		$args['expected'] = $this->replaceIds($args['expected'], $records);
 
-		$response = $this->call('POST', $args['path'], $args['parameters']);
+		$response = $this->call('POST', $args['path'], $args['body']);
 		if (!empty($response['data']['id'])) {
-			$args['expected'] = $this->replaceToken($args['expected'], '%id%', $response['data']['id']);
+			$args['expected'] = $this->replaceToken($args['expected'], (string) '%id%', $response['data']['id']);
 		}
 		$response->assertExactJSON($args['expected']);
 		$response->assertStatus($args['expectedStatus']);
