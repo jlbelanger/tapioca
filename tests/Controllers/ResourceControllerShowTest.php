@@ -121,11 +121,11 @@ class ResourceControllerShowTest extends TestCase
 	public function testShow(array $args) : void
 	{
 		$artist = Artist::factory()->create();
-		$album = Album::factory()->create(['artist_id' => $artist->id]);
-		$args['expected'] = $this->replaceToken($args['expected'], (string) '%artist_id%', $artist->id);
-		$args['expected'] = $this->replaceToken($args['expected'], (string) '%id%', $album->id);
+		$album = Album::factory()->create(['artist_id' => $artist->getKey()]);
+		$args['expected'] = $this->replaceToken($args['expected'], (string) '%artist_id%', $artist->getKey());
+		$args['expected'] = $this->replaceToken($args['expected'], (string) '%id%', $album->getKey());
 
-		$response = $this->call('GET', '/albums/' . $album->id, $args['parameters']);
+		$response = $this->call('GET', '/albums/' . $album->getKey(), $args['parameters']);
 		$response->assertExactJSON($args['expected']);
 		$response->assertStatus(200);
 	}

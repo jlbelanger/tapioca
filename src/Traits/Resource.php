@@ -91,7 +91,7 @@ trait Resource
 			if (in_array($relationshipName, $this->singularRelationships())) {
 				$relation = $this->$functionName;
 				$output[$relationshipName] = [
-					'data' => !empty($relation) && $relation->id !== 0 ? $relation->baseData() : null,
+					'data' => !empty($relation) && $relation->getKey() !== 0 ? $relation->baseData() : null,
 				];
 			} elseif (in_array($relationshipName, $this->multiRelationships())) {
 				$relation = $this->$functionName()->get();

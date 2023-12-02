@@ -15,6 +15,8 @@ class ArticleTag extends Model
 {
 	use HasFactory, Resource;
 
+	protected $primaryKey = 'atid';
+
 	protected $table = 'article_tag';
 
 	protected $fillable = [

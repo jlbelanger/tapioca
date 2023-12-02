@@ -24,7 +24,8 @@ class RelationshipsHasManyHelper
 	 */
 	public static function update(array $relData, HasMany $existing, string $key, Model $record, array $included) : array
 	{
-		$existingIds = array_map('strval', $existing->pluck($existing->getLocalKeyName())->toArray());
+		$relIdName = $existing->getRelated()->getKeyName();
+		$existingIds = array_map('strval', $existing->pluck($relIdName)->toArray());
 		$newIds = array_map('strval', Arr::pluck($relData['data'], 'id'));
 
 		$deleteData = self::delete($existing, $existingIds, $newIds);
@@ -58,11 +59,13 @@ class RelationshipsHasManyHelper
 		}
 
 		// Get the models to delete.
-		$table = explode('.', $existing->getQualifiedForeignKeyName())[0];
-		$recordsToDelete = $existing->whereIn($table . '.id', $deleteIds);
+		$relModel = $existing->getRelated();
+		$relIdName = $relModel->getQualifiedKeyName();
+		$table = $relModel->getTable();
+		$recordsToDelete = $existing->whereIn($relModel->getQualifiedKeyName(), $deleteIds);
 
 		// Get the attributes for the models we are deleting; we might want to do something with this data in an event, and once the models are deleted, we won't be able to access this data.
-		$attributeNames = array_merge(['id'], $recordsToDelete->getRelated()->getFillable());
+		$attributeNames = array_merge([$relModel->getKeyName()], $relModel->getFillable());
 		$selectAttributeNames = [];
 		foreach ($attributeNames as $attributeName) {
 			$selectAttributeNames[] = $table . '.' . $attributeName;
@@ -70,7 +73,7 @@ class RelationshipsHasManyHelper
 		$dataToDelete = $recordsToDelete->select($selectAttributeNames)->getResults()->toArray();
 		$deletedData = [];
 		foreach ($dataToDelete as $data) {
-			$deletedData[$data['id']] = Arr::only($data, $attributeNames);
+			$deletedData[$data[$relModel->getKeyName()]] = Arr::only($data, $attributeNames);
 		}
 
 		// Delete the models.
@@ -122,7 +125,7 @@ class RelationshipsHasManyHelper
 				if (!empty($includedData['meta'])) {
 					$new->updateMeta($includedData['meta']);
 				}
-				$output['ids'][] = (string) $new->id;
+				$output['ids'][] = (string) $new->getKey();
 			} else {
 				// Update the existing pivot model.
 				$relRecord = $relRecord->find($rel['id']);

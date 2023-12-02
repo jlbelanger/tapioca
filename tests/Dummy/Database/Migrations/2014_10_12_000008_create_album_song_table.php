@@ -14,7 +14,7 @@ class CreateAlbumSongTable extends Migration
 	public function up() : void
 	{
 		Schema::create('album_song', function (Blueprint $table) {
-			$table->id();
+			$table->id('asid');
 			$table->unsignedInteger('album_id');
 			$table->unsignedInteger('song_id');
 			$table->integer('track');

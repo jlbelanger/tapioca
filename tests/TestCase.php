@@ -129,7 +129,7 @@ abstract class TestCase extends BaseTestCase
 					} else {
 						$slug = $i;
 					}
-					$output[$key][$slug] = (string) $row->id;
+					$output[$key][$slug] = (string) $row->getKey();
 				}
 			}
 		}

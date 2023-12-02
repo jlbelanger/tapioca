@@ -27,11 +27,11 @@ class RelationshipsHelperTest extends TestCase
 			'tags' => [
 				'data' => [
 					[
-						'id' => (string) $tagToLeave->id,
+						'id' => (string) $tagToLeave->getKey(),
 						'type' => 'tags',
 					],
 					[
-						'id' => (string) $tagToAdd->id,
+						'id' => (string) $tagToAdd->getKey(),
 						'type' => 'tags',
 					],
 				],
@@ -40,37 +40,37 @@ class RelationshipsHelperTest extends TestCase
 		$included = [];
 		$expected = [
 			'tags' => [
-				'delete' => [(string) $tagToDelete->id],
-				'add' => [(string) $tagToAdd->id],
+				'delete' => [(string) $tagToDelete->getKey()],
+				'add' => [(string) $tagToAdd->getKey()],
 				'deleted' => [],
 			],
 		];
 		$output = RelationshipsHelper::update($article, $relationships, $included);
 		$this->assertSame($expected, $output);
 		$this->assertDatabaseMissing('article_tag', [
-			'article_id' => $article->id,
-			'tag_id' => $tagToDelete->id,
+			'article_id' => $article->getKey(),
+			'tag_id' => $tagToDelete->getKey(),
 		]);
 		$this->assertDatabaseHas('article_tag', [
-			'article_id' => $article->id,
-			'tag_id' => $tagToAdd->id,
+			'article_id' => $article->getKey(),
+			'tag_id' => $tagToAdd->getKey(),
 		]);
 		$this->assertDatabaseHas('article_tag', [
-			'article_id' => $article->id,
-			'tag_id' => $tagToLeave->id,
+			'article_id' => $article->getKey(),
+			'tag_id' => $tagToLeave->getKey(),
 		]);
 
 		$album = Album::factory()->create();
 		$songToAdd = Song::factory()->create();
 		$songToDelete = Song::factory()->create();
 		$songToLeave = Song::factory()->create();
-		$relToDelete = AlbumSong::factory()->create(['album_id' => $album->id, 'song_id' => $songToDelete->id, 'track' => 1]);
-		$relToLeave = AlbumSong::factory()->create(['album_id' => $album->id, 'song_id' => $songToLeave->id, 'track' => 2]);
+		$relToDelete = AlbumSong::factory()->create(['album_id' => $album->getKey(), 'song_id' => $songToDelete->getKey(), 'track' => 1]);
+		$relToLeave = AlbumSong::factory()->create(['album_id' => $album->getKey(), 'song_id' => $songToLeave->getKey(), 'track' => 2]);
 		$relationships = [
 			'album_songs' => [
 				'data' => [
 					[
-						'id' => (string) $relToLeave->id,
+						'id' => (string) $relToLeave->getKey(),
 						'type' => 'album-song',
 					],
 					[
@@ -86,20 +86,20 @@ class RelationshipsHelperTest extends TestCase
 				'type' => 'album-song',
 				'attributes' => [
 					'track' => 1,
-					'album_id' => (string) $album->id,
-					'song_id' => (string) $songToAdd->id,
+					'album_id' => (string) $album->getKey(),
+					'song_id' => (string) $songToAdd->getKey(),
 				],
 			],
 		];
 		$expected = [
 			'album_songs' => [
-				'delete' => [(string) $relToDelete->id],
-				'add' => [(string) ($relToLeave->id + 1)],
+				'delete' => [(string) $relToDelete->getKey()],
+				'add' => [(string) ($relToLeave->getKey() + 1)],
 				'deleted' => [
-					$relToDelete->id => [
-						'id' => $relToDelete->id,
-						'album_id' => (string) $album->id,
-						'song_id' => (string) $songToDelete->id,
+					$relToDelete->getKey() => [
+						$relToDelete->getKeyName() => $relToDelete->getKey(),
+						'album_id' => (string) $album->getKey(),
+						'song_id' => (string) $songToDelete->getKey(),
 						'track' => '1',
 						'length' => null,
 					],
@@ -109,17 +109,17 @@ class RelationshipsHelperTest extends TestCase
 		$output = RelationshipsHelper::update($album, $relationships, $included);
 		$this->assertSame($expected, $output);
 		$this->assertDatabaseMissing('album_song', [
-			'album_id' => $album->id,
-			'song_id' => $songToDelete->id,
+			'album_id' => $album->getKey(),
+			'song_id' => $songToDelete->getKey(),
 		]);
 		$this->assertDatabaseHas('album_song', [
-			'album_id' => $album->id,
-			'song_id' => $songToAdd->id,
+			'album_id' => $album->getKey(),
+			'song_id' => $songToAdd->getKey(),
 			'track' => 1,
 		]);
 		$this->assertDatabaseHas('album_song', [
-			'album_id' => $album->id,
-			'song_id' => $songToLeave->id,
+			'album_id' => $album->getKey(),
+			'song_id' => $songToLeave->getKey(),
 			'track' => 2,
 		]);
 
@@ -138,11 +138,11 @@ class RelationshipsHelperTest extends TestCase
 		$relData = [
 			'data' => [
 				[
-					'id' => (string) $tagToLeave->id,
+					'id' => (string) $tagToLeave->getKey(),
 					'type' => 'tags',
 				],
 				[
-					'id' => (string) $tagToAdd->id,
+					'id' => (string) $tagToAdd->getKey(),
 					'type' => 'tags',
 				],
 			],
@@ -150,10 +150,10 @@ class RelationshipsHelperTest extends TestCase
 		$existing = $article->tags();
 		$expected = [
 			'deleteIds' => [
-				(string) $tagToDelete->id,
+				(string) $tagToDelete->getKey(),
 			],
 			'addIds' => [
-				(string) $tagToAdd->id,
+				(string) $tagToAdd->getKey(),
 			],
 			'deleted' => [],
 		];
@@ -161,16 +161,16 @@ class RelationshipsHelperTest extends TestCase
 		$this->assertSame($output, $expected);
 
 		$this->assertDatabaseMissing('article_tag', [
-			'article_id' => $article->id,
-			'tag_id' => $tagToDelete->id,
+			'article_id' => $article->getKey(),
+			'tag_id' => $tagToDelete->getKey(),
 		]);
 		$this->assertDatabaseHas('article_tag', [
-			'article_id' => $article->id,
-			'tag_id' => $tagToAdd->id,
+			'article_id' => $article->getKey(),
+			'tag_id' => $tagToAdd->getKey(),
 		]);
 		$this->assertDatabaseHas('article_tag', [
-			'article_id' => $article->id,
-			'tag_id' => $tagToLeave->id,
+			'article_id' => $article->getKey(),
+			'tag_id' => $tagToLeave->getKey(),
 		]);
 	}
 }

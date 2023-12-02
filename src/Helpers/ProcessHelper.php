@@ -88,13 +88,13 @@ class ProcessHelper
 			if (Utilities::isTempId($includedData['id'])) {
 				foreach ($included[$i]['attributes'] as $key => $value) {
 					if ($value === 'temp-this-id') {
-						$included[$i]['attributes'][$key] = $record->id;
+						$included[$i]['attributes'][$key] = $record->getKey();
 					}
 				}
 
 				foreach ($included[$i]['relationships'] as $key => $value) {
 					if (!empty($value['data']['id']) && $value['data']['id'] === 'temp-this-id') {
-						$included[$i]['relationships'][$key]['data']['id'] = $record->id;
+						$included[$i]['relationships'][$key]['data']['id'] = $record->getKey();
 					}
 				}
 			}

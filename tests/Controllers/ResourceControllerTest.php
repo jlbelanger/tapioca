@@ -14,11 +14,11 @@ class ResourceControllerTest extends TestCase
 	public function testDestroy() : void
 	{
 		$article = Article::factory()->create();
-		$this->assertDatabaseHas('articles', ['id' => $article->id]);
-		$response = (new ArticleController)->destroy($article->id);
+		$this->assertDatabaseHas('articles', ['id' => $article->getKey()]);
+		$response = (new ArticleController)->destroy($article->getKey());
 		$this->assertSame([], $response->getData(true));
 		$this->assertSame(204, $response->getStatusCode());
-		$this->assertDatabaseMissing('articles', ['id' => $article->id]);
+		$this->assertDatabaseMissing('articles', ['id' => $article->getKey()]);
 	}
 
 	public function testModel() : void

@@ -171,7 +171,7 @@ class User extends Model
 }
 ```
 
-The route must be defined in `routes/api.php` (optionally including `'auth:sanctum'` in the middleware if you are using Sanctum):
+The route must be defined in `routes/api.php` (optionally including `'auth'` or `'auth:sanctum'` or similar in the middleware):
 
 ``` php
 <?php

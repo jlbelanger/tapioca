@@ -15,6 +15,8 @@ class AlbumSong extends Model
 {
 	use HasFactory, Resource;
 
+	protected $primaryKey = 'asid';
+
 	protected $table = 'album_song';
 
 	protected $fillable = [
