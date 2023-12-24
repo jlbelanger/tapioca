@@ -55,7 +55,8 @@ class JsonApiRequest
 		// Normalize/validate body.
 		$data = $request->input('data');
 		$included = $request->input('included');
-		if (strpos($request->header('Content-Type'), 'multipart/form-data') === 0) {
+		$contentType = $request->header('Content-Type');
+		if ($contentType && strpos($contentType, 'multipart/form-data') === 0) {
 			$files = $request->input('meta.files');
 
 			$class = 'Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull';
