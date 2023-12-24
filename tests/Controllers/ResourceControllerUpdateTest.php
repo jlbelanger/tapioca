@@ -9,7 +9,7 @@ class ResourceControllerUpdateTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function updateProvider() : array
+	public static function updateProvider() : array
 	{
 		return [
 			'with no body' => [[
@@ -185,7 +185,7 @@ class ResourceControllerUpdateTest extends TestCase
 				'expected' => [
 					'errors' => [
 						[
-							'title' => 'The release year must be an integer.',
+							'title' => 'The release year field must be an integer.',
 							'status' => '422',
 							'source' => [
 								'pointer' => '/data/attributes/release_year',
@@ -581,7 +581,7 @@ class ResourceControllerUpdateTest extends TestCase
 							'id' => '1',
 							'type' => 'album-song',
 							'attributes' => [
-								'track' => '1',
+								'track' => 1,
 								'length' => null,
 							],
 						],
@@ -589,7 +589,7 @@ class ResourceControllerUpdateTest extends TestCase
 							'id' => '2',
 							'type' => 'album-song',
 							'attributes' => [
-								'track' => '2',
+								'track' => 2,
 								'length' => null,
 							],
 						],
@@ -678,7 +678,7 @@ class ResourceControllerUpdateTest extends TestCase
 							'id' => '%album_songs.0%',
 							'type' => 'album-song',
 							'attributes' => [
-								'track' => '1',
+								'track' => 1,
 								'length' => null,
 							],
 						],
@@ -686,7 +686,7 @@ class ResourceControllerUpdateTest extends TestCase
 							'id' => '%album_songs.2%',
 							'type' => 'album-song',
 							'attributes' => [
-								'track' => '3',
+								'track' => 3,
 								'length' => null,
 							],
 						],
@@ -739,7 +739,7 @@ class ResourceControllerUpdateTest extends TestCase
 							'id' => '%album_songs.1%',
 							'type' => 'album-song',
 							'attributes' => [
-								'track' => '4',
+								'track' => 4,
 							],
 						],
 					],
@@ -776,7 +776,7 @@ class ResourceControllerUpdateTest extends TestCase
 							'id' => '%album_songs.0%',
 							'type' => 'album-song',
 							'attributes' => [
-								'track' => '1',
+								'track' => 1,
 								'length' => null,
 							],
 						],
@@ -784,7 +784,7 @@ class ResourceControllerUpdateTest extends TestCase
 							'id' => '%album_songs.1%',
 							'type' => 'album-song',
 							'attributes' => [
-								'track' => '4',
+								'track' => 4,
 								'length' => null,
 							],
 						],
@@ -792,7 +792,7 @@ class ResourceControllerUpdateTest extends TestCase
 							'id' => '%album_songs.2%',
 							'type' => 'album-song',
 							'attributes' => [
-								'track' => '3',
+								'track' => 3,
 								'length' => null,
 							],
 						],

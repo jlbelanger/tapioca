@@ -12,7 +12,7 @@ class FilterHelperTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function normalizeProvider() : array
+	public static function normalizeProvider() : array
 	{
 		return [
 			'with an empty array and no default filter' => [[
@@ -112,7 +112,7 @@ class FilterHelperTest extends TestCase
 		$this->assertSame($args['expected'], $output);
 	}
 
-	public function validateProvider() : array
+	public static function validateProvider() : array
 	{
 		return [
 			'with a string' => [[
@@ -158,7 +158,7 @@ class FilterHelperTest extends TestCase
 		$this->callPrivate(new FilterHelper, 'validate', [$args['filter']]);
 	}
 
-	public function performProvider() : array
+	public static function performProvider() : array
 	{
 		return [
 			'with no records' => [[

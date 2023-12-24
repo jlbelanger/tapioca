@@ -20,7 +20,7 @@ class TapiocaServiceProvider extends ServiceProvider
 	 */
 	public function boot() : void
 	{
-		if (!empty($_SERVER['LARAVEL_JSON_API_TEST'])) {
+		if (!empty($_ENV['LARAVEL_JSON_API_TEST'])) {
 			$this->loadRoutesFrom(__DIR__ . '/../tests/Dummy/Routes/api.php');
 		}
 

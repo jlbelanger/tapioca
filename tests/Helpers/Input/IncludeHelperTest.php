@@ -7,7 +7,7 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class IncludeHelperTest extends TestCase
 {
-	public function normalizeProvider() : array
+	public static function normalizeProvider() : array
 	{
 		return [
 			'with an empty array' => [[

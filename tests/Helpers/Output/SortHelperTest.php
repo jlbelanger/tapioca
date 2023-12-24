@@ -11,7 +11,7 @@ class SortHelperTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function performProvider() : array
+	public static function performProvider() : array
 	{
 		return [
 			'with no records' => [[

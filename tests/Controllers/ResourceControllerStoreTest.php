@@ -9,7 +9,7 @@ class ResourceControllerStoreTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function storeProvider() : array
+	public static function storeProvider() : array
 	{
 		return [
 			'with no body' => [[
@@ -371,7 +371,7 @@ class ResourceControllerStoreTest extends TestCase
 							'id' => '1',
 							'type' => 'album-song',
 							'attributes' => [
-								'track' => '1',
+								'track' => 1,
 								'length' => null,
 							],
 						],
@@ -379,7 +379,7 @@ class ResourceControllerStoreTest extends TestCase
 							'id' => '2',
 							'type' => 'album-song',
 							'attributes' => [
-								'track' => '2',
+								'track' => 2,
 								'length' => null,
 							],
 						],

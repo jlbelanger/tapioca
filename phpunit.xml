@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+	xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
 	bootstrap="vendor/autoload.php"
 	colors="true"
-	convertDeprecationsToExceptions="true"
-	convertErrorsToExceptions="true"
-	convertNoticesToExceptions="true"
-	convertWarningsToExceptions="true"
 >
-	<coverage processUncoveredFiles="true">
-		<include>
-			<directory suffix=".php">./src</directory>
-		</include>
-	</coverage>
 	<testsuites>
 		<testsuite name="Tests">
-			<directory suffix="Test.php">./tests</directory>
+			<directory>tests</directory>
 		</testsuite>
 	</testsuites>
+	<source>
+		<include>
+			<directory>app</directory>
+		</include>
+	</source>
 	<php>
-		<server name="APP_ENV" value="testing"/>
-		<server name="LARAVEL_JSON_API_TEST" value="true"/>
-		<server name="DB_CONNECTION" value="sqlite"/>
-		<server name="DB_DATABASE" value=":memory:"/>
+		<env name="APP_ENV" value="testing"/>
+		<env name="LARAVEL_JSON_API_TEST" value="true"/>
+		<env name="DB_CONNECTION" value="sqlite"/>
+		<env name="DB_DATABASE" value=":memory:"/>
 	</php>
 </phpunit>

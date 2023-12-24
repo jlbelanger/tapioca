@@ -7,7 +7,7 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class JsonApiExceptionTest extends TestCase
 {
-	public function generateProvider() : array
+	public static function generateProvider() : array
 	{
 		return [
 			'with a single error' => [[
@@ -44,7 +44,7 @@ class JsonApiExceptionTest extends TestCase
 		$this->assertSame($args['code'], $output->getCode());
 	}
 
-	public function getErrorsProvider() : array
+	public static function getErrorsProvider() : array
 	{
 		return [
 			'with a single error' => [[
@@ -100,7 +100,7 @@ class JsonApiExceptionTest extends TestCase
 		$this->assertSame($args['expected'], $exception->getErrors());
 	}
 
-	public function formatErrorProvider() : array
+	public static function formatErrorProvider() : array
 	{
 		return [
 			'with all values' => [[

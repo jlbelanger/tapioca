@@ -206,7 +206,7 @@ class JsonApiRequest
 	 * @param  mixed  $value
 	 * @return void
 	 */
-	public function setDataAttribute(string $key, $value) : void
+	public function setDataAttribute(string $key, mixed $value) : void
 	{
 		$this->data['attributes'][$key] = $value;
 	}

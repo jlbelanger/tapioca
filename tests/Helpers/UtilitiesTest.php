@@ -20,7 +20,7 @@ class UtilitiesTest extends TestCase
 		$this->assertSame(false, Utilities::isTempId('1'));
 	}
 
-	public function prettyAttributeNamesProvider() : array
+	public static function prettyAttributeNamesProvider() : array
 	{
 		return [
 			[[

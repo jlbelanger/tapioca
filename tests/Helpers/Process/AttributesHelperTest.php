@@ -11,7 +11,7 @@ class AttributesHelperTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function convertSingularRelationshipsProvider() : array
+	public static function convertSingularRelationshipsProvider() : array
 	{
 		return [
 			'when removing a valid singular relationship' => [[

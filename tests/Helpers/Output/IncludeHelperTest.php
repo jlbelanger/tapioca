@@ -27,7 +27,7 @@ class IncludeHelperTest extends TestCase
 		$this->markTestIncomplete();
 	}
 
-	public function isKnownProvider() : array
+	public static function isKnownProvider() : array
 	{
 		return [
 			'when the record is not known' => [[
@@ -62,7 +62,7 @@ class IncludeHelperTest extends TestCase
 		$this->assertSame($data['expected'], $output);
 	}
 
-	public function addKnownRecordProvider() : array
+	public static function addKnownRecordProvider() : array
 	{
 		return [
 			'when knownRecords is empty' => [[

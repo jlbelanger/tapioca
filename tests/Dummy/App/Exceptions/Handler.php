@@ -19,9 +19,9 @@ class Handler extends ExceptionHandler
 	 *
 	 * @return void
 	 */
-	public function register()
+	public function register() : void
 	{
-		// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
+		// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
 		$this->renderable(function (InvalidSignatureException $e) {
 			if (!url()->signatureHasNotExpired(request())) {
 				return response()->json(['errors' => [['title' => __('passwords.expired'), 'status' => '403']]], 403);
@@ -29,7 +29,7 @@ class Handler extends ExceptionHandler
 			return response()->json(['errors' => [['title' => __('passwords.token'), 'status' => '403']]], 403);
 		});
 
-		// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
+		// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
 		$this->renderable(function (MethodNotAllowedHttpException $e) {
 			return response()->json(['errors' => [['title' => 'URL does not exist.', 'status' => '404', 'detail' => 'Method not allowed.']]], 404);
 		});
@@ -38,7 +38,7 @@ class Handler extends ExceptionHandler
 			return response()->json(['errors' => [['title' => $e->getMessage() ? $e->getMessage() : 'URL does not exist.', 'status' => '404']]], 404);
 		});
 
-		$this->renderable(function (ThrottleRequestsException $e) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
+		$this->renderable(function (ThrottleRequestsException $e) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
 			return response()->json(['errors' => [['title' => 'Please wait before retrying.', 'status' => '429']]], 429);
 		});
 

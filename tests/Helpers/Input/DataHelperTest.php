@@ -13,7 +13,7 @@ class DataHelperTest extends TestCase
 		$this->markTestIncomplete();
 	}
 
-	public function validateProvider() : array
+	public static function validateProvider() : array
 	{
 		return [
 			'with a string' => [[

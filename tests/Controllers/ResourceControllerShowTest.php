@@ -11,7 +11,7 @@ class ResourceControllerShowTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function showProvider() : array
+	public static function showProvider() : array
 	{
 		return [
 			'with no params' => [[

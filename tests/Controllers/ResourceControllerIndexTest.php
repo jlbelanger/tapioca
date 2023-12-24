@@ -9,7 +9,7 @@ class ResourceControllerIndexTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function indexProvider() : array
+	public static function indexProvider() : array
 	{
 		return [
 			'with no params' => [[
@@ -356,7 +356,7 @@ class ResourceControllerIndexTest extends TestCase
 							'id' => '%album_songs.0%',
 							'type' => 'album-song',
 							'attributes' => [
-								'track' => '1',
+								'track' => 1,
 								'length' => null,
 							],
 						],
@@ -364,7 +364,7 @@ class ResourceControllerIndexTest extends TestCase
 							'id' => '%album_songs.1%',
 							'type' => 'album-song',
 							'attributes' => [
-								'track' => '1',
+								'track' => 1,
 								'length' => null,
 							],
 						],
@@ -372,7 +372,7 @@ class ResourceControllerIndexTest extends TestCase
 							'id' => '%album_songs.2%',
 							'type' => 'album-song',
 							'attributes' => [
-								'track' => '1',
+								'track' => 1,
 								'length' => null,
 							],
 						],
@@ -380,7 +380,7 @@ class ResourceControllerIndexTest extends TestCase
 							'id' => '%album_songs.3%',
 							'type' => 'album-song',
 							'attributes' => [
-								'track' => '1',
+								'track' => 1,
 								'length' => null,
 							],
 						],

@@ -43,7 +43,7 @@ protected $dontReport = [
 Add the following to the `register` function in the same file (`app/Exceptions/Handler.php`):
 
 ``` php
-public function register()
+public function register() : void
 {
 	$this->renderable(function (\Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $e) {
 		return response()->json(['errors' => [['title' => 'URL does not exist.', 'status' => '404', 'detail' => 'Method not allowed.']]], 404);

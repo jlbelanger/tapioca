@@ -8,7 +8,7 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class DataAttributesHelperTest extends TestCase
 {
-	public function normalizeProvider() : array
+	public static function normalizeProvider() : array
 	{
 		return [
 			'with an empty array' => [[
@@ -48,7 +48,7 @@ class DataAttributesHelperTest extends TestCase
 		$this->assertSame($args['expected'], $output);
 	}
 
-	public function validateProvider() : array
+	public static function validateProvider() : array
 	{
 		return [
 			'with a string' => [[

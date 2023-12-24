@@ -10,7 +10,7 @@ use Jlbelanger\Tapioca\Tests\TestCase;
 
 class BodyValidationMiddlewareTest extends TestCase
 {
-	public function handleProvider() : array
+	public static function handleProvider() : array
 	{
 		return [
 			'with a GET request' => [[

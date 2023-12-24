@@ -54,9 +54,9 @@ class RelationshipsHasManyHelperTest extends TestCase
 			'deleted' => [
 				$relToDelete->getKey() => [
 					$relToDelete->getKeyName() => $relToDelete->getKey(),
-					'album_id' => (string) $album->getKey(),
-					'song_id' => (string) $songToDelete->getKey(),
-					'track' => '1',
+					'album_id' => $album->getKey(),
+					'song_id' => $songToDelete->getKey(),
+					'track' => 1,
 					'length' => null,
 				],
 			],
@@ -80,7 +80,7 @@ class RelationshipsHasManyHelperTest extends TestCase
 		]);
 	}
 
-	public function findProvider() : array
+	public static function findProvider() : array
 	{
 		return [
 			'when there is no matching record' => [[
