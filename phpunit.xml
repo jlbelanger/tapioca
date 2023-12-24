@@ -5,7 +5,6 @@
 	bootstrap="vendor/autoload.php"
 	colors="true"
 >
-	<coverage />
 	<testsuites>
 		<testsuite name="Tests">
 			<directory>tests</directory>
@@ -13,7 +12,7 @@
 	</testsuites>
 	<source>
 		<include>
-			<directory>app</directory>
+			<directory>src</directory>
 		</include>
 	</source>
 	<php>
