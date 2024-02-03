@@ -33,7 +33,13 @@ class Utilities
 		$output = [];
 		$keys = array_keys($rules);
 		foreach ($keys as $key) {
-			$output[$key] = preg_replace('/^.+\.([^\.]+)$/', '$1', str_replace('_', ' ', $key));
+			$cleanKey = preg_replace('/^.+\.([^\.]+)$/', '$1', $key);
+			$langKey = 'validation.attributes.' . $cleanKey;
+			if (trans()->hasForLocale($langKey)) {
+				$output[$key] = __('validation.attributes.' . $cleanKey);
+			} else {
+				$output[$key] = str_replace('_', ' ', $cleanKey);
+			}
 		}
 		return $output;
 	}
