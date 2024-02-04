@@ -3,6 +3,7 @@
 namespace Jlbelanger\Tapioca\Helpers\Process;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Support\Str;
 use Jlbelanger\Tapioca\Helpers\JsonApiRequest;
 
@@ -40,28 +41,39 @@ class AttributesHelper
 	}
 
 	/**
-	 * @param  array $data
-	 * @param  Model $record
+	 * @param  array             $data
+	 * @param  Model             $record
+	 * @param  HasOneOrMany|null $existing
 	 * @return array
 	 */
-	public static function convertSingularRelationships(array $data, Model $record) : array
+	public static function convertSingularRelationships(array $data, Model $record, ?HasOneOrMany $existing = null) : array
 	{
 		$fillable = $record->getFillable();
+		$className = $existing ? class_basename($existing) : '';
 
 		foreach ($data['relationships'] as $key => $value) {
-			$attribute = Str::snake($key) . '_id';
+			$cleanKey = Str::snake($key);
+			$attribute = $cleanKey . '_id';
 			if (!in_array($attribute, $fillable)) {
 				continue;
 			}
+
+			$typeAttribute = $cleanKey . '_type';
 
 			if ($value['data'] === null) {
 				// This is a singular relationship that is being removed.
 				unset($data['relationships'][$key]);
 				$data['attributes'][$attribute] = null;
+				if ($className === 'MorphMany' && in_array($typeAttribute, $fillable)) {
+					$data['attributes'][$typeAttribute] = null;
+				}
 			} elseif (array_key_exists('id', $value['data'])) {
 				// This is a singular relationship that is being updated.
 				unset($data['relationships'][$key]);
 				$data['attributes'][$attribute] = $value['data']['id'];
+				if ($className === 'MorphMany' && in_array($typeAttribute, $fillable)) {
+					$data['attributes'][$typeAttribute] = $value['data']['type'];
+				}
 			}
 		}
 

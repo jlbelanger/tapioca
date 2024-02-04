@@ -3,7 +3,7 @@
 namespace Jlbelanger\Tapioca\Helpers\Process;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Support\Arr;
 use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 use Jlbelanger\Tapioca\Helpers\Input\DataHelper;
@@ -15,14 +15,14 @@ class RelationshipsHasManyHelper
 	/**
 	 * Note: This is not in the JSON:API spec.
 	 *
-	 * @param  array   $relData
-	 * @param  HasMany $existing
-	 * @param  string  $key
-	 * @param  Model   $record
-	 * @param  array   $included
+	 * @param  array        $relData
+	 * @param  HasOneOrMany $existing
+	 * @param  string       $key
+	 * @param  Model        $record
+	 * @param  array        $included
 	 * @return array
 	 */
-	public static function update(array $relData, HasMany $existing, string $key, Model $record, array $included) : array
+	public static function update(array $relData, HasOneOrMany $existing, string $key, Model $record, array $included) : array
 	{
 		$relIdName = $existing->getRelated()->getKeyName();
 		$existingIds = array_map('strval', $existing->pluck($relIdName)->toArray());
@@ -41,12 +41,12 @@ class RelationshipsHasManyHelper
 	/**
 	 * Deletes any records that are in existingIds but not newIds.
 	 *
-	 * @param  HasMany $existing
-	 * @param  array   $existingIds
-	 * @param  array   $newIds
+	 * @param  HasOneOrMany $existing
+	 * @param  array        $existingIds
+	 * @param  array        $newIds
 	 * @return array
 	 */
-	protected static function delete(HasMany $existing, array $existingIds, array $newIds) : array
+	protected static function delete(HasOneOrMany $existing, array $existingIds, array $newIds) : array
 	{
 		$output = [
 			'ids' => [],
@@ -86,14 +86,14 @@ class RelationshipsHasManyHelper
 	}
 
 	/**
-	 * @param  array   $relData
-	 * @param  HasMany $existing
-	 * @param  string  $key
-	 * @param  Model   $record
-	 * @param  array   $included
+	 * @param  array        $relData
+	 * @param  HasOneOrMany $existing
+	 * @param  string       $key
+	 * @param  Model        $record
+	 * @param  array        $included
 	 * @return array
 	 */
-	protected static function addOrUpdate(array $relData, HasMany $existing, string $key, Model $record, array $included) : array
+	protected static function addOrUpdate(array $relData, HasOneOrMany $existing, string $key, Model $record, array $included) : array
 	{
 		// Get the pivot model (eg. AlbumSong).
 		$pivotModel = get_class($existing->getRelated());
@@ -117,7 +117,7 @@ class RelationshipsHasManyHelper
 
 			$relRecord = new $pivotModel();
 			$includedData = DataHelper::normalize($includedData, $relRecord->whitelistedAttributes(), $relRecord->whitelistedRelationships());
-			$includedData = AttributesHelper::convertSingularRelationships($includedData, $relRecord);
+			$includedData = AttributesHelper::convertSingularRelationships($includedData, $relRecord, $existing);
 
 			if ($isAdd) {
 				// Create the new pivot model.

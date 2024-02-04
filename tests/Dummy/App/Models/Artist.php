@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Note;
 use Jlbelanger\Tapioca\Tests\Dummy\Database\Factories\ArtistFactory;
 use Jlbelanger\Tapioca\Traits\Resource;
 
@@ -44,7 +46,7 @@ class Artist extends Model
 	 */
 	public function multiRelationships() : array
 	{
-		return ['albums'];
+		return ['albums', 'notes'];
 	}
 
 	/**
@@ -53,5 +55,13 @@ class Artist extends Model
 	public function albums() : HasMany
 	{
 		return $this->hasMany(Album::class);
+	}
+
+	/**
+	 * @return MorphMany
+	 */
+	public function notes() : MorphMany
+	{
+		return $this->morphMany(Note::class, 'record');
 	}
 }

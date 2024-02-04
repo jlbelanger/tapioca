@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\AlbumSong;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Artist;
+use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Note;
 use Jlbelanger\Tapioca\Tests\Dummy\Database\Factories\AlbumFactory;
 use Jlbelanger\Tapioca\Traits\Resource;
 
@@ -50,7 +52,7 @@ class Album extends Model
 	 */
 	public function multiRelationships() : array
 	{
-		return ['album_songs', 'songs'];
+		return ['album_songs', 'notes', 'songs'];
 	}
 
 	/**
@@ -75,6 +77,14 @@ class Album extends Model
 	public function artist() : BelongsTo
 	{
 		return $this->belongsTo(Artist::class);
+	}
+
+	/**
+	 * @return MorphMany
+	 */
+	public function notes() : MorphMany
+	{
+		return $this->morphMany(Note::class, 'record');
 	}
 
 	/**

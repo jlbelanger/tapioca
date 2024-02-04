@@ -30,7 +30,7 @@ class RelationshipsHelper
 
 			if ($className === 'BelongsToMany') {
 				$result = self::updateBelongsToMany($relData, $existing);
-			} elseif ($className === 'HasMany') {
+			} elseif ($className === 'HasMany' || $className === 'MorphMany') {
 				$result = RelationshipsHasManyHelper::update($relData, $existing, $key, $record, $included);
 			} elseif ($className === 'HasOneThrough') {
 				$result = RelationshipsHasOneThroughHelper::update($relData, $existing, $record);
