@@ -131,7 +131,7 @@ class FilterHelperTest extends TestCase
 						'equals' => 'bar, baz',
 					],
 				],
-				'expectedMessage' => '{"title":"Parameter \'filter[foo][equals]\' has invalid operation.","detail":"Permitted operations: eq, ge, gt, le, like, notlike, lt, ne, in, null, notnull"}',
+				'expectedMessage' => '{"title":"Parameter \'filter[foo][equals]\' has invalid operation.","detail":"Permitted operations: eq, ge, gt, le, like, notlike, lt, ne, in, notin, null, notnull"}',
 			]],
 			'with a valid array' => [[
 				'filter' => [
@@ -362,6 +362,21 @@ class FilterHelperTest extends TestCase
 					],
 				],
 				'expected' => ['a', 'c'],
+			]],
+			'when filtering with notin' => [[
+				'records' => [
+					'albums' => [
+						['title' => 'a'],
+						['title' => 'b'],
+						['title' => 'c'],
+					],
+				],
+				'filter' => [
+					'title' => [
+						'notin' => 'a,c',
+					],
+				],
+				'expected' => ['b'],
 			]],
 			'when filtering with null' => [[
 				'records' => [

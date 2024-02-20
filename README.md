@@ -203,6 +203,7 @@ GET /articles?filter[slug][notlike]=foo%
 GET /articles?filter[slug][notlike]=%foo
 GET /articles?filter[slug][notlike]=%foo%
 GET /articles?filter[slug][in]=foo,bar
+GET /articles?filter[slug][notin]=foo,bar
 GET /articles?filter[slug][null]=1
 GET /articles?filter[slug][notnull]=1
 GET /articles?filter[word_count][gt]=50

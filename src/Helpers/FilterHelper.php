@@ -18,6 +18,7 @@ class FilterHelper
 		'lt' => '<',
 		'ne' => '!=',
 		'in' => 'IN',
+		'notin' => 'NOT IN',
 		'null' => 'IS NULL',
 		'notnull' => 'IS NOT NULL',
 	];
@@ -98,6 +99,9 @@ class FilterHelper
 				} elseif ($op === 'in') {
 					$value = array_map('trim', explode(',', $value));
 					$records = $records->whereIn($key, $value);
+				} elseif ($op === 'notin') {
+					$value = array_map('trim', explode(',', $value));
+					$records = $records->whereNotIn($key, $value);
 				} else {
 					$records = $records->where($key, $operator, $value);
 				}
