@@ -94,7 +94,7 @@ trait Resource
 					'data' => !empty($relation) && $relation->getKey() !== 0 ? $relation->baseData() : null,
 				];
 			} elseif (in_array($relationshipName, $this->multiRelationships())) {
-				$relation = $this->$functionName()->get();
+				$relation = $this->relationLoaded($functionName) ? $this->$functionName : $this->$functionName()->get();
 				$output[$relationshipName] = [
 					'data' => [],
 				];
