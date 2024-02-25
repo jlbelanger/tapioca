@@ -2,6 +2,8 @@
 
 namespace Jlbelanger\Tapioca\Helpers;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Jlbelanger\Tapioca\Helpers\JsonApiRequest;
 use Jlbelanger\Tapioca\Helpers\Output\IncludeHelper;
 
@@ -28,14 +30,10 @@ class JsonApiResponse
 	public function prepare() : void
 	{
 		// Convert singular records to an array so we don't have to deal with both cases.
-		if ($this->request->isSingular()) {
-			$records = [$this->request->getRecords()];
-		} else {
-			$records = $this->request->getRecords();
-		}
+		$records = $this->request->getRecords();
 
 		$this->data = $this->fetch($records);
-		$this->included = IncludeHelper::perform($this->data, $this->request->getInclude(), $this->request->getFields());
+		$this->included = IncludeHelper::perform($records, $this->data, $this->request->getInclude(), $this->request->getFields());
 
 		// Convert singular records back.
 		if ($this->request->isSingular()) {
@@ -71,10 +69,10 @@ class JsonApiResponse
 	}
 
 	/**
-	 * @param  array|Builder $records
+	 * @param  Builder|Collection $records
 	 * @return array
 	 */
-	protected function fetch($records) : array
+	protected function fetch(Builder|Collection $records) : array
 	{
 		$output = [];
 		foreach ($records as $record) {

@@ -2,7 +2,9 @@
 
 namespace Jlbelanger\Tapioca\Helpers;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use Jlbelanger\Tapioca\Helpers\FilterHelper;
 use Jlbelanger\Tapioca\Helpers\Input\DataHelper;
@@ -33,13 +35,13 @@ class JsonApiRequest
 	protected $sort;
 
 	/**
-	 * @param  string                                                                    $type
-	 * @param  Request                                                                   $request
-	 * @param  Model                                                                     $model
-	 * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model $records
+	 * @param  string             $type
+	 * @param  Request            $request
+	 * @param  Model              $model
+	 * @param  Builder|Collection $records
 	 * @return void
 	 */
-	public function __construct(string $type, Request $request, Model $model, $records)
+	public function __construct(string $type, Request $request, Model $model, Builder|Collection $records)
 	{
 		$this->type = $type;
 		$this->model = $model;
@@ -186,9 +188,9 @@ class JsonApiRequest
 	}
 
 	/**
-	 * @return array|\Illuminate\Database\Eloquent\Builder
+	 * @return Builder|Collection
 	 */
-	public function getRecords()
+	public function getRecords() : Builder|Collection
 	{
 		return $this->records;
 	}
@@ -212,10 +214,10 @@ class JsonApiRequest
 	}
 
 	/**
-	 * @param  Model $records
+	 * @param  Collection $records
 	 * @return void
 	 */
-	public function setRecords(Model $records) : void
+	public function setRecords(Collection $records) : void
 	{
 		$this->records = $records;
 	}

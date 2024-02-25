@@ -53,14 +53,14 @@ class ResourceController extends Controller
 		$record = $this->model($request);
 
 		// Validate the record.
-		$req = new JsonApiRequest('store', $request, $this->model($request), $record);
+		$req = new JsonApiRequest('store', $request, $this->model($request), collect([$record]));
 		$rules = $record->rules();
 		$this->validate($request, $rules, [], Utilities::prettyAttributeNames($rules));
 
 		// Store the record.
 		$record = ProcessHelper::create($record, $req);
 		$record = $record->fresh();
-		$req->setRecords($record);
+		$req->setRecords(collect([$record]));
 
 		return response()->json($req->output(), 201);
 	}
@@ -78,7 +78,7 @@ class ResourceController extends Controller
 		if (!$record) {
 			abort(404, __('This record does not exist.'));
 		}
-		$req = new JsonApiRequest('show', $request, $this->model(), $record);
+		$req = new JsonApiRequest('show', $request, $this->model(), collect([$record]));
 		return response()->json($req->output());
 	}
 
@@ -98,7 +98,7 @@ class ResourceController extends Controller
 		}
 
 		// Validate the record.
-		$req = new JsonApiRequest('update', $request, $this->model(), $record);
+		$req = new JsonApiRequest('update', $request, $this->model(), collect([$record]));
 		$rules = $record->rules();
 		$this->validate($request, $rules, [], Utilities::prettyAttributeNames($rules));
 

@@ -3,6 +3,7 @@
 namespace Jlbelanger\Tapioca\Helpers\Output;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Jlbelanger\Tapioca\Helpers\Utilities;
@@ -28,12 +29,13 @@ class IncludeHelper
 	}
 
 	/**
-	 * @param  array $records
-	 * @param  array $include
-	 * @param  array $fields
+	 * @param  Collection $collection
+	 * @param  array      $records
+	 * @param  array      $include
+	 * @param  array      $fields
 	 * @return array
 	 */
-	public static function perform(array $records, array $include, array $fields) : array
+	public static function perform(Collection $collection, array $records, array $include, array $fields) : array
 	{
 		$output = [];
 		if (empty($include)) {
@@ -46,8 +48,25 @@ class IncludeHelper
 			$knownRecords = self::addKnownRecord($knownRecords, $recordData);
 		}
 
+		// TODO: This probably needs to be recursive.
+		$eagerRecords = [];
+		foreach ($collection as $model) {
+			foreach ($model->getRelations() as $relations) {
+				if (empty($relations)) {
+					continue;
+				}
+				if (class_basename(get_class($relations)) !== 'Collection' && !is_array($relations)) {
+					$relations = collect([$relations]);
+				}
+				foreach ($relations as $relatedRecord) {
+					$data = $relatedRecord->baseData();
+					$eagerRecords[$data['type'] . '-' . $data['id']] = $relatedRecord;
+				}
+			}
+		}
+
 		foreach ($records as $recordData) {
-			$new = self::include($recordData, $include, $fields, $knownRecords);
+			$new = self::include($recordData, $include, $fields, $knownRecords, $eagerRecords);
 			$knownRecords = $new['knownRecords'];
 			$output = array_merge($output, $new['included']);
 		}
@@ -60,9 +79,10 @@ class IncludeHelper
 	 * @param  array $include
 	 * @param  array $fields
 	 * @param  array $knownRecords
+	 * @param  array $eagerRecords
 	 * @return array
 	 */
-	protected static function include(array $recordData, array $include, array $fields, array $knownRecords) : array
+	protected static function include(array $recordData, array $include, array $fields, array $knownRecords, array $eagerRecords) : array
 	{
 		$output = [
 			'included' => [],
@@ -92,12 +112,12 @@ class IncludeHelper
 					continue;
 				}
 				$output['knownRecords'] = self::addKnownRecord($output['knownRecords'], $relatedData);
-				$record = self::getRecordFromData($relatedData);
+				$record = self::getRecordFromData($relatedData, $eagerRecords);
 				$relatedData = $record->data($filteredInclude, $fields);
 				$output['included'][] = $relatedData;
 
 				if (!empty($filteredInclude)) {
-					$new = self::include($relatedData, $filteredInclude, $fields, $output['knownRecords']);
+					$new = self::include($relatedData, $filteredInclude, $fields, $output['knownRecords'], $eagerRecords);
 					$output['knownRecords'] = $new['knownRecords'];
 					$output['included'] = array_merge($output['included'], $new['included']);
 				}
@@ -109,10 +129,15 @@ class IncludeHelper
 
 	/**
 	 * @param  array $data
+	 * @param  array $eagerRecords
 	 * @return Model
 	 */
-	protected static function getRecordFromData(array $data) : Model
+	protected static function getRecordFromData(array $data, array $eagerRecords) : Model
 	{
+		$key = $data['type'] . '-' . $data['id'];
+		if (!empty($eagerRecords[$key])) {
+			return $eagerRecords[$key];
+		}
 		$className = Utilities::getClassNameFromType($data['type']);
 		return (new $className)->find($data['id']);
 	}
