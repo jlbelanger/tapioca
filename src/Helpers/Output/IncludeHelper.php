@@ -23,6 +23,7 @@ class IncludeHelper
 				$records = $records->with(Str::camel($name));
 			}
 		}
+		$records = $model->prepareInclude($records, $include);
 		return $records;
 	}
 

@@ -2,6 +2,7 @@
 
 namespace Jlbelanger\Tapioca\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Jlbelanger\Tapioca\Traits\Filterable;
 use Jlbelanger\Tapioca\Traits\Sortable;
@@ -157,6 +158,16 @@ trait Resource
 	public function multiRelationships() : array
 	{
 		return [];
+	}
+
+	/**
+	 * @param  Builder $records
+	 * @param  array   $include
+	 * @return Builder
+	 */
+	public function prepareInclude(Builder $records, array $include) : Builder
+	{
+		return $records;
 	}
 
 	/**
