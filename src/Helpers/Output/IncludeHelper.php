@@ -17,8 +17,9 @@ class IncludeHelper
 	 */
 	public static function prepare(Model $model, Builder $records, array $include) : Builder
 	{
+		$relationships = array_merge($model->singularRelationships(), $model->multiRelationships());
 		foreach ($include as $name) {
-			if (in_array($name, $model->singularRelationships())) {
+			if (in_array($name, $relationships)) {
 				$records = $records->with(Str::camel($name));
 			}
 		}
