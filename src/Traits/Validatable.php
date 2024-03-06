@@ -3,6 +3,7 @@
 namespace Jlbelanger\Tapioca\Traits;
 
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Unique;
 
 trait Validatable
 {
@@ -24,9 +25,9 @@ trait Validatable
 
 	/**
 	 * @param  string $column
-	 * @return string
+	 * @return Unique
 	 */
-	protected function unique(string $column) : string
+	protected function unique(string $column) : Unique
 	{
 		$unique = Rule::unique($this->getTable(), $column);
 		if ($this->getKey()) {
