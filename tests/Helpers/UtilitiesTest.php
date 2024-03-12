@@ -27,10 +27,14 @@ class UtilitiesTest extends TestCase
 				'rules' => [
 					'data.attributes.contact_email_address' => '',
 					'data.relationships.foo' => '',
+					'data.relationships.foo.data' => '',
+					'data.relationships.foo.data.id' => '',
 				],
 				'expected' => [
 					'data.attributes.contact_email_address' => 'contact email address',
 					'data.relationships.foo' => 'foo',
+					'data.relationships.foo.data' => 'foo',
+					'data.relationships.foo.data.id' => 'id',
 				],
 			]],
 		];
