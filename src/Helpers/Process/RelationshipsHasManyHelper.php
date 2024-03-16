@@ -101,7 +101,7 @@ class RelationshipsHasManyHelper
 			'ids' => [],
 		];
 
-		foreach ($relData['data'] as $rel) {
+		foreach ($relData['data'] as $i => $rel) {
 			$isAdd = Utilities::isTempId($rel['id']);
 
 			// Find the corresponding record in 'included'.
@@ -132,6 +132,16 @@ class RelationshipsHasManyHelper
 			} else {
 				// Update the existing pivot model.
 				$relRecord = $relRecord->find($rel['id']);
+
+				if (!$relRecord) {
+					throw JsonApiException::generate([
+						'title' => __("Record with id ':id' and type ':type' does not exist.", ['id' => $rel['id'], 'type' => $rel['type']]),
+						'source' => [
+							'pointer' => "/data/relationships/$key/data/$i",
+						],
+					], 422);
+				}
+
 				$relRecord->update($includedData['attributes']);
 				if (!empty($includedData['relationships'])) {
 					RelationshipsHelper::update($relRecord, $includedData['relationships'], $included);

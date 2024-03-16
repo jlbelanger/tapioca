@@ -117,6 +117,15 @@ class ProcessHelper
 			}
 
 			$rules = $record->rules();
+			if (!$record) {
+				throw JsonApiException::generate([
+					'title' => __("Record with id ':id' and type ':type' does not exist.", ['id' => $data['id'], 'type' => $data['type']]),
+					'source' => [
+						'pointer' => '/included/' . $i,
+					],
+				], 422);
+			}
+
 			$newRules = [];
 			foreach ($rules as $key => $value) {
 				$newKey = preg_replace('/^data\./', 'included.' . $i . '.', $key);
