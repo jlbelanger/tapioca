@@ -37,7 +37,7 @@ class ArticleTag extends Model
 	/**
 	 * @return array
 	 */
-	public function rules() : array
+	public function rules(array $data) : array
 	{
 		return [
 			'data.relationships.article' => [$this->requiredOnCreate()],

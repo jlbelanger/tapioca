@@ -38,7 +38,7 @@ class Album extends Model
 	/**
 	 * @return array
 	 */
-	public function rules() : array
+	public function rules(array $data) : array
 	{
 		return [
 			'data.attributes.title' => [$this->requiredOnCreate()],

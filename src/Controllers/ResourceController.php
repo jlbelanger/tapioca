@@ -54,7 +54,7 @@ class ResourceController extends Controller
 
 		// Validate the record.
 		$req = new JsonApiRequest('store', $request, $this->model($request), collect([$record]));
-		$rules = $record->rules();
+		$rules = $record->rules($req->getData());
 		$this->validate($request, $rules, [], Utilities::prettyAttributeNames($rules));
 
 		// Store the record.
@@ -99,7 +99,7 @@ class ResourceController extends Controller
 
 		// Validate the record.
 		$req = new JsonApiRequest('update', $request, $this->model(), collect([$record]));
-		$rules = $record->rules();
+		$rules = $record->rules($req->getData());
 		$this->validate($request, $rules, [], Utilities::prettyAttributeNames($rules));
 
 		// Update the record.

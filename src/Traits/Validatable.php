@@ -10,7 +10,7 @@ trait Validatable
 	/**
 	 * @return array eg. ['data.attributes.email' => ['required', 'email'], 'data.relationships.user' => ['required']]
 	 */
-	public function rules() : array
+	public function rules(array $data) : array
 	{
 		return [];
 	}

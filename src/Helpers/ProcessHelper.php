@@ -5,6 +5,7 @@ namespace Jlbelanger\Tapioca\Helpers;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Jlbelanger\Tapioca\Events\RelationshipUpdated;
+use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 use Jlbelanger\Tapioca\Helpers\JsonApiRequest;
 use Jlbelanger\Tapioca\Helpers\Process\AttributesHelper;
 use Jlbelanger\Tapioca\Helpers\Process\RelationshipsHelper;
@@ -116,7 +117,6 @@ class ProcessHelper
 				$record = (new $className)::find($data['id']);
 			}
 
-			$rules = $record->rules();
 			if (!$record) {
 				throw JsonApiException::generate([
 					'title' => __("Record with id ':id' and type ':type' does not exist.", ['id' => $data['id'], 'type' => $data['type']]),
@@ -126,6 +126,7 @@ class ProcessHelper
 				], 422);
 			}
 
+			$rules = $record->rules($data);
 			$newRules = [];
 			foreach ($rules as $key => $value) {
 				$newKey = preg_replace('/^data\./', 'included.' . $i . '.', $key);
