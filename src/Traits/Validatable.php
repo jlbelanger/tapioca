@@ -8,6 +8,7 @@ use Illuminate\Validation\Rules\Unique;
 trait Validatable
 {
 	/**
+	 * @param  array $data
 	 * @return array eg. ['data.attributes.email' => ['required', 'email'], 'data.relationships.user' => ['required']]
 	 */
 	public function rules(array $data) : array
