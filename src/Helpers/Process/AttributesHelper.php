@@ -50,13 +50,19 @@ class AttributesHelper
 	{
 		$fillable = $record->getFillable();
 		$className = $existing ? class_basename($existing) : '';
+		$singularRelationships = $record->singularRelationships();
+		$relToColumn = [];
+		foreach ($singularRelationships as $rel) {
+			$fn = Str::camel($rel);
+			$relToColumn[$rel] = $record->$fn()->getForeignKeyName();
+		}
 
 		foreach ($data['relationships'] as $key => $value) {
 			$cleanKey = Str::snake($key);
-			$attribute = $cleanKey . '_id';
-			if (!in_array($attribute, $fillable)) {
+			if (empty($relToColumn[$cleanKey]) || !in_array($relToColumn[$cleanKey], $fillable)) {
 				continue;
 			}
+			$attribute = $relToColumn[$cleanKey];
 
 			$typeAttribute = $cleanKey . '_type';
 

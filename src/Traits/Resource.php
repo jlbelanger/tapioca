@@ -62,19 +62,26 @@ trait Resource
 	protected function dataAttributes($fields = null) : array
 	{
 		$output = [];
-		$singularRelationships = array_map(function ($s) {
-			return Str::snake($s) . '_id';
-		}, $this->singularRelationships());
+
+		$singularRelationships = $this->singularRelationships();
+		$relToColumn = [];
+		foreach ($singularRelationships as $rel) {
+			$fn = Str::camel($rel);
+			$relToColumn[$rel] = $this->$fn()->getForeignKeyName();
+		}
+
 		$attributes = $this->fillable;
 		$attributes = array_diff($attributes, $this->hidden);
-		$attributes = array_diff($attributes, $singularRelationships);
+		$attributes = array_diff($attributes, $relToColumn);
 		$attributes = array_merge($attributes, $this->additionalAttributes());
+
 		foreach ($attributes as $attribute) {
 			if ($fields !== null && !in_array($attribute, $fields)) {
 				continue;
 			}
 			$output[$attribute] = $this->$attribute;
 		}
+
 		return $output;
 	}
 
