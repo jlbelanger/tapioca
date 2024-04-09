@@ -25,6 +25,15 @@ class RelationshipsHelper
 
 		foreach ($relationships as $key => $relData) {
 			$funcName = Str::camel($key);
+			if (!method_exists($record, $funcName)) {
+				throw JsonApiException::generate([
+					'title' => __("Relationship type ':key' is invalid.", ['key' => $key]),
+					'source' => [
+						'pointer' => "/data/relationships/$key",
+					],
+				], 400);
+			}
+
 			$existing = $record->$funcName();
 			$className = class_basename($existing);
 

@@ -3,6 +3,7 @@
 namespace Jlbelanger\Tapioca\Tests\Helpers\Process;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 use Jlbelanger\Tapioca\Helpers\Process\RelationshipsHelper;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\AlbumSong;
@@ -123,7 +124,22 @@ class RelationshipsHelperTest extends TestCase
 			'track' => 2,
 		]);
 
-		// TODO: With an unsupported relationship.
+		// With an unsupported relationship.
+		$article = Article::factory()->create();
+		$relationships = [
+			'foos' => [
+				'data' => [
+					[
+						'id' => '1',
+						'type' => 'foos',
+					],
+				],
+			],
+		];
+		$included = [];
+		$this->expectException(JsonApiException::class);
+		$this->expectExceptionMessage('{"title":"Relationship type \'foos\' is invalid.","source":{"pointer":"\/data\/relationships\/foos"}}');
+		RelationshipsHelper::update($article, $relationships, $included);
 	}
 
 	public function testUpdateBelongsToMany() : void
