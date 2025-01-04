@@ -4,6 +4,7 @@ namespace Jlbelanger\Tapioca\Tests\Controllers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ResourceControllerUpdateTest extends TestCase
 {
@@ -803,9 +804,7 @@ class ResourceControllerUpdateTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider updateProvider
-	 */
+	#[DataProvider('updateProvider')]
 	public function testUpdate(array $args = []) : void
 	{
 		$records = $this->createRecords($args['records']);

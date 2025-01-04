@@ -5,6 +5,7 @@ namespace Jlbelanger\Tapioca\Tests\Helpers\Input;
 use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 use Jlbelanger\Tapioca\Helpers\Input\IncludedHelper;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class IncludedHelperTest extends TestCase
 {
@@ -43,9 +44,7 @@ class IncludedHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider normalizeProvider
-	 */
+	#[DataProvider('normalizeProvider')]
 	public function testNormalize(array $args) : void
 	{
 		$output = IncludedHelper::normalize($args['included']);
@@ -100,9 +99,7 @@ class IncludedHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider validateProvider
-	 */
+	#[DataProvider('validateProvider')]
 	public function testValidate(array $args) : void
 	{
 		if (!empty($args['expectedMessage'])) {

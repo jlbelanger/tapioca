@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Artist;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ResourceControllerShowTest extends TestCase
 {
@@ -115,9 +116,7 @@ class ResourceControllerShowTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider showProvider
-	 */
+	#[DataProvider('showProvider')]
 	public function testShow(array $args) : void
 	{
 		$artist = Artist::factory()->create();

@@ -7,6 +7,7 @@ use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 use Jlbelanger\Tapioca\Helpers\FilterHelper;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class FilterHelperTest extends TestCase
 {
@@ -103,9 +104,7 @@ class FilterHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider normalizeProvider
-	 */
+	#[DataProvider('normalizeProvider')]
 	public function testNormalize(array $args) : void
 	{
 		$output = FilterHelper::normalize($args['filter'], $args['defaultFilter']);
@@ -144,9 +143,7 @@ class FilterHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider validateProvider
-	 */
+	#[DataProvider('validateProvider')]
 	public function testValidate(array $args) : void
 	{
 		if (!empty($args['expectedMessage'])) {
@@ -429,9 +426,7 @@ class FilterHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider performProvider
-	 */
+	#[DataProvider('performProvider')]
 	public function testPerform(array $args) : void
 	{
 		$this->createRecords($args['records']);

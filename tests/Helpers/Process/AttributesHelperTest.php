@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jlbelanger\Tapioca\Helpers\Process\AttributesHelper;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class AttributesHelperTest extends TestCase
 {
@@ -52,9 +53,7 @@ class AttributesHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider convertSingularRelationshipsProvider
-	 */
+	#[DataProvider('convertSingularRelationshipsProvider')]
 	public function testConvertSingularRelationships(array $args) : void
 	{
 		$record = Album::factory()->create();

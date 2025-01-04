@@ -4,6 +4,7 @@ namespace Jlbelanger\Tapioca\Tests\Controllers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ResourceControllerIndexTest extends TestCase
 {
@@ -538,9 +539,7 @@ class ResourceControllerIndexTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider indexProvider
-	 */
+	#[DataProvider('indexProvider')]
 	public function testIndex(array $args) : void
 	{
 		$records = $this->createRecords($args['records']);

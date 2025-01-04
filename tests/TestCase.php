@@ -162,7 +162,7 @@ abstract class TestCase extends BaseTestCase
 		foreach ($rows as $key => $row) {
 			if (is_array($row)) {
 				$rows[$key] = $this->replaceToken($row, $token, $value);
-			} elseif (strpos($row, $token) !== false) {
+			} elseif ($row && strpos($row, $token) !== false) {
 				$rows[$key] = str_replace($token, $value, $row);
 			}
 		}

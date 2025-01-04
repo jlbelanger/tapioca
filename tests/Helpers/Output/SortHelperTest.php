@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jlbelanger\Tapioca\Helpers\Output\SortHelper;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class SortHelperTest extends TestCase
 {
@@ -74,9 +75,7 @@ class SortHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider performProvider
-	 */
+	#[DataProvider('performProvider')]
 	public function testPerform(array $args) : void
 	{
 		$this->createRecords($args['records']);

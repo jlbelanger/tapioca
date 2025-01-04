@@ -4,6 +4,7 @@ namespace Jlbelanger\Tapioca\Tests\Helpers\Output;
 
 use Jlbelanger\Tapioca\Helpers\Output\IncludeHelper;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class IncludeHelperTest extends TestCase
 {
@@ -53,9 +54,7 @@ class IncludeHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider isKnownProvider
-	 */
+	#[DataProvider('isKnownProvider')]
 	public function testIsKnown(array $data) : void
 	{
 		$output = $this->callPrivate(new IncludeHelper, 'isKnown', [$data['record'], $data['knownRecords']]);
@@ -83,9 +82,7 @@ class IncludeHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider addKnownRecordProvider
-	 */
+	#[DataProvider('addKnownRecordProvider')]
 	public function testAddKnownRecord(array $data) : void
 	{
 		$output = $this->callPrivate(new IncludeHelper, 'addKnownRecord', [$data['knownRecords'], $data['data']]);

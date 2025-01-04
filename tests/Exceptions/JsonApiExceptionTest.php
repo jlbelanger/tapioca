@@ -4,6 +4,7 @@ namespace Jlbelanger\Tapioca\Tests\Exceptions;
 
 use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class JsonApiExceptionTest extends TestCase
 {
@@ -34,9 +35,7 @@ class JsonApiExceptionTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider generateProvider
-	 */
+	#[DataProvider('generateProvider')]
 	public function testGenerate(array $args) : void
 	{
 		$output = JsonApiException::generate($args['data'], $args['code']);
@@ -91,9 +90,7 @@ class JsonApiExceptionTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider getErrorsProvider
-	 */
+	#[DataProvider('getErrorsProvider')]
 	public function testGetErrors(array $args) : void
 	{
 		$exception = JsonApiException::generate($args['message'], $args['code']);
@@ -131,9 +128,7 @@ class JsonApiExceptionTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider formatErrorProvider
-	 */
+	#[DataProvider('formatErrorProvider')]
 	public function testFormatError(array $args) : void
 	{
 		$exception = JsonApiException::generate([], $args['code']);

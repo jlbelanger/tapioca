@@ -6,17 +6,17 @@ There are other Laravel packages that already do the same thing, and they probab
 
 ## Features
 
-- Add/update/delete/view/view-all
+- CRUD operations: Create/read/update/delete
 - Sparse fieldsets: `?fields[articles]=title`
-- Filter (with operation) `?filter[slug][eq]=foo`
-- Include relationships: `?include=user`
+- Filter (with operation) `?filter[slug][eq]=foo` `?filter[slug][like]=%foo%` `?filter[slug][in]=foo,bar`
+- Include relationships: `?include=user` `?include=user.roles`
 - Pagination: `?page[size]=10&page[number]=1`
 - Sort: `?sort=-created_at,user.username`
 
 ## Requirements
 
-- PHP 7.4+
-- [Laravel](https://laravel.com/) 8+
+- PHP 8.4+
+- [Laravel](https://laravel.com/) 10+
 
 ## Install
 
@@ -31,6 +31,106 @@ php artisan vendor:publish --provider="Jlbelanger\Tapioca\TapiocaServiceProvider
 ```
 
 ## Setup
+
+Create or update `app/Http/Middleware/Authenticate.php`:
+
+``` php
+<?php
+
+namespace App\Http\Middleware;
+
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Http\Request;
+use Jlbelanger\Tapioca\Exceptions\JsonApiException;
+
+class Authenticate extends Middleware
+{
+	/**
+	 * Handles an unauthenticated user.
+	 *
+	 * @param  Request $request
+	 * @param  array   $guards
+	 * @return void
+	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassAfterLastUsed, Squiz.Commenting.FunctionComment.TypeHintMissing
+	protected function unauthenticated($request, array $guards)
+	{
+		throw JsonApiException::generate([['title' => 'You are not logged in.', 'status' => '401']], 401);
+	}
+}
+```
+
+### Setup: Laravel 11 and later
+
+Add the following to `bootstrap/app.php`:
+
+``` php
+	->withMiddleware(function (Middleware $middleware) {
+		$middleware->alias([
+			'auth' => \App\Http\Middleware\Authenticate::class,
+		]);
+	})
+	->withExceptions(function (\Illuminate\Foundation\Configuration\Exceptions $exceptions) {
+		$exceptions->dontReport([
+			\Jlbelanger\Tapioca\Exceptions\JsonApiException::class,
+		]);
+
+		$exceptions->render(function (\Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $e) {
+			return response()->json(['errors' => [['title' => 'URL does not exist.', 'status' => '404', 'detail' => 'Method not allowed.']]], 404);
+		});
+
+		$exceptions->render(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e) {
+			return response()->json(['errors' => [['title' => $e->getMessage() ? $e->getMessage() : 'URL does not exist.', 'status' => '404']]], 404);
+		});
+
+		$exceptions->render(function (\Illuminate\Http\Exceptions\ThrottleRequestsException $e) {
+			return response()->json(['errors' => [['title' => 'Please wait before retrying.', 'status' => '429']]], 429);
+		});
+
+		$exceptions->render(function (\Illuminate\Validation\ValidationException $e) {
+			$output = [];
+			$errors = $e->validator->errors()->toArray();
+			foreach ($errors as $pointer => $titles) {
+				foreach ($titles as $title) {
+					$output[] = [
+						'title' => $title,
+						'source' => [
+							'pointer' => '/' . str_replace('.', '/', $pointer),
+						],
+						'status' => '422',
+					];
+				}
+			}
+			return response()->json(['errors' => $output], 422);
+		});
+
+		$exceptions->render(function (\Symfony\Component\HttpKernel\Exception\HttpException $e) {
+			return response()->json(['errors' => [['title' => $e->getMessage(), 'status' => (string) $e->getStatusCode()]]], $e->getStatusCode());
+		});
+
+		$exceptions->render(function (\Jlbelanger\Tapioca\Exceptions\JsonApiException $e) {
+			return response()->json(['errors' => $e->getErrors()], $e->getCode());
+		});
+
+		$exceptions->render(function (Throwable $e) {
+			$error = ['title' => 'There was an error connecting to the server.', 'status' => '500'];
+			if (config('app.debug')) {
+				$error['detail'] = $e->getMessage();
+				$error['meta'] = [
+					'exception' => get_class($e),
+					'file' => $e->getFile(),
+					'line' => $e->getLine(),
+				];
+				if (config('app.env') !== 'testing') {
+					$error['meta']['trace'] = $e->getTrace();
+				}
+			}
+			return response()->json(['errors' => [$error]], 500);
+		});
+	});
+```
+
+### Setup: Laravel 10 and earlier
 
 Add the following to the `dontReport` property in `app/Exceptions/Handler.php`:
 
@@ -49,12 +149,8 @@ public function register() : void
 		return response()->json(['errors' => [['title' => 'URL does not exist.', 'status' => '404', 'detail' => 'Method not allowed.']]], 404);
 	});
 
-	$this->renderable(function (\Jlbelanger\Tapioca\Exceptions\JsonApiException $e) {
-		return response()->json(['errors' => $e->getErrors()], $e->getCode());
-	});
-
-	$this->renderable(function (\Symfony\Component\HttpKernel\Exception\HttpException $e) {
-		return response()->json(['errors' => [['title' => $e->getMessage(), 'status' => $e->getStatusCode()]]], $e->getStatusCode());
+	$this->renderable(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e) {
+		return response()->json(['errors' => [['title' => $e->getMessage() ? $e->getMessage() : 'URL does not exist.', 'status' => '404']]], 404);
 	});
 
 	$this->renderable(function (\Illuminate\Http\Exceptions\ThrottleRequestsException $e) {
@@ -78,57 +174,35 @@ public function register() : void
 		return response()->json(['errors' => $output], 422);
 	});
 
+	$this->renderable(function (\Symfony\Component\HttpKernel\Exception\HttpException $e) {
+		return response()->json(['errors' => [['title' => $e->getMessage(), 'status' => (string) $e->getStatusCode()]]], $e->getStatusCode());
+	});
+
+	$this->renderable(function (\Jlbelanger\Tapioca\Exceptions\JsonApiException $e) {
+		return response()->json(['errors' => $e->getErrors()], $e->getCode());
+	});
+
 	$this->renderable(function (\Throwable $e) {
-		$code = $e->getCode() ? $e->getCode() : 500;
-		$error = ['title' => 'There was an error connecting to the server.', 'status' => (string) $code];
+		$error = ['title' => 'There was an error connecting to the server.', 'status' => '500'];
 		if (config('app.debug')) {
 			$error['detail'] = $e->getMessage();
 			$error['meta'] = [
 				'exception' => get_class($e),
 				'file' => $e->getFile(),
 				'line' => $e->getLine(),
-				'trace' => $e->getTrace(),
 			];
+			if (config('app.env') !== 'testing') {
+				$error['meta']['trace'] = $e->getTrace();
+			}
 		}
-		return response()->json(['errors' => [$error]], $code);
+		return response()->json(['errors' => [$error]], 500);
 	});
 }
 ```
 
-Update `app/Http/Middleware/Authenticate.php`:
+## Creating resources
 
-``` php
-<?php
-
-namespace App\Http\Middleware;
-
-use Closure;
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
-class Authenticate extends Middleware
-{
-	/**
-	 * Handles an incoming request.
-	 *
-	 * @param  Request     $request
-	 * @param  Closure     $next
-	 * @param  string|null $guard
-	 * @return mixed
-	 */
-	public function handle(Request $request, Closure $next, $guard = null)
-	{
-		if (!Auth::guard($guard)->check()) {
-			abort(404);
-		}
-
-		return $next($request);
-	}
-}
-```
-
-Then, you can either create each resource automatically or manually.
+You can create resources automatically or manually.
 
 ### Option A: Automatically
 
@@ -278,13 +352,13 @@ composer install
 
 [PHP does not support multipart PUT requests](https://bugs.php.net/bug.php?id=55815). As a workaround, you can install the [apfd PECL extension.](https://pecl.php.net/package/apfd).
 
-To install the extension on Ubuntu (replace 7.4 with your PHP version):
+To install the extension on Ubuntu (replace 8.4 with your PHP version):
 
 ``` bash
 apt-get install php-pear
-apt-get install php7.4-dev
+apt-get install php8.4-dev
 pecl install apfd
-echo "extension=apfd.so" >> /etc/php/7.4/fpm/php.ini
+echo "extension=apfd.so" >> /etc/php/8.4/fpm/php.ini
 ```
 
-Then restart PHP (eg. `service php7.4-fpm restart`)
+Then restart PHP (eg. `service php8.4-fpm restart`)

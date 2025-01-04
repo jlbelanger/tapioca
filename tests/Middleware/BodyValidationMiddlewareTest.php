@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Jlbelanger\Tapioca\Middleware\BodyValidationMiddleware;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class BodyValidationMiddlewareTest extends TestCase
 {
@@ -198,9 +199,7 @@ class BodyValidationMiddlewareTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider handleProvider
-	 */
+	#[DataProvider('handleProvider')]
 	public function testHandle(array $args) : void
 	{
 		$request = Request::create($args['uri'], $args['method'], $args['parameters']);

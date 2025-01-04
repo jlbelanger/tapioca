@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jlbelanger\Tapioca\Helpers\Output\PageHelper;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Article;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class PageHelperTest extends TestCase
 {
@@ -94,9 +95,7 @@ class PageHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider performProvider
-	 */
+	#[DataProvider('performProvider')]
 	public function testPerform(array $args) : void
 	{
 		$this->createRecords($args['records']);

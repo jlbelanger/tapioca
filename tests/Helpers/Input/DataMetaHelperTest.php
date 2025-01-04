@@ -5,6 +5,7 @@ namespace Jlbelanger\Tapioca\Tests\Helpers\Input;
 use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 use Jlbelanger\Tapioca\Helpers\Input\DataMetaHelper;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class DataMetaHelperTest extends TestCase
 {
@@ -34,9 +35,7 @@ class DataMetaHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider normalizeProvider
-	 */
+	#[DataProvider('normalizeProvider')]
 	public function testNormalize(array $args) : void
 	{
 		$output = DataMetaHelper::normalize($args['data']);
@@ -57,9 +56,7 @@ class DataMetaHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider validateProvider
-	 */
+	#[DataProvider('validateProvider')]
 	public function testValidate(array $args) : void
 	{
 		if (!empty($args['expectedMessage'])) {

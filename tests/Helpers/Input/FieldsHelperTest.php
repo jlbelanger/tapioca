@@ -5,6 +5,7 @@ namespace Jlbelanger\Tapioca\Tests\Helpers\Input;
 use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 use Jlbelanger\Tapioca\Helpers\Input\FieldsHelper;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class FieldsHelperTest extends TestCase
 {
@@ -44,9 +45,7 @@ class FieldsHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider normalizeProvider
-	 */
+	#[DataProvider('normalizeProvider')]
 	public function testNormalize(array $args) : void
 	{
 		$output = FieldsHelper::normalize($args['fields']);
@@ -69,9 +68,7 @@ class FieldsHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider validateProvider
-	 */
+	#[DataProvider('validateProvider')]
 	public function testValidate(array $args) : void
 	{
 		if (!empty($args['expectedMessage'])) {

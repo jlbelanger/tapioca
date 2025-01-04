@@ -4,6 +4,7 @@ namespace Jlbelanger\Tapioca\Tests\Helpers;
 
 use Jlbelanger\Tapioca\Helpers\Utilities;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class UtilitiesTest extends TestCase
 {
@@ -40,9 +41,7 @@ class UtilitiesTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider prettyAttributeNamesProvider
-	 */
+	#[DataProvider('prettyAttributeNamesProvider')]
 	public function testPrettyAttributeNames(array $args) : void
 	{
 		$output = Utilities::prettyAttributeNames($args['rules']);

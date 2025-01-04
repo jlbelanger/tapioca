@@ -5,6 +5,7 @@ namespace Jlbelanger\Tapioca\Tests\Helpers\Input;
 use Jlbelanger\Tapioca\Exceptions\JsonApiException;
 use Jlbelanger\Tapioca\Helpers\Input\PageHelper;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class PageHelperTest extends TestCase
 {
@@ -55,9 +56,7 @@ class PageHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider normalizeProvider
-	 */
+	#[DataProvider('normalizeProvider')]
 	public function testNormalize(array $args) : void
 	{
 		$output = PageHelper::normalize($args['page']);
@@ -115,9 +114,7 @@ class PageHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider validateProvider
-	 */
+	#[DataProvider('validateProvider')]
 	public function testValidate(array $args) : void
 	{
 		if (!empty($args['expectedMessage'])) {

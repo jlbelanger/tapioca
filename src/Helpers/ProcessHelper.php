@@ -42,40 +42,38 @@ class ProcessHelper
 	 */
 	protected static function process(Model $record, JsonApiRequest $req, bool $isUpdate = false) : Model
 	{
-		DB::beginTransaction();
-
-		$files = $req->getFiles();
-		if (!empty($files)) {
-			foreach ($files as $key => $file) {
-				if (empty($file)) {
-					$filename = null;
-				} else {
-					$filename = $record->uploadedFilename($key, $file->getClientOriginalName(), $req->getData());
-					$pathInfo = pathinfo($filename);
-					$file->move(public_path($pathInfo['dirname']), $pathInfo['basename']);
-					$record->processFile($key, $filename);
+		return DB::transaction(function () use ($record, $req, $isUpdate) {
+			$files = $req->getFiles();
+			if (!empty($files)) {
+				foreach ($files as $key => $file) {
+					if (empty($file)) {
+						$filename = null;
+					} else {
+						$filename = $record->uploadedFilename($key, $file->getClientOriginalName(), $req->getData());
+						$pathInfo = pathinfo($filename);
+						$file->move(public_path($pathInfo['dirname']), $pathInfo['basename']);
+						$record->processFile($key, $filename);
+					}
+					$req->setDataAttribute($key, $filename);
 				}
-				$req->setDataAttribute($key, $filename);
 			}
-		}
 
-		list($record, $data) = AttributesHelper::process($record, $req, $isUpdate);
+			list($record, $data) = AttributesHelper::process($record, $req, $isUpdate);
 
-		$included = self::normalizeIncludedRecords($req->getIncluded(), $record);
-		self::validateIncludedRecords($included);
+			$included = self::normalizeIncludedRecords($req->getIncluded(), $record);
+			self::validateIncludedRecords($included);
 
-		if (!empty($data['relationships'])) {
-			$result = RelationshipsHelper::update($record, $data['relationships'], $included);
-			event(new RelationshipUpdated($record, $result));
-		}
+			if (!empty($data['relationships'])) {
+				$result = RelationshipsHelper::update($record, $data['relationships'], $included);
+				event(new RelationshipUpdated($record, $result));
+			}
 
-		if (!empty($data['meta'])) {
-			$record->updateMeta($data['meta']);
-		}
+			if (!empty($data['meta'])) {
+				$record->updateMeta($data['meta']);
+			}
 
-		DB::commit();
-
-		return $record;
+			return $record;
+		});
 	}
 
 	/**

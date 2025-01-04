@@ -4,6 +4,7 @@ namespace Jlbelanger\Tapioca\Tests\Helpers\Input;
 
 use Jlbelanger\Tapioca\Helpers\Input\IncludeHelper;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class IncludeHelperTest extends TestCase
 {
@@ -29,9 +30,7 @@ class IncludeHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider normalizeProvider
-	 */
+	#[DataProvider('normalizeProvider')]
 	public function testNormalize(array $args) : void
 	{
 		$output = IncludeHelper::normalize($args['include']);

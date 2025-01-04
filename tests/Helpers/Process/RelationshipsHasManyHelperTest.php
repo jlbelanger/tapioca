@@ -9,6 +9,7 @@ use Jlbelanger\Tapioca\Tests\Dummy\App\Models\AlbumSong;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Note;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Song;
 use Jlbelanger\Tapioca\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class RelationshipsHasManyHelperTest extends TestCase
 {
@@ -193,9 +194,7 @@ class RelationshipsHasManyHelperTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider findProvider
-	 */
+	#[DataProvider('findProvider')]
 	public function testFind(array $args) : void
 	{
 		$output = $this->callPrivate(new RelationshipsHasManyHelper, 'find', [$args['included'], $args['id'], $args['type']]);

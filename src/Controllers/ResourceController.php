@@ -37,8 +37,9 @@ class ResourceController extends Controller
 	 */
 	public function index(Request $request) : JsonResponse
 	{
-		$records = $this->model()->newQuery();
-		$req = new JsonApiRequest('index', $request, $this->model(), $records);
+		$model = $this->model($request);
+		$records = $model->newQuery();
+		$req = new JsonApiRequest('index', $request, $model, $records);
 		return response()->json($req->output());
 	}
 
@@ -53,7 +54,7 @@ class ResourceController extends Controller
 		$record = $this->model($request);
 
 		// Validate the record.
-		$req = new JsonApiRequest('store', $request, $this->model($request), collect([$record]));
+		$req = new JsonApiRequest('store', $request, $record, collect([$record]));
 		$rules = $record->rules($req->getData());
 		$this->validate($request, $rules, [], Utilities::prettyAttributeNames($rules));
 
@@ -74,11 +75,12 @@ class ResourceController extends Controller
 	 */
 	public function show(Request $request, string $id) : JsonResponse
 	{
-		$record = $this->model()->find($id);
+		$model = $this->model($request);
+		$record = $model->find($id);
 		if (!$record) {
 			abort(404, __('This record does not exist.'));
 		}
-		$req = new JsonApiRequest('show', $request, $this->model(), collect([$record]));
+		$req = new JsonApiRequest('show', $request, $model, collect([$record]));
 		return response()->json($req->output());
 	}
 
@@ -92,13 +94,14 @@ class ResourceController extends Controller
 	public function update(Request $request, string $id) : JsonResponse
 	{
 		// Fetch the record.
-		$record = $this->model()->find($id);
+		$model = $this->model($request);
+		$record = $model->find($id);
 		if (!$record) {
 			abort(404, __('This record does not exist.'));
 		}
 
 		// Validate the record.
-		$req = new JsonApiRequest('update', $request, $this->model(), collect([$record]));
+		$req = new JsonApiRequest('update', $request, $model, collect([$record]));
 		$rules = $record->rules($req->getData());
 		$this->validate($request, $rules, [], Utilities::prettyAttributeNames($rules));
 
@@ -111,13 +114,14 @@ class ResourceController extends Controller
 	/**
 	 * Removes the specified resource from storage.
 	 *
-	 * @param  string $id
+	 * @param  Request $request
+	 * @param  string  $id
 	 * @return JsonResponse
 	 */
-	public function destroy(string $id) : JsonResponse
+	public function destroy(Request $request, string $id) : JsonResponse
 	{
 		// Fetch the record.
-		$record = $this->model()->find($id);
+		$record = $this->model($request)->find($id);
 		if (!$record) {
 			abort(404, __('This record does not exist.'));
 		}
@@ -134,7 +138,7 @@ class ResourceController extends Controller
 	 * @param  Request $request
 	 * @return Model
 	 */
-	protected function model(Request $request = null) : Model
+	protected function model(Request $request) : Model
 	{
 		$className = get_class($this);
 		$className = explode('\\', $className);
