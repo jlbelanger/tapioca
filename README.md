@@ -314,8 +314,8 @@ GET /articles?sort=user.username
 ## Examples
 
 - [Corrieography API](https://github.com/jlbelanger/corrie)
-- [Food Tracker API](https://github.com/jlbelanger/food-api)
-- [Glick API](https://github.com/jlbelanger/glick-api)
+- [Food Tracker API](https://github.com/jlbelanger/food)
+- [Glick API](https://github.com/jlbelanger/glick)
 - [Jenny's Wardrobe API](https://github.com/jlbelanger/wardrobe)
 
 ## Development
