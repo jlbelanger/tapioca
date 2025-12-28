@@ -9,12 +9,6 @@ use Jlbelanger\Tapioca\Helpers\JsonApiRequest;
 
 class AttributesHelper
 {
-	/**
-	 * @param  Model          $record
-	 * @param  JsonApiRequest $req
-	 * @param  boolean        $isUpdate
-	 * @return Model
-	 */
 	public static function process(Model $record, JsonApiRequest $req, bool $isUpdate = false) : array
 	{
 		$data = $req->getData();
@@ -40,12 +34,6 @@ class AttributesHelper
 		return [$record, $data];
 	}
 
-	/**
-	 * @param  array             $data
-	 * @param  Model             $record
-	 * @param  HasOneOrMany|null $existing
-	 * @return array
-	 */
 	public static function convertSingularRelationships(array $data, Model $record, ?HasOneOrMany $existing = null) : array
 	{
 		$fillable = $record->getFillable();

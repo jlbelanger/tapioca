@@ -3,6 +3,7 @@
 namespace Jlbelanger\Tapioca\Tests\Dummy\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Article;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\ArticleTag;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Tag;
@@ -12,7 +13,7 @@ class ArticleTagFactory extends Factory
 	/**
 	 * The name of the factory's corresponding model.
 	 *
-	 * @var string
+	 * @var class-string<Model>
 	 */
 	protected $model = ArticleTag::class;
 

@@ -10,6 +10,9 @@ class ResourceControllerStoreTest extends TestCase
 {
 	use RefreshDatabase;
 
+	/**
+	 * @return array<string|int, array<int, array{records: array, path: string, body: array, expected: array, expectedStatus: int}>>
+	 */
 	public static function storeProvider() : array
 	{
 		return [
@@ -407,8 +410,12 @@ class ResourceControllerStoreTest extends TestCase
 		];
 	}
 
+	/**
+	 * @param  array{records: array, path: string, body: array, expected: array, expectedStatus: int} $args
+	 * @return void
+	 */
 	#[DataProvider('storeProvider')]
-	public function testStore(array $args = []) : void
+	public function testStore(array $args) : void
 	{
 		$records = $this->createRecords($args['records']);
 		$args['body'] = $this->replaceIds($args['body'], $records);

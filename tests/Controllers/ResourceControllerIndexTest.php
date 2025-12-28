@@ -10,6 +10,9 @@ class ResourceControllerIndexTest extends TestCase
 {
 	use RefreshDatabase;
 
+	/**
+	 * @return array<string|int, array<int, array{records: array, path: string, parameters: array, expected: array}>>
+	 */
 	public static function indexProvider() : array
 	{
 		return [
@@ -539,6 +542,10 @@ class ResourceControllerIndexTest extends TestCase
 		];
 	}
 
+	/**
+	 * @param  array{records: array, path: string, parameters: array, expected: array} $args
+	 * @return void
+	 */
 	#[DataProvider('indexProvider')]
 	public function testIndex(array $args) : void
 	{

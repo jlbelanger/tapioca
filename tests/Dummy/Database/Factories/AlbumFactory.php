@@ -3,6 +3,7 @@
 namespace Jlbelanger\Tapioca\Tests\Dummy\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Album;
 use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Artist;
 
@@ -11,7 +12,7 @@ class AlbumFactory extends Factory
 	/**
 	 * The name of the factory's corresponding model.
 	 *
-	 * @var string
+	 * @var class-string<Model>
 	 */
 	protected $model = Album::class;
 

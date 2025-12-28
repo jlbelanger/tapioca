@@ -8,6 +8,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 class JsonApiExceptionTest extends TestCase
 {
+	/**
+	 * @return array<string|int, array<int, array{data: array, code: int}>>
+	 */
 	public static function generateProvider() : array
 	{
 		return [
@@ -35,6 +38,10 @@ class JsonApiExceptionTest extends TestCase
 		];
 	}
 
+	/**
+	 * @param  array{data: array, code: int} $args
+	 * @return void
+	 */
 	#[DataProvider('generateProvider')]
 	public function testGenerate(array $args) : void
 	{
@@ -43,6 +50,9 @@ class JsonApiExceptionTest extends TestCase
 		$this->assertSame($args['code'], $output->getCode());
 	}
 
+	/**
+	 * @return array<string|int, array<int, array{message: array, code: int, expected: array}>>
+	 */
 	public static function getErrorsProvider() : array
 	{
 		return [
@@ -90,6 +100,10 @@ class JsonApiExceptionTest extends TestCase
 		];
 	}
 
+	/**
+	 * @param  array{message: array, code: int, expected: array} $args
+	 * @return void
+	 */
 	#[DataProvider('getErrorsProvider')]
 	public function testGetErrors(array $args) : void
 	{
@@ -97,6 +111,9 @@ class JsonApiExceptionTest extends TestCase
 		$this->assertSame($args['expected'], $exception->getErrors());
 	}
 
+	/**
+	 * @return array<string|int, array<int, array{error: object, code: int, expected: array}>>
+	 */
 	public static function formatErrorProvider() : array
 	{
 		return [
@@ -128,6 +145,10 @@ class JsonApiExceptionTest extends TestCase
 		];
 	}
 
+	/**
+	 * @param  array{error: object, code: int, expected: array} $args
+	 * @return void
+	 */
 	#[DataProvider('formatErrorProvider')]
 	public function testFormatError(array $args) : void
 	{

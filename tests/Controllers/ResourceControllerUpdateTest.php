@@ -10,6 +10,9 @@ class ResourceControllerUpdateTest extends TestCase
 {
 	use RefreshDatabase;
 
+	/**
+	 * @return array<string|int, array<int, array{records: array, path: string, parameters: array, expected: array, expectedStatus: int}>>
+	 */
 	public static function updateProvider() : array
 	{
 		return [
@@ -804,8 +807,12 @@ class ResourceControllerUpdateTest extends TestCase
 		];
 	}
 
+	/**
+	 * @param  array{records: array, path: string, parameters: array, expected: array, expectedStatus: int} $args
+	 * @return void
+	 */
 	#[DataProvider('updateProvider')]
-	public function testUpdate(array $args = []) : void
+	public function testUpdate(array $args) : void
 	{
 		$records = $this->createRecords($args['records']);
 		$args['parameters'] = $this->replaceIds($args['parameters'], $records);

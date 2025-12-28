@@ -12,6 +12,9 @@ class ResourceControllerShowTest extends TestCase
 {
 	use RefreshDatabase;
 
+	/**
+	 * @return array<string|int, array<int, array{parameters: array, expected: array}>>
+	 */
 	public static function showProvider() : array
 	{
 		return [
@@ -116,6 +119,10 @@ class ResourceControllerShowTest extends TestCase
 		];
 	}
 
+	/**
+	 * @param  array{parameters: array, expected: array} $args
+	 * @return void
+	 */
 	#[DataProvider('showProvider')]
 	public function testShow(array $args) : void
 	{
