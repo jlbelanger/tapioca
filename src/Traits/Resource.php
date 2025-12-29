@@ -189,9 +189,10 @@ trait Resource
 	/**
 	 * @param  string $key
 	 * @param  string $filename
+	 * @param  array  $data
 	 * @return string
 	 */
-	public function uploadedFilename(string $key, string $filename) : string
+	public function uploadedFilename(string $key, string $filename, array $data = []) : string
 	{
 		$pathInfo = pathinfo($filename);
 		$extension = strtolower($pathInfo['extension']);

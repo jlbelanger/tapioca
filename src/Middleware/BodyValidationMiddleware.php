@@ -26,9 +26,17 @@ class BodyValidationMiddleware
 		$errors = [];
 
 		if (strpos($request->header('Content-Type'), 'multipart/form-data') === 0) {
-			if (!$request->has('data') || !$request->has('meta.files')) {
+			$detail = [];
+			if (!$request->has('data')) {
+				$detail[] = __("'data' value is missing.");
+			}
+			if (!$request->has('meta.files')) {
+				$detail[] = __("'meta.files' value is missing.");
+			}
+			if ($detail) {
 				$errors[] = [
 					'title' => __("Multipart requests must contain 'data' and 'meta.files' value."),
+					'detail' => implode(' ', $detail),
 					'status' => '400',
 				];
 				return response()->json(['errors' => $errors], 400);

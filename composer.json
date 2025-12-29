@@ -15,9 +15,11 @@
 		"php": "^8.4"
 	},
 	"require-dev": {
-		"orchestra/testbench": "^9.8.0",
-		"phpunit/phpunit": "^11.5.2",
-		"squizlabs/php_codesniffer": "^3.11.2"
+		"orchestra/testbench": "^10.8.0",
+		"phpunit/phpunit": "^12.5.4",
+		"squizlabs/php_codesniffer": "^4.0.1",
+		"phpstan/phpstan": "^2.1.33",
+		"larastan/larastan": "^3.8.1"
 	},
 	"autoload": {
 		"psr-4": {

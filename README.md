@@ -350,7 +350,9 @@ composer install
 
 ### Multipart PUT requests
 
-[PHP does not support multipart PUT requests](https://bugs.php.net/bug.php?id=55815). As a workaround, you can install the [apfd PECL extension.](https://pecl.php.net/package/apfd).
+PHP < 8.4 and Laravel < 11.40 [do not support multipart PUT requests](https://bugs.php.net/bug.php?id=55815).
+
+As a workaround, you can install the [apfd PECL extension.](https://pecl.php.net/package/apfd).
 
 To install the extension on Ubuntu (replace 8.4 with your PHP version):
 
