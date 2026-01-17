@@ -24,7 +24,7 @@ There are other Laravel packages that already do the same thing, and they probab
 
 Run:
 
-``` bash
+```bash
 composer config repositories.tapioca vcs git@github.com:jlbelanger/tapioca.git
 composer require jlbelanger/tapioca @dev
 php artisan vendor:publish --provider="Jlbelanger\Tapioca\TapiocaServiceProvider" --tag="config"
@@ -34,7 +34,7 @@ php artisan vendor:publish --provider="Jlbelanger\Tapioca\TapiocaServiceProvider
 
 Create or update `app/Http/Middleware/Authenticate.php`:
 
-``` php
+```php
 <?php
 
 namespace App\Http\Middleware;
@@ -64,7 +64,7 @@ class Authenticate extends Middleware
 
 Add the following to `bootstrap/app.php`:
 
-``` php
+```php
 	->withMiddleware(function (Middleware $middleware) {
 		$middleware->alias([
 			'auth' => \App\Http\Middleware\Authenticate::class,
@@ -134,7 +134,7 @@ Add the following to `bootstrap/app.php`:
 
 Add the following to the `dontReport` property in `app/Exceptions/Handler.php`:
 
-``` php
+```php
 protected $dontReport = [
 	\Jlbelanger\Tapioca\Exceptions\JsonApiException::class,
 ];
@@ -142,7 +142,7 @@ protected $dontReport = [
 
 Add the following to the `register` function in the same file (`app/Exceptions/Handler.php`):
 
-``` php
+```php
 public function register() : void
 {
 	$this->renderable(function (\Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $e) {
@@ -208,7 +208,7 @@ You can create resources automatically or manually.
 
 To automatically generate a controller, model, and route, run the following command (replacing "User" with the name of the resource):
 
-``` bash
+```bash
 php artisan make:tapioca User
 ```
 
@@ -216,7 +216,7 @@ php artisan make:tapioca User
 
 The controller must extend `ResourceController` (or `AuthorizedResourceController` if you are using Sanctum):
 
-``` php
+```php
 <?php
 
 namespace App\Http\Controllers\Api;
@@ -231,7 +231,7 @@ class UserController extends ResourceController
 
 The model must include the `Resource` trait:
 
-``` php
+```php
 <?php
 
 namespace App\Models;
@@ -247,7 +247,7 @@ class User extends Model
 
 The route must be defined in `routes/api.php` (optionally including `'auth'` or `'auth:sanctum'` or similar in the middleware):
 
-``` php
+```php
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -328,7 +328,7 @@ GET /articles?sort=user.username
 
 ### Setup
 
-``` bash
+```bash
 git clone https://github.com/jlbelanger/tapioca.git
 cd tapioca
 composer install
@@ -336,13 +336,13 @@ composer install
 
 ### Lint
 
-``` bash
+```bash
 ./vendor/bin/phpcs
 ```
 
 ### Test
 
-``` bash
+```bash
 ./vendor/bin/phpunit
 ```
 
@@ -356,7 +356,7 @@ As a workaround, you can install the [apfd PECL extension.](https://pecl.php.net
 
 To install the extension on Ubuntu (replace 8.4 with your PHP version):
 
-``` bash
+```bash
 apt-get install php-pear
 apt-get install php8.4-dev
 pecl install apfd

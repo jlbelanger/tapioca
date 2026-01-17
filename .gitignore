@@ -2,5 +2,6 @@
 .env
 .phpunit.result.cache
 *.log
+/node_modules
 /vendor
 TODO.md
