@@ -25,19 +25,11 @@ class Album extends Model
 		'artist_id',
 	];
 
-	/**
-	 * Creates a new factory instance for the model.
-	 *
-	 * @return Factory
-	 */
 	protected static function newFactory() : Factory
 	{
 		return AlbumFactory::new();
 	}
 
-	/**
-	 * @return array
-	 */
 	public function rules(array $data) : array
 	{
 		return [
@@ -47,49 +39,31 @@ class Album extends Model
 		];
 	}
 
-	/**
-	 * @return array
-	 */
 	public function multiRelationships() : array
 	{
 		return ['album_songs', 'notes', 'songs'];
 	}
 
-	/**
-	 * @return array
-	 */
 	public function singularRelationships() : array
 	{
 		return ['artist'];
 	}
 
-	/**
-	 * @return HasMany
-	 */
 	public function albumSongs() : HasMany
 	{
 		return $this->hasMany(AlbumSong::class);
 	}
 
-	/**
-	 * @return BelongsTo
-	 */
 	public function artist() : BelongsTo
 	{
 		return $this->belongsTo(Artist::class);
 	}
 
-	/**
-	 * @return MorphMany
-	 */
 	public function notes() : MorphMany
 	{
 		return $this->morphMany(Note::class, 'record');
 	}
 
-	/**
-	 * @return BelongsToMany
-	 */
 	public function songs() : BelongsToMany
 	{
 		return $this->belongsToMany(Song::class);

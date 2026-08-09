@@ -26,19 +26,11 @@ class AlbumSong extends Model
 		'length',
 	];
 
-	/**
-	 * Creates a new factory instance for the model.
-	 *
-	 * @return Factory
-	 */
 	protected static function newFactory() : Factory
 	{
 		return AlbumSongFactory::new();
 	}
 
-	/**
-	 * @return array
-	 */
 	public function rules(array $data) : array
 	{
 		return [
@@ -48,25 +40,16 @@ class AlbumSong extends Model
 		];
 	}
 
-	/**
-	 * @return array
-	 */
 	public function singularRelationships() : array
 	{
 		return ['album', 'song'];
 	}
 
-	/**
-	 * @return BelongsTo
-	 */
 	public function album() : BelongsTo
 	{
 		return $this->belongsTo(Album::class);
 	}
 
-	/**
-	 * @return BelongsTo
-	 */
 	public function song() : BelongsTo
 	{
 		return $this->belongsTo(Song::class);

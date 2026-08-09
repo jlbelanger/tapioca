@@ -9,18 +9,8 @@ use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Note;
 
 class NoteFactory extends Factory
 {
-	/**
-	 * The name of the factory's corresponding model.
-	 *
-	 * @var class-string<Model>
-	 */
 	protected $model = Note::class;
 
-	/**
-	 * Defines the model's default state.
-	 *
-	 * @return array
-	 */
 	public function definition() : array
 	{
 		return [

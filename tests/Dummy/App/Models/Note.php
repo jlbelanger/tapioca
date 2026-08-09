@@ -21,27 +21,16 @@ class Note extends Model
 		'content',
 	];
 
-	/**
-	 * Creates a new factory instance for the model.
-	 *
-	 * @return Factory
-	 */
 	protected static function newFactory() : Factory
 	{
 		return NoteFactory::new();
 	}
 
-	/**
-	 * @return MorphTo
-	 */
 	public function record() : MorphTo
 	{
 		return $this->morphTo();
 	}
 
-	/**
-	 * @return array
-	 */
 	public function rules(array $data) : array
 	{
 		return [
@@ -50,9 +39,6 @@ class Note extends Model
 		];
 	}
 
-	/**
-	 * @return array
-	 */
 	public function singularRelationships() : array
 	{
 		return ['record'];

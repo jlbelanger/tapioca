@@ -8,18 +8,8 @@ use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Article;
 
 class ArticleFactory extends Factory
 {
-	/**
-	 * The name of the factory's corresponding model.
-	 *
-	 * @var class-string<Model>
-	 */
 	protected $model = Article::class;
 
-	/**
-	 * Defines the model's default state.
-	 *
-	 * @return array
-	 */
 	public function definition() : array
 	{
 		return [

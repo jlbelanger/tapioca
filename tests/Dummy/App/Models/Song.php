@@ -19,19 +19,11 @@ class Song extends Model
 		'content',
 	];
 
-	/**
-	 * Creates a new factory instance for the model.
-	 *
-	 * @return Factory
-	 */
 	protected static function newFactory() : Factory
 	{
 		return SongFactory::new();
 	}
 
-	/**
-	 * @return array
-	 */
 	public function rules(array $data) : array
 	{
 		return [
@@ -39,17 +31,11 @@ class Song extends Model
 		];
 	}
 
-	/**
-	 * @return array
-	 */
 	public function multiRelationships() : array
 	{
 		return ['album_songs'];
 	}
 
-	/**
-	 * @return HasMany
-	 */
 	public function albumSongs() : HasMany
 	{
 		return $this->hasMany(AlbumSong::class);

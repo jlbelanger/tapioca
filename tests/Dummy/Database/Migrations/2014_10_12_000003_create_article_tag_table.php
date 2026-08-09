@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateArticleTagTable extends Migration
 {
-	/**
-	 * Runs the migrations.
-	 *
-	 * @return void
-	 */
 	public function up() : void
 	{
 		Schema::create('article_tag', function (Blueprint $table) {
@@ -21,11 +16,6 @@ class CreateArticleTagTable extends Migration
 		});
 	}
 
-	/**
-	 * Reverses the migrations.
-	 *
-	 * @return void
-	 */
 	public function down() : void
 	{
 		Schema::dropIfExists('article_tag');

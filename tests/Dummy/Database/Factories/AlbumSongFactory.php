@@ -10,18 +10,8 @@ use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Song;
 
 class AlbumSongFactory extends Factory
 {
-	/**
-	 * The name of the factory's corresponding model.
-	 *
-	 * @var class-string<Model>
-	 */
 	protected $model = AlbumSong::class;
 
-	/**
-	 * Defines the model's default state.
-	 *
-	 * @return array
-	 */
 	public function definition() : array
 	{
 		return [

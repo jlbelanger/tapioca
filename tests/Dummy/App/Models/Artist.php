@@ -21,19 +21,11 @@ class Artist extends Model
 		'filename',
 	];
 
-	/**
-	 * Creates a new factory instance for the model.
-	 *
-	 * @return Factory
-	 */
 	protected static function newFactory() : Factory
 	{
 		return ArtistFactory::new();
 	}
 
-	/**
-	 * @return array
-	 */
 	public function rules(array $data) : array
 	{
 		return [
@@ -41,25 +33,16 @@ class Artist extends Model
 		];
 	}
 
-	/**
-	 * @return array
-	 */
 	public function multiRelationships() : array
 	{
 		return ['albums', 'notes'];
 	}
 
-	/**
-	 * @return HasMany
-	 */
 	public function albums() : HasMany
 	{
 		return $this->hasMany(Album::class);
 	}
 
-	/**
-	 * @return MorphMany
-	 */
 	public function notes() : MorphMany
 	{
 		return $this->morphMany(Note::class, 'record');

@@ -14,11 +14,6 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
-	/**
-	 * Registers the exception handling callbacks for the application.
-	 *
-	 * @return void
-	 */
 	public function register() : void
 	{
 		// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found

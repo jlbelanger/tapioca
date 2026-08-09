@@ -24,19 +24,11 @@ class ArticleTag extends Model
 		'tag_id',
 	];
 
-	/**
-	 * Creates a new factory instance for the model.
-	 *
-	 * @return Factory
-	 */
 	protected static function newFactory() : Factory
 	{
 		return ArticleTagFactory::new();
 	}
 
-	/**
-	 * @return array
-	 */
 	public function rules(array $data) : array
 	{
 		return [
@@ -45,25 +37,16 @@ class ArticleTag extends Model
 		];
 	}
 
-	/**
-	 * @return array
-	 */
 	public function singularRelationships() : array
 	{
 		return ['article', 'tag'];
 	}
 
-	/**
-	 * @return BelongsTo
-	 */
 	public function article() : BelongsTo
 	{
 		return $this->belongsTo(Article::class);
 	}
 
-	/**
-	 * @return BelongsTo
-	 */
 	public function tag() : BelongsTo
 	{
 		return $this->belongsTo(Tag::class);

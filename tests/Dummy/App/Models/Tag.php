@@ -20,19 +20,11 @@ class Tag extends Model
 		'parent_id',
 	];
 
-	/**
-	 * Creates a new factory instance for the model.
-	 *
-	 * @return Factory
-	 */
 	protected static function newFactory() : Factory
 	{
 		return TagFactory::new();
 	}
 
-	/**
-	 * @return array
-	 */
 	public function rules(array $data) : array
 	{
 		return [
@@ -40,33 +32,21 @@ class Tag extends Model
 		];
 	}
 
-	/**
-	 * @return array
-	 */
 	public function multiRelationships() : array
 	{
 		return ['articles'];
 	}
 
-	/**
-	 * @return array
-	 */
 	public function singularRelationships() : array
 	{
 		return ['parent'];
 	}
 
-	/**
-	 * @return HasMany
-	 */
 	public function articles() : HasMany
 	{
 		return $this->hasMany(Article::class);
 	}
 
-	/**
-	 * @return BelongsTo
-	 */
 	public function parent() : BelongsTo
 	{
 		return $this->belongsTo(self::class, 'parent_id');

@@ -8,18 +8,8 @@ use Jlbelanger\Tapioca\Tests\Dummy\App\Models\Tag;
 
 class TagFactory extends Factory
 {
-	/**
-	 * The name of the factory's corresponding model.
-	 *
-	 * @var class-string<Model>
-	 */
 	protected $model = Tag::class;
 
-	/**
-	 * Defines the model's default state.
-	 *
-	 * @return array
-	 */
 	public function definition() : array
 	{
 		return [
